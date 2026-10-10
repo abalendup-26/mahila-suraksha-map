@@ -1,4 +1,3 @@
-# Build pipeline (scripts/build_*.py, make_report_pdf.py) uses only the Python 3.10+ standard library.
-# Headless verification scripts (scripts/verify.py, scripts/verify_live.py):
-playwright>=1.40
-# System tools (not pip): google-chrome or chromium (PDF rendering + headless checks), git, gh (GitHub CLI), flock (util-linux)
+# Data pipeline (runs in GitHub Actions: .github/workflows/daily-update.yml). Everything else is Python standard library.
+trafilatura>=1.12      # article text extraction (falls back to simple <p> parsing if missing)
+# System tools: google-chrome (PDF rendering; preinstalled on GitHub's ubuntu runners), fonts-noto-core (Devanagari), git

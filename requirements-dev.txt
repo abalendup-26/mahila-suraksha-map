@@ -1,0 +1,3 @@
+# Local UI tests / live checks only (scripts/test_ui.py, scripts/verify_live.py)
+-r requirements.txt
+playwright>=1.40

@@ -22,7 +22,7 @@ async def run(p, mobile):
     async def inject(route):
         r = await route.fetch(); j = await r.json()
         j["incidents"].append({"id": "incXSS", "type": "rape", "type_label": "Rape / sexual assault", "channel": "news", "date": j["date_span"][1],
-            "place": "Testpur\"><img src=x onerror=window.__xss=1>", "state": "X", "lat": 12.97, "lon": 77.59, "precision": "City", 
+            "place": "Testpur\"><img src=x onerror=window.__xss=1>", "state": "X", "lat": 12.97, "lon": 77.59, "precision": "Locality / neighbourhood (approx., ±1–2 km)", "pin_level": "locality", "incident_date": j["date_span"][1], "incident_date_basis": "approx = report date", 
             "headline": "<img src=x onerror=window.__xss=1><script>window.__xss=2</script>", "summary": "<b onmouseover=alert(1)>s</b>",
             "status": "x", "verification": "x", "sources": [{"name": "<svg onload=window.__xss=3>", "date": "2026-01-01", "kind": "article", "article_url": "javascript:window.__xss=4"}]})
         await route.fulfill(response=r, body=json.dumps(j))
@@ -51,10 +51,20 @@ async def run(p, mobile):
     check(f"{tag}: zero-row export shows message", "Nothing to export" in (await pg.inner_text("#toast")))
     await pg.click("#resetF"); await pg.wait_for_timeout(300)
     check(f"{tag}: reset restores all", await pg.evaluate("visible().length") == total and not await pg.is_visible("#empty"))
-    # channel filter
-    await pg.evaluate("$('chSocial').checked=false;$('chSocial').dispatchEvent(new Event('change'))")
-    check(f"{tag}: news-only filter", await pg.evaluate("visible().every(i=>i.channel==='news')") and await pg.evaluate("visible().length") < total)
-    await pg.evaluate("$('chSocial').checked=true;$('chSocial').dispatchEvent(new Event('change'))")
+    # no social-media filter any more; unpinned (city-only) reports are listed, not pinned
+    check(f"{tag}: no social-media filter/legend", not await pg.evaluate("!!document.getElementById('chSocial')") and "Social media" not in await pg.inner_text("aside"))
+    pinned_n = await pg.evaluate("visible().filter(pinned).length"); un_n = await pg.evaluate("visible().filter(i=>!pinned(i)).length")
+    mk = await pg.evaluate("markerLayer.getLayers().length")
+    check(f"{tag}: only locality-or-better incidents are pinned", mk == pinned_n and await pg.evaluate("markerLayer.getLayers().every(m=>m.inc.pin_level!=='city')"), f"markers={mk} pinned={pinned_n} unpinned={un_n}")
+    check(f"{tag}: 'Location not specific' list counts unpinned", (un_n == 0) or (str(un_n) in await pg.evaluate("$('nsSum').textContent")))
+    if un_n:
+        if mobile: await pg.evaluate("setSheet('full')")
+        await pg.evaluate("$('nsWrap').open=true"); await pg.wait_for_timeout(200)
+        await pg.click("#nsList .it"); await pg.wait_for_timeout(300)
+        check(f"{tag}: unpinned report opens in dialog", await pg.is_visible("#rmodal") and "Incident date" in await pg.inner_text("#rbody"))
+        await pg.click("#rclose")
+        if mobile: await pg.evaluate("setSheet('peek')")
+    check(f"{tag}: time filter uses incident_date", await pg.evaluate("(()=>{const i=incidents.find(x=>x.incident_date&&x.incident_date!==x.date);return !i||idate(i)===i.incident_date})()"))
     # time presets
     if mobile: await pg.evaluate("setSheet('full')"); await pg.wait_for_timeout(400)
     counts = {}
@@ -93,7 +103,7 @@ async def run(p, mobile):
     await pg.wait_for_timeout(800)
     await pg.screenshot(path=f"{OUT}_{tag}_spiderfy.png")
     # popup on a real marker
-    await pg.evaluate("""()=>{markerLayer.unspiderfy();const m=markerLayer.getLayers().find(m=>m.inc.precision.startsWith('Locality')&&m.inc.channel==='news'&&m.inc.id!=='incXSS');map.setView(m.getLatLng(),16,{animate:false});setTimeout(()=>{markerLayer.zoomToShowLayer(m,()=>m.openPopup());},600);}""")
+    await pg.evaluate("""()=>{markerLayer.unspiderfy();const m=markerLayer.getLayers().find(m=>m.inc.pin_level!=='city'&&m.inc.id!=='incXSS');map.setView(m.getLatLng(),16,{animate:false});setTimeout(()=>{markerLayer.zoomToShowLayer(m,()=>m.openPopup());},600);}""")
     await pg.wait_for_selector(".leaflet-popup-content", timeout=15000); await pg.wait_for_timeout(1200)
     box = await pg.evaluate("(()=>{const r=document.querySelector('.leaflet-popup-content-wrapper').getBoundingClientRect();return [r.left,r.top,r.right,r.bottom,innerWidth,innerHeight]})()")
     check(f"{tag}: popup fits viewport", box[0] >= 0 and box[2] <= box[4] and box[1] >= 0, str([round(x) for x in box]))

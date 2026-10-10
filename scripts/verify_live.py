@@ -5,7 +5,7 @@ import asyncio, sys, json
 from playwright.async_api import async_playwright
 URL = sys.argv[1] if len(sys.argv) > 1 else "https://abalendup-26.github.io/mahila-suraksha-map/"
 OUT = sys.argv[2] if len(sys.argv) > 2 else "screenshots/live"
-OPEN_POPUP = """()=>{const m=markerLayer.getLayers().find(m=>m.inc.precision.startsWith('Locality')&&m.inc.channel==='news')||markerLayer.getLayers()[0];
+OPEN_POPUP = """()=>{const m=markerLayer.getLayers().find(m=>m.inc.pin_level&&m.inc.pin_level!=='city')||markerLayer.getLayers()[0];
   map.setView(m.getLatLng(),14,{animate:false});setTimeout(()=>markerLayer.zoomToShowLayer(m,()=>m.openPopup()),700);}"""
 async def shoot(p, mobile):
     tag = "mobile" if mobile else "desktop"
@@ -36,6 +36,13 @@ async def shoot(p, mobile):
     await pg.evaluate("void map.setView([22.5,79],5,{animate:false})"); await pg.wait_for_timeout(2500)
     if mobile: await pg.evaluate("setSheet('half')"); await pg.wait_for_timeout(600)
     await pg.screenshot(path=f"{OUT}_{tag}_india.png")
+    print(tag, "counts:", await pg.inner_text("#countB")); print(tag, "unpinned list:", await pg.evaluate("$('nsSum').textContent"))
+    if mobile: await pg.evaluate("setSheet('peek')"); await pg.wait_for_timeout(500)
+    city = await pg.evaluate("""()=>{const c={};visible().filter(pinned).forEach(i=>{c[i.city]=(c[i.city]||[]).concat([[i.lat,i.lon]])});
+      const [k,pts]=Object.entries(c).sort((a,b)=>b[1].length-a[1].length)[0];map.fitBounds(L.latLngBounds(pts).pad(0.15),{animate:false,maxZoom:13});
+      return k+': '+pts.length+' pins at '+new Set(pts.map(p=>p.join())).size+' distinct points'}""")
+    await pg.wait_for_timeout(3000); print(tag, "city zoom:", city)
+    await pg.screenshot(path=f"{OUT}_{tag}_city_zoom.png")
     for page_ in ["terms.html", "privacy.html", "disclaimer.html", "manifest.webmanifest", "assets/og-image.png", "data/incidents.app.json"]:
         rr = await pg.request.get(URL.split("?")[0].rstrip("/") + "/" + page_); print(tag, page_, rr.status)
     print(tag, "errors:", [e for e in errs if "favicon" not in e])

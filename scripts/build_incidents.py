@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-"""Collect real recent news + social-media reports about crimes against women in India,
-extract only the area/city, geocode, and write data/incidents.json + data/incidents.csv.
+"""Collect recent news reports about crimes against women in India, extract only the area/city, geocode,
+and write data/incidents.json + data/incidents.csv. Runs unattended in GitHub Actions (.github/workflows/daily-update.yml).
 
-Sources:
-  * Google News RSS search (English + Hindi queries)  -> archived raw in data/raw_news/YYYY-MM-DD/
-  * X (Twitter) public posts / X news stories, fetched through the X API tools (MCP) and saved
-    as raw JSON in data/raw_x/YYYY-MM-DD/*.txt by the caller; this script only ingests those files.
-APPEND-ONLY: existing data/incidents.json is loaded and never shrinks. New records are deduped by
-source URL, attached to an existing incident when the grouping rule matches, otherwise added as new
-incidents. Files are rewritten only when something new was added (a backup is kept in data/backups/).
-Exit status 0 always; prints "RESULT: CHANGED" or "RESULT: NOCHANGE".
-Privacy: no victim names, ages, photos or identifying details are stored. Post text from
-X is never shown; only a templated summary + link. Headlines are shown with ages removed.
+Source: Google News RSS search (English + Hindi queries) -> raw XML in data/raw_news/YYYY-MM-DD/ (not committed).
+(Social media / X was removed on 2026-10-10; X-only incidents are no longer published.)
+APPEND-ONLY: existing data/incidents.json is loaded and never shrinks. New records are deduped by source URL,
+attached to an existing incident when the grouping rule matches, otherwise added as new incidents.
+Files are rewritten only when something changed (a backup is kept in data/backups/, local runs only).
+Incident date: the date the crime occurred, extracted from the headline/article text when stated
+(scripts/incident_date.py), otherwise approximated by the report (publish) date.
+Prints "RESULT: CHANGED" or "RESULT: NOCHANGE".
+Privacy: adult ages kept; minors' ages -> "minor"/"नाबालिग"; names and identifying details removed.
 """
 import json, os, re, sys, csv, time, glob, math, hashlib, html
 import urllib.request, urllib.parse
@@ -23,8 +22,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from gazetteer import Gazetteer
+from incident_date import extract as extract_incident_date, COURT_RE
+from datetime import date as _date
 
-UA = "WomenSafetyMap/0.1 (personal research prototype)"
+UA = "SafeNaksha/1.0 (+https://github.com/abalendup-26/mahila-suraksha-map; non-commercial women-safety awareness map)"
 NOW = datetime.now(timezone.utc)
 IST = timezone(timedelta(hours=5, minutes=30))
 TODAY = NOW.astimezone(IST).strftime("%Y-%m-%d")
@@ -217,34 +218,6 @@ def read_rss():
                           "date": dt.astimezone(timezone.utc), "text": title})
     return items
 
-def read_x():
-    items = []
-    for fn in sorted(glob.glob(os.path.join(DATA, "raw_x", "**", "*.txt"), recursive=True) + glob.glob(os.path.join(DATA, "raw_x", "**", "*.json"), recursive=True)):
-        t = open(fn, encoding="utf-8").read()
-        try: d = json.loads(t[t.index("{"): t.rindex("}") + 1])
-        except Exception: continue
-        users = {u["id"]: u for u in d.get("includes", {}).get("users", [])}
-        for p in d.get("data", []):
-            if "name" in p and "summary" in p:  # X news story (aggregated from posts)
-                txt = p["name"] + ". " + p.get("summary", "")
-                items.append({"kind": "x_story", "title": p["name"], "link": p["url"], "source": "X News story (summary of posts)",
-                              "date": datetime.fromisoformat(p["updated_at"].replace("Z", "+00:00")), "text": txt,
-                              "head_text": p["name"]})
-                continue
-            txt = p.get("text", "")
-            if txt.startswith("RT @"): continue
-            u = users.get(p.get("author_id"), {})
-            handle = u.get("username", "")
-            links = [e.get("expanded_url", "") for e in (p.get("entities") or {}).get("urls", [])]
-            has_news_link = any(NEWS_DOMAINS.search(l or "") for l in links) or bool(re.search(r"https://t\.co/", txt)) and NEWS_DOMAINS.search(handle or "")
-            police = bool(POLICE_HANDLE.search(handle))
-            if not (links or "t.co/" in txt or police): continue  # prefer posts linking to news/police
-            items.append({"kind": "x_post", "title": None, "link": p["url"], "source": "@" + handle if handle else "X user",
-                          "handle": handle, "police": police, "has_link": bool(links or "t.co/" in txt),
-                          "news_link": has_news_link, "date": datetime.fromisoformat(p["created_at"].replace("Z", "+00:00")),
-                          "text": txt, "head_text": txt[:140]})
-    return items
-
 # ---------------------------------------------------------------- resolve Google News links to publisher article URLs
 RES_FN = os.path.join(DATA, "url_resolve_cache.json")
 rescache = json.load(open(RES_FN)) if os.path.exists(RES_FN) else {}
@@ -276,6 +249,39 @@ def resolve_gnews(u):
     rescache[u] = out; json.dump(rescache, open(RES_FN, "w"), indent=0)
     time.sleep(1.5)
     return out
+
+# ---------------------------------------------------------------- article text -> incident date + place candidates
+# Article text is used in memory only. data/article_cache.json keeps per article URL only: extracted place-name
+# candidates ("c"), the extracted incident date ("d": [date, phrase, kind]) and whether the fetch worked ("ok").
+import locate as LOC
+ART_FN = os.path.join(DATA, "article_cache.json")
+artcache = json.load(open(ART_FN, encoding="utf-8")) if os.path.exists(ART_FN) else {}
+ART_STATE = {"n": 0}
+ART_MAX_PER_RUN = int(os.environ.get("ART_MAX_PER_RUN", "150"))
+def save_art(): json.dump(artcache, open(ART_FN, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+def get_article(url, pub, gaz=None, bad=()):
+    c = artcache.get(url)
+    if c and not (c.get("ok") and c.get("g") is None and gaz):  # re-fetch only to run a now-available gazetteer scan
+        return c
+    if ART_STATE["n"] >= ART_MAX_PER_RUN or not url.startswith("http"): return c
+    ART_STATE["n"] += 1
+    try:
+        body = LOC.fetch_article(url); ok = len(body) > 200
+    except Exception as ex:
+        print("article fetch fail", url[:80], str(ex)[:60]); body, ok = "", False
+    d = extract_incident_date(body[:1500], pub, mode="article") if body else None
+    # only place names that also exist in the district's OSM gazetteer are kept from the scan (never other words)
+    artcache[url] = {"ok": ok, "c": LOC.place_candidates(body), "d": list(d) if d else None,
+                     "g": gaz_scan(gaz, body, bad) if (ok and gaz) else None}
+    if ART_STATE["n"] % 10 == 0: save_art()
+    time.sleep(0.8)
+    return artcache[url]
+def article_date(url, pub, court=False):
+    c = get_article(url, pub)
+    if not c or not c.get("d"): return None
+    d = c["d"]
+    if court and d[2] in ("wd", "hwd", "y", "t"): return None
+    return tuple(d)
 
 # ---------------------------------------------------------------- geocode
 CACHE_FN = os.path.join(DATA, "geocode_cache.json")
@@ -316,11 +322,85 @@ def area_candidates(text):
         if w not in out: out.append(w)
     return out[:3]
 
+# ---------------------------------------------------------------- precise location (pins only at locality or better)
+DISTRICTS = None
+KIND_LABEL = {"police": "Police station", "locality": "Locality", "village": "Village", "street": "Street/landmark"}
+GAZ_SCAN_TYPES = {"suburb", "neighbourhood", "quarter", "village", "residential", "police", "locality"}
+def gaz_scan(rows, text, bad):
+    """Names from the district's OSM gazetteer that literally occur in the article/headline (fallback)."""
+    if not rows or not text: return []
+    # a name counts only in a place context: "in/at/near/from X" (English) or "X में/के/स्थित/निवासी/इलाके/गांव/थाना" (Hindi)
+    ws = set(m.group(1) for m in re.finditer(r"\b(?:in|at|near|from|of)\s+([A-Z][a-z]{3,}(?:\s[A-Z][a-z]{3,}){0,2})", text))
+    ws |= set(m.group(1) for m in re.finditer(r"([\u0900-\u097F]{3,}(?:\s[\u0900-\u097F]{3,})?)\s+(?:में|के|की|स्थित|निवासी|इलाके|इलाका|गांव|गाँव|थाना|थाने|क्षेत्र|मोहल्ले|मोहल्ला)", text))
+    for w in list(ws):
+        if " " in w: ws.update(w.split())
+    lower = set(re.findall(r"\b[a-z]{4,}\b", text))  # words also used in lower case are ordinary words, not names
+    hits = []
+    for nm, hi, en, lat, lon, typ in rows:
+        if typ not in GAZ_SCAN_TYPES: continue
+        for n in (nm, hi, en):
+            if not n: continue
+            base = re.sub(r"\s*(Police Station|Police Chowki|Police Post|Thana|पुलिस स्टेशन|थाना|कोतवाली)\s*", " ", n).strip() if typ == "police" else n
+            if len(base) < 5 or base.lower() in bad or base in LOC.STOP_HI or base.lower() in LOC.STOP_EN: continue
+            if base in ws and base.lower() not in lower:
+                hits.append((base, "police" if typ == "police" else ("village" if typ in ("village", "hamlet") else "locality"))); break
+    return list(dict.fromkeys(hits))[:8]
+
+def refine_location(e, rec_by_url):
+    global DISTRICTS
+    if DISTRICTS is None: DISTRICTS = LOC.Districts()
+    if e.get("city_lat") is None:
+        if e.get("precision", "").startswith("City"): e["city_lat"], e["city_lon"] = e["lat"], e["lon"]
+        else:
+            c = nominatim(f"{e['city']}, {e['state']}, India") or {"lat": e["lat"], "lon": e["lon"]}
+            e["city_lat"], e["city_lon"] = c["lat"], c["lon"]
+    if e.get("loc_v") == 2 and e.get("pin_level") != "city": return  # already precise
+    clat, clon = e["city_lat"], e["city_lon"]
+    dist, bb = DISTRICTS.find(clat, clon)
+    dname = dist["properties"].get("d", "") if dist else ""
+    if e.get("pin_level") in (None, "city") and not e.get("city_reported"): e["city_reported"] = e.get("place_reported") or e["city"]
+    bad = {x.lower() for x in (e["city"], dname, e["state"], e["place"].split(",")[0], e.get("city_reported")) if x}
+    gaz = LOC.osm_gazetteer(f"{dname}_{dist['properties'].get('s','')}", bb) if dist else None
+    found = None
+    srcs = sorted(e["sources"], key=lambda z: z["date"])
+    texts = []  # (outlet, where, candidates, words, raw_text)
+    for sx in srcs:
+        r_ = rec_by_url.get(sx["url"]); head = (r_ or {}).get("title") or e.get("headline") or ""
+        texts.append((sx["name"], "headline", LOC.place_candidates(head), [], head))
+    for sx in srcs:
+        if sx.get("article_url"):
+            c = get_article(sx["article_url"], _date.fromisoformat(sx["date"]), gaz, bad)
+            if c and c.get("ok"): texts.append((sx["name"], "article text", [(LOC._clean(x[0]), x[1]) for x in c.get("c", []) if len(LOC._clean(x[0])) >= 3], [tuple(x) for x in (c.get("g") or [])], ""))
+    tried = set()
+    for outlet, where, cands, words, raw in texts:
+        cands = [c for c in cands if c[0].lower() not in bad and c not in tried]; tried.update(cands)
+        found = LOC.locate(cands, dist, bb, (clat, clon), gaz, cache, sorted(bad)) if cands else None
+        if found: found["outlet"], found["where"] = outlet, where; break
+    if not found:
+        for outlet, where, cands, words, raw in texts:
+            sc = words if where == "article text" else gaz_scan(gaz, raw, bad)
+            found = LOC.locate(sc, dist, bb, (clat, clon), gaz, cache, sorted(bad)) if sc else None
+            if found:
+                found["outlet"], found["where"] = outlet, where; found["method"] = "name found in " + where + " and " + found["method"]; break
+    json.dump(cache, open(CACHE_FN, "w"), ensure_ascii=False, indent=0)
+    e["loc_v"] = 2
+    if found:
+        lvl = found["level"]
+        e.update(lat=round(found["lat"], 5), lon=round(found["lon"], 5), pin_level=lvl, precision=LOC.LEVEL[lvl],
+                 place=f"{found['name']}, {e['city']}", place_reported=found["name"], place_reported_by=found["outlet"],
+                 place_reported_in=found["where"],
+                 geocode=f"{KIND_LABEL.get(found['kind'], 'Place')} “{found['name']}” as stated in the {found['outlet']} {found['where']}; {found['method']}; map pin {LOC.LEVEL[lvl].split('(')[1].rstrip(')')}")
+    elif e.get("precision", "").startswith("Locality"):
+        e["pin_level"] = "locality"  # earlier locality match from the headline (kept)
+    else:
+        e.update(lat=clat, lon=clon, pin_level="city", precision=LOC.LEVEL["city"], place=f"{e['city']}, {e['state']}" if e["city"] != e["state"] else e["city"],
+                 geocode=f"Only the city/district “{e.get('place_reported') or e['city']}” is named in the {'headline and article text' if any(t[1] == 'article text' for t in texts) else 'headline (article text not available)'}; no locality, police station or village could be matched inside the district, so this report is listed under “Location not specific” and not pinned")
+
 # ---------------------------------------------------------------- build
 def main():
     if FETCH: fetch_rss()
     gz = Gazetteer(os.path.join(DATA, "ncrb_raw.geojson"))
-    raw = read_rss() + read_x()
+    raw = read_rss()
     print("raw items", len(raw))
     cut = NOW - timedelta(days=MAX_AGE_DAYS)
     recs, skipped = [], {"old": 0, "type": 0, "place": 0, "excluded": 0, "geocode": 0}
@@ -396,7 +476,15 @@ def main():
     # 2) load existing (append-only base)
     JF = os.path.join(DATA, "incidents.json")
     old = json.load(open(JF)) if os.path.exists(JF) else {"incidents": []}
-    existing = old["incidents"]; before = len(existing)
+    existing = old["incidents"]
+    n_social = sum(1 for e in existing if e.get("channel") == "social")
+    if n_social:  # X/social media removed: drop X-only incidents from published data (local backups keep them)
+        os.makedirs(os.path.join(DATA, "backups"), exist_ok=True)
+        bk = os.path.join(DATA, "backups", f"incidents_with_x_{NOW.astimezone(IST).strftime('%Y%m%d_%H%M%S')}.json")
+        json.dump(old, open(bk, "w"), ensure_ascii=False, indent=1)
+        existing = [e for e in existing if e.get("channel") != "social"]
+        print("removed", n_social, "social-media (X) incidents from published data; backup:", bk)
+    before = len(existing)
     for e in existing:  # migrate older records
         e.setdefault("city", e["place"].split(", ")[-2] if e["place"].count(", ") >= 1 else e["place"])
         e.setdefault("first_seen", (old.get("generated") or old.get("last_updated") or NOW.isoformat())[:10])
@@ -477,6 +565,12 @@ def main():
 
     # backfill credibility fields on older incidents from archived raw records (deterministic)
     rec_by_url = {r["link"]: r for r in recs}
+    if RESOLVE:  # batched Google News decoding (see gnews_resolve.py), capped per run; the rest on later runs
+        from gnews_resolve import resolve_many
+        pend = [sx["url"] for e in existing if not e.get("removed") for sx in e["sources"] if "news.google.com" in sx["url"] and not sx.get("article_url")]
+        resolve_many(pend, rescache, max_n=int(os.environ.get("RESOLVE_MAX_PER_RUN", "250")),
+                     save=lambda: json.dump(rescache, open(RES_FN, "w"), indent=0))
+        json.dump(rescache, open(RES_FN, "w"), indent=0)
     enriched = 0
     for e in existing:
         before_e = json.dumps(e, sort_keys=True, ensure_ascii=False)
@@ -485,8 +579,8 @@ def main():
             if "kind" not in sx:
                 sx["kind"] = KIND[r["kind"]] if r else ("x_story" if "/i/trending/" in sx["url"] else "x_post" if "x.com/" in sx["url"] else "article")
             if "outlet_url" not in sx: sx["outlet_url"] = (r.get("source_url") or "") if r else ""
-            if RESOLVE and "article_url" not in sx and sx["kind"] == "article":
-                au = resolve_gnews(sx["url"])
+            if "article_url" not in sx and sx["kind"] == "article":
+                au = rescache.get(sx["url"]) if "news.google.com" in sx["url"] else sx["url"]
                 if au: sx["article_url"] = au
         if not e.get("place_reported") and not e.get("removed"):
             rs = [rec_by_url[u] for u in e["all_urls"] if u in rec_by_url]
@@ -500,6 +594,19 @@ def main():
             if src_head: e["headline"] = redact(src_head["title"], e["minor"])  # rebuilt from the original text (ages kept)
             elif e.get("headline"): e["headline"] = redact(e["headline"], e["minor"])
             finalize(e)
+            if e.get("incident_date_basis") != "stated in report":
+                res = None
+                for sx in sorted(e["sources"], key=lambda z: z["date"]):
+                    pub = _date.fromisoformat(sx["date"]); r_ = rec_by_url.get(sx["url"])
+                    head = (r_ or {}).get("title") or e.get("headline") or ""
+                    court = bool(COURT_RE.search(head))
+                    res = extract_incident_date(head, pub, court=court)
+                    if not res and sx.get("article_url"): res = article_date(sx["article_url"], pub, court)
+                    if res and res[0] > e["date"]: res = None  # cannot be after the first report
+                    if res: break
+                if res: e.update(incident_date=res[0], incident_date_basis="stated in report", incident_date_text=res[1])
+                else: e.update(incident_date=e["date"], incident_date_basis="approx = report date", incident_date_text="")
+        if not e.get("removed"): refine_location(e, rec_by_url)
         ok = [sx for sx in e["sources"] if sx["url"].startswith("http") and sx["kind"] in ("article", "x_post")]
         e["verifiable"] = bool(ok)
         e["hidden_reason"] = None if ok else "No verifiable source link (only an aggregated X news-story summary)"
@@ -514,7 +621,8 @@ def main():
                      all_urls=[u if u.startswith("sha1:") else h1(u) for u in urls_e])
         if json.dumps(e, sort_keys=True, ensure_ascii=False) != before_e: enriched += 1
     print("enriched/updated metadata on", enriched, "incidents; not verifiable (hidden):", sum(not e["verifiable"] for e in existing))
-    changed = added_src > 0 or enriched > 0 or old.get("schema") != 5
+    save_art()
+    changed = added_src > 0 or enriched > 0 or n_social > 0 or old.get("schema") != 7
     print(f"before {before} incidents; added {added_inc} new incidents, {added_src} new source links; total {len(existing)}")
     if not changed:
         print("RESULT: NOCHANGE"); return
@@ -522,9 +630,10 @@ def main():
         os.makedirs(os.path.join(DATA, "backups"), exist_ok=True)
         import shutil; shutil.copy2(JF, os.path.join(DATA, "backups", f"incidents_{NOW.astimezone(IST).strftime('%Y%m%d_%H%M%S')}.json"))
     dates = sorted(e["date"] for e in existing)
-    out = {"schema": 5, "last_updated": NOW.astimezone(IST).isoformat(timespec="seconds"),
+    out = {"schema": 7, "last_updated": NOW.astimezone(IST).isoformat(timespec="seconds"),
            "first_collected": old.get("first_collected") or (old.get("generated") or NOW.isoformat())[:10],
            "date_span": [dates[0], dates[-1]] if dates else None, "count": len(existing),
+           "incident_date_span": [min(x), max(x)] if (x := [e["incident_date"] for e in existing if e.get("incident_date")]) else None,
            "count_visible": sum(e["verifiable"] for e in existing), "incidents": existing}
     out["generated"] = out["last_updated"]  # backward-compat
     json.dump(out, open(JF, "w"), ensure_ascii=False, indent=1)
@@ -532,15 +641,15 @@ def main():
         class _W:  # neutralise spreadsheet formula injection in text cells (=, +, -, @ at start)
             def __init__(s_, f): s_.w = csv.writer(f)
             def writerow(s_, row): s_.w.writerow([("'" + c) if isinstance(c, str) and c[:1] in ("=", "+", "-", "@", "\t", "\r") else c for c in row])
-        w = _W(fh); w.writerow(["id", "report_date", "first_seen", "crime_type", "channel", "outlets", "article_urls", "publish_dates",
-                                        "place_as_reported", "place_reported_by", "geocoding_method", "map_place", "state", "lat", "lon", "precision",
+        w = _W(fh); w.writerow(["id", "incident_date", "incident_date_basis", "report_date", "first_seen", "crime_type", "channel", "outlets", "article_urls", "publish_dates",
+                                        "place_as_reported", "place_reported_by", "geocoding_method", "map_place", "state", "lat", "lon", "pin_level", "precision",
                                         "headline", "summary", "status", "verification"])
         for o in existing:
             if not o["verifiable"]: continue
             ss = [x for x in o["sources"] if x["kind"] in ("article", "x_post")]
-            w.writerow([o["id"], o["date"], o["first_seen"], o["type_label"], o["channel"], " | ".join(x["name"] for x in ss), " | ".join(x.get("article_url") or x["url"] for x in ss),
+            w.writerow([o["id"], o.get("incident_date", o["date"]), o.get("incident_date_basis", ""), o["date"], o["first_seen"], o["type_label"], o["channel"], " | ".join(x["name"] for x in ss), " | ".join(x.get("article_url") or x["url"] for x in ss),
                         " | ".join(x["date"] for x in ss), o["place_reported"], f'{o["place_reported_by"]} ({o["place_reported_in"]})', o["geocode"],
-                        o["place"], o["state"], o["lat"], o["lon"], o["precision"], o["headline"] or "", o["summary"], o["status"], o["verification"]])
+                        o["place"], o["state"], o["lat"], o["lon"], o.get("pin_level", ""), o["precision"], o["headline"] or "", o["summary"], o["status"], o["verification"]])
     from collections import Counter
     print("incidents", len(existing), Counter(o["channel"] for o in existing), Counter(o["type"] for o in existing))
     print("RESULT: CHANGED")

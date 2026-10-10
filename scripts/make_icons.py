@@ -2,7 +2,8 @@
 """Render assets/ icons + OG image from assets/logo.svg (needs playwright + Chrome). Run manually; outputs are committed."""
 import asyncio
 from playwright.async_api import async_playwright
-A="/workspace/safety-map/assets/"
+import os
+A=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"assets")+"/"
 logo=open(A+"logo.svg").read()
 def page(size,pad,bg,radius):
     inner=int(size*(1-2*pad))

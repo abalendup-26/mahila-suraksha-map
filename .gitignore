@@ -8,11 +8,12 @@ venv/
 __pycache__/
 *.pyc
 logs/
-# caches and large raw dumps stay local (see README)
+# large raw dumps and local backups stay out of the repo
 data/raw_news/
 data/raw_x/
 data/backups/
-data/geocode_cache.json
-data/url_resolve_cache.json
 data/incident_reports.html
+data/*.tmp
 screenshots/
+# NOTE: caches ARE committed so the GitHub Actions run stays light on Nominatim/Google:
+#   data/geocode_cache.json, data/url_resolve_cache.json, data/article_cache.json, data/photon_cache.json, data/osm/

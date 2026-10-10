@@ -1,0 +1,58 @@
+name: Daily data update
+
+on:
+  schedule:
+    - cron: "21 1 * * *"   # 01:21 UTC = 06:51 IST, every day
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # commit data changes back to main
+  pages: write      # request a GitHub Pages rebuild
+
+concurrency:
+  group: daily-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-core >/dev/null || true
+          which google-chrome || which chromium || true
+
+      - name: Run pipeline (fetch, merge append-only, locate, export)
+        run: bash scripts/ci_update.sh
+
+      - name: Commit and push data changes
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data
+          if git diff --cached --quiet; then
+            echo "No data changes."; echo "changed=0" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          N=$(python3 -c "import json;j=json.load(open('data/incidents.app.json'));print(len(j['incidents']))")
+          git commit -q -m "Daily data update $(TZ=Asia/Kolkata date +%F): $N incidents (automated)"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
+          echo "changed=1" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger GitHub Pages build
+        if: steps.commit.outputs.changed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "Pages build request failed (Pages may still build from the push)"

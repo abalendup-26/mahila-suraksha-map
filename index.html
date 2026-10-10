@@ -34,6 +34,10 @@ select{width:100%;padding:5px}
 .mk.social span{transform:rotate(-45deg)}
 .popup h4{margin:0 0 4px;font-size:14px}.popup table{border-collapse:collapse;font-size:12px}.popup td{padding:2px 4px;vertical-align:top}
 .popup td:first-child{color:#666;white-space:nowrap}
+.srcbox{background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:6px;margin:6px 0;font-size:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000;display:none;align-items:center;justify-content:center}.modal.open{display:flex}
+.modal>div{background:#fff;max-width:760px;width:94%;max-height:88vh;overflow:auto;border-radius:8px;padding:14px 18px;font-size:13px;line-height:1.5}
+.modal h2{font-size:17px;color:#7b1fa2;margin:4px 0}.modal h3{font-size:14px;margin:10px 0 2px}
 .tag{display:inline-block;padding:1px 6px;border-radius:10px;font-size:11px;color:#fff}
 #nearby{background:#e8eaf6;border-radius:6px;padding:8px;font-size:13px;display:none}
 #toggle{display:none}
@@ -47,9 +51,33 @@ select{width:100%;padding:5px}
   <h1>🛡️ Mahila Suraksha Map</h1>
   <form id="sform"><input id="q" placeholder="Search place / jagah search karein (e.g. Connaught Place, Delhi)"><button>Search</button></form>
   <button id="loc">📍 Use my location</button>
+  <button id="mbtn" type="button">ℹ️ Sources &amp; method</button>
   <a id="sos" href="tel:112">SOS 112</a>
 </div>
 <div id="map"></div>
+<div class="modal" id="mmodal" onclick="if(event.target===this)closeM()"><div>
+<button class="btn" style="float:right;border:1px solid #7b1fa2" onclick="closeM()">✕ Close</button>
+<h2>Data sources &amp; methodology</h2>
+<p>This map shows two different things: <b>official police statistics</b> per district (Layer A) and <b>individual media reports</b> (Layer B). Neither is a guarantee about safety, and neither names or identifies victims.</p>
+<h3>Layer A – district colours (official statistics)</h3>
+<ul>
+<li><b>What:</b> cases <i>registered</i> by police in calendar year 2024 for the chosen crime head (also 2022 and 2023 rape counts in the district popup).</li>
+<li><b>Source:</b> National Crime Records Bureau (NCRB), <i>Crime in India 2024</i>, district-wise “Crime against Women” data. NCRB publishes district-wise data as unnumbered “District Wise Reports” (see the <a href="https://ncrb.gov.in/crime-in-india-additional-table?year=2022&category=" target="_blank">NCRB additional tables page</a>; the 2023/2024 district files were not listed there when checked on 10 Oct 2026). The numbers and district boundaries used here come from the <a href="https://livingatlas.esri.in/server1/rest/services/NCRB/District_Wise_Crime_Against_Women_2022/MapServer/0" target="_blank">Esri India Living Atlas layer “NCRB/District_Wise_Crime_Against_Women_2022”</a> (fields such as <code>totrape24</code>, <code>totmod24</code>, <code>totcrwom24</code>).</li>
+<li><b>Cross-check:</b> summing the districts gives 29,441 rape cases for 2024 vs 29,536 in NCRB <i>Crime in India 2024</i> Vol. I Table 3A.2 (99.7%); Rajasthan 4,871 vs 4,871; Maharashtra 3,091 vs 3,091; Madhya Pradesh 3,061 vs 3,061; Telangana 1,148 vs 1,148. 2022 sum 31,438 vs 31,516 published. Small gaps are police units not tied to a district (e.g. railway/GRP, some Delhi units).</li>
+<li><b>Colours:</b> all districts with data are split into three equal-sized groups (Low/Medium/High) for the chosen category and measure; this is a <i>relative ranking</i>, not an absolute danger rating. More cases can mean a bigger population or better reporting.</li>
+<li><b>Per lakh women:</b> cases ÷ Census 2011 female population × 100,000 (Census 2011 is the latest census). Districts created after 2011 show no rate; split districts may be understated.</li>
+</ul>
+<h3>Layer B – incident markers (media reports)</h3>
+<ul>
+<li><b>Collected from:</b> Google News RSS searches (English &amp; Hindi) and public X (Twitter) posts. Each marker links to the original article(s)/post(s) and shows the outlet and publish date. Items whose only source was an aggregated X news-story summary are <b>not shown</b> (no verifiable link).</li>
+<li><b>Place:</b> the exact place words found in the headline/post (shown as “place as reported”) are matched to a district/city list; a locality or police-station name is used only if OpenStreetMap Nominatim finds it within 40 km of that city. Pins are approximate: ±10–30 km (city/district) or ±2–5 km (locality). Pins never mark an exact address.</li>
+<li><b>Type &amp; status:</b> assigned automatically from keywords in the headline/post (e.g. “arrested/गिरफ्तार” → arrest reported). Reports of the same type and city within ~2 days are grouped as one incident. Errors are possible; always read the linked report.</li>
+<li><b>Dates:</b> “report date” = publish date of the first source; “first seen” = when this map first collected it. Data is cumulative (old incidents are kept) and updated daily.</li>
+<li><b>Privacy:</b> no victim names, ages, photos or identifying details are stored or shown (BNS Sec. 72). X post text is not reproduced.</li>
+</ul>
+<h3>Limits</h3>
+<p>Media covers only a small, uneven fraction of crimes (more Hindi-belt coverage). No markers or a green district does <b>not</b> mean an area is safe. Emergency: <a href="tel:112">112</a> · Women helpline: <a href="tel:181">181</a>.</p>
+</div></div>
 <div id="panel">
   <button id="toggle" class="btn" style="background:#7b1fa2;color:#fff">☰ Filters, legend &amp; help</button>
   <div id="nearby"></div>
@@ -81,7 +109,7 @@ select{width:100%;padding:5px}
     <b>Yeh data adhoora hai (this data is incomplete).</b> NCRB counts only crimes <i>registered</i> with police; many crimes are never reported. News/social-media markers cover only a small sample of recent reports picked up by automated search, and their locations are approximate (city/district or police-station area — never exact addresses).<br>
     <b>No markers or a green district does NOT mean an area is safe.</b> Higher counts can also reflect larger population or better reporting. Social-media items are unverified. Use this as awareness only, not as a guarantee. No victim identities are stored or shown (BNS Sec. 72).
   </div>
-  <h3>Sources</h3>
+  <h3>Sources <a href="#" class="small" onclick="openM();return false">(full methodology)</a></h3>
   <div class="small" id="sources">
     • District data: NCRB, <i>Crime in India 2024</i> (district-wise Crime Against Women tables; also 2022 &amp; 2023), via Esri India Living Atlas layer “NCRB/District_Wise_Crime_Against_Women_2022” (<a href="https://livingatlas.esri.in/server1/rest/services/NCRB/District_Wise_Crime_Against_Women_2022/MapServer/0" target="_blank">link</a>). District boundaries from the same layer.<br>
     • *Rate uses Census 2011 female population (latest census; districts created after 2011 or split since show no rate, and split parents may be under-stated).<br>
@@ -99,6 +127,7 @@ const TYPES = {
   acid:{label:"Acid attack",color:"#827717",icon:"🧪"},
   dowry:{label:"Dowry death / domestic violence",color:"#4e342e",icon:"🏠"}
 };
+const CATF = {rape:'totrape24',pocso:'totpocso24',attempt:'totcmrape24',modesty:'totmod24',sexh:'totsexh24',stalk:'totstk24',kidnap:'totkidabd24',acid:'acidatt24',dowry:'dwydeath24',cruelty:'crlhus24',total:'totcrwom24'};
 const CATS = {
   rape:"Rape (Sec. 376 IPC / 64–68 BNS)", pocso:"POCSO – girl child victims", attempt:"Attempt to rape",
   modesty:"Assault on modesty / molestation (354 IPC / 74 BNS)", sexh:"Sexual harassment (354A / 75 BNS)",
@@ -127,7 +156,7 @@ function distPopup(p){const v=val(p),l=level(v);
   ${p.fpop11?`<tr><td>Per lakh women*</td><td>${p[catSel.value]!=null?(p[catSel.value]/p.fpop11*1e5).toFixed(2):'n/a'}</td></tr>`:''}
   <tr><td>Rape cases 2022 / 2023 / 2024</td><td>${p.rape22??'–'} / ${p.rape23??'–'} / ${p.rape??'–'}</td></tr>
   <tr><td>Total crime vs women 2024</td><td>${p.total??'n/a'}</td></tr></table>
-  <div class="small">Source: NCRB Crime in India 2024 (registered cases). *Census 2011 female population.</div></div>`;}
+  <div class="small">Source: <a href="https://ncrb.gov.in/crime-in-india-additional-table?year=2022&category=" target="_blank">NCRB Crime in India 2024</a> – District-wise Crime against Women (NCRB ‘District Wise Reports’; NCRB does not number this table), field ${CATF[catSel.value]}, via <a href="https://livingatlas.esri.in/server1/rest/services/NCRB/District_Wise_Crime_Against_Women_2022/MapServer/0" target="_blank">Esri India Living Atlas NCRB layer</a>. State/national totals cross-checked with CII 2024 Vol. I Table 3A.2. <a href="#" onclick="openM();return false">Method</a>. Registered cases only. *Census 2011 female population.</div></div>`;}
 function renderDist(){computeBreaks(); if(distLayer) map.removeLayer(distLayer);
   distLayer=L.geoJSON(distData,{style,onEachFeature:(f,l)=>l.bindPopup(()=>distPopup(f.properties))});
   if(document.getElementById('showDist').checked) distLayer.addTo(map);
@@ -136,23 +165,28 @@ function renderDist(){computeBreaks(); if(distLayer) map.removeLayer(distLayer);
   <div class="row"><span class="sw" style="background:${COL.Medium}"></span> Medium: ${fmt(breaks[0])} – ${fmt(breaks[1])}</div>
   <div class="row"><span class="sw" style="background:${COL.High}"></span> High: &gt; ${fmt(breaks[1])}${u}</div>
   <div class="row"><span class="sw" style="background:#9e9e9e"></span> No data</div>
-  Classes = thirds of all districts (relative ranking, NCRB 2024).`;}
+  Classes = thirds of all districts (relative ranking). <br>Source: <a href="https://ncrb.gov.in/crime-in-india-additional-table?year=2022&category=" target="_blank">NCRB Crime in India 2024</a> – District-wise Crime against Women (NCRB ‘District Wise Reports’; NCRB does not number this table), field ${CATF[catSel.value]}, via <a href="https://livingatlas.esri.in/server1/rest/services/NCRB/District_Wise_Crime_Against_Women_2022/MapServer/0" target="_blank">Esri India Living Atlas NCRB layer</a>. State/national totals cross-checked with CII 2024 Vol. I Table 3A.2. <a href="#" onclick="openM();return false">Method</a>.`;}
 catSel.onchange=renderDist; document.querySelectorAll('input[name=metric]').forEach(r=>r.onchange=renderDist);
 document.getElementById('showDist').onchange=e=>{e.target.checked?distLayer.addTo(map):map.removeLayer(distLayer)};
 
 function esc(s){return (s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function incPopup(i){const t=TYPES[i.type];
-  return `<div class="popup" style="max-width:290px"><h4>${t.icon} ${esc(i.type_label)}</h4>
+const aurl=s=>s.article_url||s.url; const dom=u=>{try{return new URL(u).hostname.replace(/^www\./,'')}catch(e){return ''}};
+function vsrc(i){return i.sources.filter(s=>s.kind==='article'||s.kind==='x_post'||!s.kind);}
+function pinApprox(i){return i.precision.startsWith('Locality')?'±2–5 km':'±10–30 km';}
+function incPopup(i){const t=TYPES[i.type]; const vs=vsrc(i), other=i.sources.filter(s=>!vs.includes(s));
+  const srcHtml=vs.map(s=>`<a href="${esc(aurl(s))}" target="_blank" rel="noopener"><b>${esc(s.name)}</b></a> <span class="small">(published ${esc(s.date)}; ${s.kind==='x_post'?'X post':(s.article_url?esc(dom(s.article_url)):'link opens via Google News')})</span>`).join('<br>');
+  return `<div class="popup" style="max-width:300px"><h4>${t.icon} ${esc(i.type_label)}</h4>
   <span class="tag" style="background:${i.channel==='social'?'#616161':'#2e7d32'}">${i.channel==='social'?'SOCIAL MEDIA – UNVERIFIED':'NEWS REPORT'}</span>
-  <table><tr><td>Date</td><td>${esc(i.date)} <span class="small">(report date)</span>${i.first_seen?`<br><span class="small">First seen by this map: ${esc(i.first_seen)}</span>`:""}</td></tr>
-  <tr><td>Place</td><td>${esc(i.place)}</td></tr>
-  <tr><td>Precision</td><td>${esc(i.precision)}</td></tr>
+  <div class="srcbox"><b>Source${vs.length>1?'s':''}:</b><br>${srcHtml}
+   <div style="margin-top:4px">📍 <b>“${esc(i.place_reported||i.place)}”</b>, as reported by <b>${esc(i.place_reported_by||(vs[0]&&vs[0].name)||'source')}</b>${i.place_reported_in?' ('+esc(i.place_reported_in)+')':''}; map pin approx <b>${pinApprox(i)}</b> → shown at ${esc(i.place)}.</div>
+   <details><summary class="small">How this pin was placed</summary><div class="small">${esc(i.geocode||'')}</div></details></div>
+  <table><tr><td>Report date</td><td>${esc(i.date)}${i.first_seen?` <span class="small">(first seen by this map ${esc(i.first_seen)})</span>`:''}</td></tr>
   ${i.headline?`<tr><td>Headline</td><td>${esc(i.headline)}</td></tr>`:''}
   <tr><td>Summary</td><td>${esc(i.summary)}</td></tr>
   <tr><td>Status</td><td>${esc(i.status)}</td></tr>
   <tr><td>Verification</td><td>${esc(i.verification)}</td></tr>
-  <tr><td>Source(s)</td><td>${i.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a> (${esc(s.date)})`).join('<br>')}</td></tr></table>
-  <div class="small">Victim identity is never shown (BNS Sec. 72).</div></div>`;}
+  ${other.length?`<tr><td>Context</td><td class="small">${other.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a> (${esc(s.date)})`).join('<br>')}</td></tr>`:''}</table>
+  <div class="small">Victim identity is never shown (BNS Sec. 72). Found an error? The original reports are linked above.</div></div>`;}
 const istDate=d=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata'}).format(d);
 function addDays(ymd,n){const d=new Date(ymd+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);}
 function range(){const p=document.getElementById('tPreset').value,t=istDate(new Date());
@@ -202,11 +236,14 @@ document.getElementById('sform').onsubmit=async e=>{e.preventDefault();const q=d
    if(!j.length) return alert('Place not found'); showArea(+j[0].lat,+j[0].lon,j[0].display_name.split(',').slice(0,3).join(','));}catch(err){alert('Search failed: '+err);}};
 function fitTop(){const h=document.getElementById('top').offsetHeight;document.getElementById('map').style.top=h+'px';if(innerWidth>800)document.getElementById('panel').style.top=h+'px';else document.getElementById('panel').style.top='auto';map.invalidateSize();}
 addEventListener('resize',fitTop);fitTop();
+function openM(){document.getElementById('mmodal').classList.add('open');}
+function closeM(){document.getElementById('mmodal').classList.remove('open');}
+document.getElementById('mbtn').onclick=openM;
 document.getElementById('toggle').onclick=()=>document.getElementById('panel').classList.toggle('open');
 
 // downloads
-const COLS=['id','date','first_seen','type_label','channel','place','state','precision','headline','summary','status','verification','sources'];
-function rowOf(i){return COLS.map(c=>c==='sources'?i.sources.map(s=>s.name+': '+s.url).join(' | '):(i[c]??''));}
+const COLS=['id','date','first_seen','type_label','channel','outlets','article_urls','publish_dates','place_reported','place_reported_by','geocode','place','state','precision','headline','summary','status','verification'];
+function rowOf(i){const vs=vsrc(i);const x={outlets:vs.map(s=>s.name).join(' | '),article_urls:vs.map(aurl).join(' | '),publish_dates:vs.map(s=>s.date).join(' | '),place_reported_by:(i.place_reported_by||'')+(i.place_reported_in?' ('+i.place_reported_in+')':'')};return COLS.map(c=>c in x?x[c]:(i[c]??''));}
 document.getElementById('dlcsv').onclick=()=>{const rows=[COLS.join(',')].concat(visible().map(i=>rowOf(i).map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')));
   const b=new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='incident_reports.csv';a.click();};
 document.getElementById('dlpdf').onclick=()=>{
@@ -217,13 +254,13 @@ document.getElementById('dlpdf').onclick=()=>{
   // Hindi glyphs are not in the built-in PDF font; non-Latin text is replaced. Use the CSV for Hindi headlines.
   const clean=s=>String(s).replace(/[^\x20-\x7E\u00A0-\u00FF–—’“”•]/g,'').replace(/\s+/g,' ').trim()||'(Hindi text – see CSV/source)';
   doc.autoTable({startY:54,styles:{fontSize:6.5,cellPadding:2,overflow:'linebreak'},headStyles:{fillColor:[123,31,162]},
-    head:[['Report date','Type','Channel','Place','Summary','Status','Verification','Source links']],
-    body:visible().map(i=>[i.date,i.type_label,i.channel,clean(i.place),clean(i.summary),i.status,i.verification,i.sources.map(s=>clean(s.name)+': '+s.url).join('\n')]),
-    columnStyles:{4:{cellWidth:170},7:{cellWidth:200}}});
+    head:[['Report date','Type','Channel','Outlet(s) & article URL(s), publish date','Place as reported (by)','Map place / pin','Summary','Status','Verification']],
+    body:visible().map(i=>[i.date,i.type_label,i.channel,vsrc(i).map(s=>clean(s.name)+' ('+s.date+'): '+aurl(s)).join('\n'),clean(i.place_reported||'')+' ('+clean(i.place_reported_by||'')+')',clean(i.place)+' – '+pinApprox(i),clean(i.summary),i.status,i.verification]),
+    columnStyles:{3:{cellWidth:190},6:{cellWidth:140}}});
   doc.save('incident_reports.pdf');};
 
 Promise.all([fetch('data/districts.geojson').then(r=>r.json()),fetch('data/incidents.json').then(r=>r.json())]).then(([d,inc])=>{
-  distData=d; renderDist(); incidents=inc.incidents; renderInc();
+  distData=d; renderDist(); incidents=inc.incidents.filter(i=>i.verifiable!==false); window.__hidden=inc.incidents.length-incidents.length; renderInc();
   const lu=new Date(inc.last_updated||inc.generated).toLocaleString('en-IN',{timeZone:'Asia/Kolkata',dateStyle:'medium',timeStyle:'short'})+' IST';
   const span=inc.date_span||[incidents.map(i=>i.date).sort()[0],incidents.map(i=>i.date).sort().pop()];
   document.getElementById('gen').textContent='continuously since '+(inc.first_collected||span[0])+' (cumulative; last updated '+lu+')';

@@ -1,13 +1,13 @@
 {
  "schema": 4,
- "last_updated": "2026-10-10T13:50:07+05:30",
+ "last_updated": "2026-10-10T14:52:26+05:30",
  "first_collected": "2026-10-10",
  "date_span": [
   "2026-09-10",
   "2026-10-10"
  ],
- "count": 552,
- "count_visible": 534,
+ "count": 557,
+ "count_visible": 539,
  "incidents": [
   {
    "id": "inc0001",
@@ -754,7 +754,8 @@
      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQNWJ2OUlVc1NHck9sLXJlTEg0Yzh1YzB5Z0FZV2lidXBua2g5Zk1nZXZjemVEYVhTTENrSEtHUFpOdGF1a1ljb3hiZG9xX0xIeDBycW9KWFhtQVpKLUJIQ19QZWlqc21uRnJmdjRsVzVGekhMUmM0UUZPQXd1RHY2VzVmNWViWWhkVWllWHFHQzlPX0ZSTHd2MlZ5ejhOUU55dkJDT1NaUlIydkwxUW9QWG9sdl9NWkRQVEl0QU1pOHNHNTNzaDc4NzhPYjJoOHc4YVJN0gHYAUFVX3lxTE5hLU9kRUlrSE1QZGpzUzJRYlRSWFhRbXBPZGppQldhTHRzY0tPeldIek5RTmQyR2JBdHZkWi10Y0Y2b0tIQVh1LVNWQ2U3Rm80TU1wZWphS2dHZ0hYbXRodXdYb0NwdW4yQ1lHWTA5QTdSSENPczRMMUNael82ZERublJ3RUdhQUJkbEJ4YjlwN1dPc0N3OFN3MXBlaVhDdXV1ZGtLVUV5QjRiRWF1Q0VZcU8xcGxKNVdjSUtPYTY5THgwenhOV21UU2Faa2JzbS1lMVlXTlZzcQ?oc=5",
      "date": "2026-09-12",
      "kind": "article",
-     "outlet_url": "https://www.bhaskar.com"
+     "outlet_url": "https://www.bhaskar.com",
+     "article_url": "https://www.bhaskar.com/g/local/bihar/muzaffarpur/news/muzaffarpur-retired-officer-chain-snatching-cctv-footage-crime-news-139015163.html"
     }
    ],
    "all_urls": [
@@ -1065,7 +1066,8 @@
      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPVm5mTDBJaEFfcGR6Y2tZOURGVXg4cDB0aEp6NmZIZndQeWxaVlJIWEdrcnBQUFkxNEVxNEZCUWx5bHNaZDdXeGFld3NqdWhOMnNpd0pGWnRMQmUwcW5yVTZidDFHdmRpLUFuYzlWbk9OdlFYSDRkX3lUX1NRSENMMVpxOElJeC16a3dJbzBwclRjQkR4LXRWS1NIMC1rcHhYd0RR0gGoAUFVX3lxTFBLTGMtU3dJUzYwSnhPcl9JTzNGY09GZy1sRnBOOGhGd1Q1bWNPaHBrSnJBbTRxLVpRUlJseWx1V2RMMnRhMzVta0hWaG5GZ25CNDRlOWtINWIxNmRGb1B5b2pmaE45VFFKRjhnUEk1ZWh3NVpLb243bUl0dWMzTDNmaUJnLVJRZTB5VDFsWm1XSTd4ZGtuclBuMFNyeFpCSnVObWRDWnREZw?oc=5",
      "date": "2026-09-13",
      "kind": "article",
-     "outlet_url": "https://newstrack.com"
+     "outlet_url": "https://newstrack.com",
+     "article_url": "https://newstrack.com/uttar-pradesh/hapur/hapur-news-youth-arrested-minor-girl-harassment-case-631270"
     }
    ],
    "all_urls": [
@@ -1249,7 +1251,8 @@
      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBNMWp4VkdPb2FPb2wxSVZGU0JkbUtEbWdYRVBzaG9VYjBqZ01ZOTZDYmpLSUEzNnBoaXc1a3ItN3RhanBEMk5DeWJYdDQxdEp3cEdNQ1ljcnNWQkVnLW9FZDJpNS15R2NGX0pBbVd6ekhKTjQxRV9VcWhyM0dnd9IBgwFBVV95cUxQZldPYmtBMmlWMzN3MDk2eWNFLWdGWnBybUdiQ1NqSVkzVHN3a2tUTG0tdmdrUnU1N0ZVMFJhZUlySE0wWU5zLXQzQ0JPc1REMl9MYjkwR1FGdV9pWWRZVkFkaGdCSkl6UEl0UWVDbHhIS0lwSnF2dGdVZm9mbGtqNkZlQQ?oc=5",
      "date": "2026-09-14",
      "kind": "article",
-     "outlet_url": "https://www.entertales.com"
+     "outlet_url": "https://www.entertales.com",
+     "article_url": "https://www.entertales.com/ajmer-man-fights-chain-snatchers-couple-video/"
     },
     {
      "name": "NDTV",
@@ -1402,7 +1405,8 @@
      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPcDZuY3hSS2U3aGZ1VDRIY3VPRjNac0hqSDY5d2Mxa3M5dDNZY0NmZkFHa3ByUFdGYXVaNng4LVBpQk9JbmJaWkwxb3hiSWJsRWhEQ2FxMlAyak9UZml2UjBISGJnUEhuWlkyemJfSk1kNGtQUmJJelltWm0xZ1NybWJTT2lfc2x6ZlFOTTZWUFdnV3JrWkMyVVc0M2Q5MDJTdm9WbEZrZWo5LWNxX1BjcTk2TWRoMkhaTGs0Qk5LdktueVhxeVdmMHRlb2RPMU9rbTY5aDNJRWMzdmJIajFLatIB5gFBVV95cUxNb2pMS0lfakdEMVkxWjRkMllpY2hJU3U4dXlxSm1kQnpMRm9HVzlxbmNNdGxjLVNTbTA3R2VQeHpuZm43SXFESHluaUdsaG1PNjFBSnIxRTZnelRDVVVUVnZnXzdNQXdQMDUtTjBDalRaTFpXb2JnSklnanJUSTE5LWotNUFWaUM0Y043d3FLazZwaG53VE5GTEpQNjZWS0swTHUxMWpIaXlES0d2MVdBQW1sTDVPNklibzdob3lva24xZGdYckdUb3dTNzJiVmNKUkFhR2wxc1N0MWlpdjlfNlNQZWhzUQ?oc=5",
      "date": "2026-09-14",
      "kind": "article",
-     "outlet_url": "https://www.livehindustan.com"
+     "outlet_url": "https://www.livehindustan.com",
+     "article_url": "https://www.livehindustan.com/uttar-pradesh/hardoi/story-woman-alleges-assault-harassment-and-death-threat-in-mallawan-village-201789406907249.html"
     }
    ],
    "all_urls": [
@@ -1485,7 +1489,8 @@
      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOX05lZnVseTZwal8xZldQaDBZM2JzTElTYTRyWU1UQUIxOVhDM2kxa3BqZFN6WlBMRmNGeEpsVWlFSnlCWGFSTHpoc1BTYnMtMFBTVEViZWdWLWl0RDRWekJkR25jQjNsUWV5S0NfODlhNDBncUw1THlCa3hzT0dkX0wxZk1qVlhpQXJyTkJnZGxkdVhLM2d30gGcAUFVX3lxTE83RE4weHlhc3hvU3F2WlRCWHlpZnRIOThsQ3l6SlpKNWgzTUV2QVNtdmVpWDdla1VCLTBQWVU4bEowbWhJOUJNN2hHRDgzX1VRYW1xSXQyU0x5YUZ1WENDUGl2eW8wWl9fcEl3UVJMOHRJN0NFZktqQjI3WWxlYzZXT2ZNUDVTZnVmY0pQMHJFdV95eU8zb0NpRnVPWQ?oc=5",
      "date": "2026-09-14",
      "kind": "article",
-     "outlet_url": "https://www.amarujala.com"
+     "outlet_url": "https://www.amarujala.com",
+     "article_url": "https://www.amarujala.com/delhi-ncr/noida/dfsg-grnoida-news-c-23-1-lko1064-106102-2026-09-14"
     }
    ],
    "all_urls": [
@@ -1652,7 +1657,8 @@
      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOQW43UF9BMEZyV3hua0NleWRUUlphellCSFZOd0FxVm5CeHNiRlc4TUtvNFhibnZ6WkRvWG5aWVhJRzdabjcxUFFxUFRGSXdyVms3R0d1cWpRZS1MeExXMWdER2xZdnByMy1qWm9uOUM4MTNSMTd1WkMyTE9GbkEzblY3cXFhUm55M3BiSTRkZUNiSjJURi1VdXNFWnZVU21oUWJlV21Xell6bk8tRFNLVEUzWmdJdmVCTTFWOFNFcnJOQ096akdqTm45cFBRZ3fSAdQBQVVfeXFMT0h5aUJDajhMRVRad2pBWEp2NGFjTUhSNC1MY2hKdDk1WjZmNDZJdWFEWE0xeWNral9raTZRUmZCcEhiZE83Z1AzVGN6OUpvbGV6anhhRWNMMW84SmJPZ3lZb2pRcC1sTE15NEdoaGU3azl1cnBKZ3FkSjZOREdSbnVybGVjQTRmVmQ0Uzl0N0UzcEEyLXNxSHd0dUJsR1I3NVpMZllMU3AtLTM2di1KdHRXTlhEQ1ltR3RpZUlKYV81bm9NdjQ3U2p0cG1EWEpUUlI0S1E?oc=5",
      "date": "2026-09-14",
      "kind": "article",
-     "outlet_url": "https://www.amarujala.com"
+     "outlet_url": "https://www.amarujala.com",
+     "article_url": "https://www.amarujala.com/uttar-pradesh/jhansi/parents-in-law-arrested-in-dowry-death-case-moth-news-c-420-1-sjhs1005-12838-2026-09-14"
     }
    ],
    "all_urls": [
@@ -23625,9 +23631,9 @@
    "lon": 78.3436,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "Amroha News: विधायक के फार्म हाउस में सामूहिक दुष्कर्म में बढ़ीं एससी-एसटी की धाराएं",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Amroha, Uttar Pradesh area. Status in reports: Not stated in source.",
-   "status": "Not stated in source",
-   "verification": "News report – 1 outlet (single source)",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Amroha, Uttar Pradesh area. Status in reports: Arrest reported.",
+   "status": "Arrest reported",
+   "verification": "News report – 1 outlet (single source); 2 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
    "sources": [
     {
      "name": "Amar Ujala",
@@ -23635,13 +23641,21 @@
      "date": "2026-10-10",
      "kind": "article",
      "outlet_url": "https://www.amarujala.com"
+    },
+    {
+     "name": "Amar Ujala",
+     "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPQzRCYkk1b0NUMGptSE1wa3hqck1tT1pzYTRrR29XUnFJeXc1TFBYM0lrN3lFMkRXNXJ6ZjdNSlVSZXBoS2NldkhPT2tNMDdSenVkNjlMQ1B2emdxc2xITGlsbXN5VXpoZEhVc05zSkZtTmxqZ1lvT0dJR25GS0Y4a2tEaDNCWFNwNDg3bTRheF9JQXZycHZjZXpjMmhaR19uTXV6Y0RCSlBscG9mNWdFd2NoNWdPbjU0amlXeTB0R1ZiVmlUQ3c1Ny1WcUZiUdIB0wFBVV95cUxNMkF3OEJZQmZBX2loVTFlR0FGREpmMFE3RnMweG4tdjhoNGZ2RERWVXlocmlhb1kyRXpNaXVrRFlnLV95RTNFVW1qMHhBcUxDOHR5eGo3X2ZxdWQ1WVlJaXJ1UjRDbzRmblRxNERaYzZBUjZPUnlabHFOd3hFN053NFBnd3NJaVg3V1otNFB4dlJfUEc2UlVnZ2xSendxeW1Xa3NQZzZTbFVPLWNuaXpXcUVHemx2SE1KOHZDY3VGd2FLcWZURmZSNEZ5LTE0Z2hjN3hj?oc=5",
+     "date": "2026-10-08",
+     "kind": "article",
+     "outlet_url": "https://www.amarujala.com"
     }
    ],
    "all_urls": [
-    "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPNVRSUkk4aGVKcGdsUGNoTmZWSDlXSXpiUHhkUVVKZG1oYTdqcnRTNlN5ai11NGxZYzFEOW9OYUx0T0hkRjRHR21jLTRnSHE3b09YZlh5MlNRWWp6R09xNWF1NncxUUVZODhoV0gzY2poeEJoZS1qNkFfMEFfZXh5U29fT1Vydk83WEFka3NNT2ZGRUlqYUEzQ1E0Mi01LVJzMER1WS1JYURyT1hiUC12UFVUYnpQc3kxLXRfU0s1OXJEQTVXMFNDSWljSWZOQmlPREg4c1JGM2czR2RNWWVHdkJmOWhGTzd60gHuAUFVX3lxTFBXS0tWcGJUaXBQZ1ZhcENFS2YwZ2ZlMTVlU0V1NGVmUzFIMmtteXQwVTZZTk5NNzFrSWtwbE5YdlFUWW9aMnF5SDNhaG5LdkJSTHdKY0EwT3JtSUcxNU5TMndGVFVHdmh5VWZsR21OMzB2Wm0yRUhPNm5ONXJKVk1qU2pQSDNtbVY3a29JRk1acFM4X0ZuODJhZENCT05aVWIxU1VUS0t4MVA5aUhtc055dDJlMFR2d3dkbE1IbkFDN2hsM2JLSUQwLUpLQlpvWEh5MFJPX080UHAyZmd1SW5lbjhlckR5VTY4b3pSSEE?oc=5"
+    "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPNVRSUkk4aGVKcGdsUGNoTmZWSDlXSXpiUHhkUVVKZG1oYTdqcnRTNlN5ai11NGxZYzFEOW9OYUx0T0hkRjRHR21jLTRnSHE3b09YZlh5MlNRWWp6R09xNWF1NncxUUVZODhoV0gzY2poeEJoZS1qNkFfMEFfZXh5U29fT1Vydk83WEFka3NNT2ZGRUlqYUEzQ1E0Mi01LVJzMER1WS1JYURyT1hiUC12UFVUYnpQc3kxLXRfU0s1OXJEQTVXMFNDSWljSWZOQmlPREg4c1JGM2czR2RNWWVHdkJmOWhGTzd60gHuAUFVX3lxTFBXS0tWcGJUaXBQZ1ZhcENFS2YwZ2ZlMTVlU0V1NGVmUzFIMmtteXQwVTZZTk5NNzFrSWtwbE5YdlFUWW9aMnF5SDNhaG5LdkJSTHdKY0EwT3JtSUcxNU5TMndGVFVHdmh5VWZsR21OMzB2Wm0yRUhPNm5ONXJKVk1qU2pQSDNtbVY3a29JRk1acFM4X0ZuODJhZENCT05aVWIxU1VUS0t4MVA5aUhtc055dDJlMFR2d3dkbE1IbkFDN2hsM2JLSUQwLUpLQlpvWEh5MFJPX080UHAyZmd1SW5lbjhlckR5VTY4b3pSSEE?oc=5",
+    "https://news.google.com/rss/articles/CBMizgFBVV95cUxPQzRCYkk1b0NUMGptSE1wa3hqck1tT1pzYTRrR29XUnFJeXc1TFBYM0lrN3lFMkRXNXJ6ZjdNSlVSZXBoS2NldkhPT2tNMDdSenVkNjlMQ1B2emdxc2xITGlsbXN5VXpoZEhVc05zSkZtTmxqZ1lvT0dJR25GS0Y4a2tEaDNCWFNwNDg3bTRheF9JQXZycHZjZXpjMmhaR19uTXV6Y0RCSlBscG9mNWdFd2NoNWdPbjU0amlXeTB0R1ZiVmlUQ3c1Ny1WcUZiUdIB0wFBVV95cUxNMkF3OEJZQmZBX2loVTFlR0FGREpmMFE3RnMweG4tdjhoNGZ2RERWVXlocmlhb1kyRXpNaXVrRFlnLV95RTNFVW1qMHhBcUxDOHR5eGo3X2ZxdWQ1WVlJaXJ1UjRDbzRmblRxNERaYzZBUjZPUnlabHFOd3hFN053NFBnd3NJaVg3V1otNFB4dlJfUEc2UlVnZ2xSendxeW1Xa3NQZzZTbFVPLWNuaXpXcUVHemx2SE1KOHZDY3VGd2FLcWZURmZSNEZ5LTE0Z2hjN3hj?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-10",
@@ -23898,7 +23912,212 @@
    "last_updated": "2026-10-10",
    "verifiable": true,
    "hidden_reason": null
+  },
+  {
+   "id": "inc0553",
+   "type": "rape",
+   "type_label": "Rape / sexual assault",
+   "channel": "news",
+   "date": "2026-09-28",
+   "place": "Sri Ram & Son, Delhi, Delhi",
+   "state": "Delhi",
+   "city": "Delhi",
+   "lat": 28.6479,
+   "lon": 77.1903,
+   "precision": "Locality / police-station area (approx., ±2–5 km)",
+   "headline": "'Pulled Her Hair, Threatened To Rape': Woman Alleges Daughter Assaulted By Senior Bureaucrat's Son In South Delhi",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Sri Ram & Son, Delhi, Delhi area. Status in reports: Complaint / allegation, police action not stated.",
+   "status": "Complaint / allegation, police action not stated",
+   "verification": "News report – 1 outlet (single source)",
+   "sources": [
+    {
+     "name": "The Daily Jagran",
+     "url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxQMUtaUTBzZDR4UGYzVkh1dGNobGt5UGpZbGVFa2ptb25KTUxtMDllakN5U2NXMjRFS0tfS1hKWTlDUFg2UnlwdlpIOGRXWEpFYUtvQlk1ZmJONE9OVURZcF9JVVp2N0taanhxVlN6blQyeC1ncG5OS3R2X0ZEcEhGaUJTcEVlMklFRklBYy1Eb18zWUdINXJtU3pMaUIzeVJhVzFybHEzU1lRdWFtNjBtUlFZc2JrcUpJTnh5ZFZpTnFWcEJTOUR6eXFOSVhOTUFDRGRJUE4tMFU3MjlPa3ZvTkQ0TzVESC1FNVY3bXpQdlU?oc=5",
+     "date": "2026-09-28",
+     "kind": "article",
+     "outlet_url": "https://www.thedailyjagran.com"
+    }
+   ],
+   "all_urls": [
+    "https://news.google.com/rss/articles/CBMi8AFBVV95cUxQMUtaUTBzZDR4UGYzVkh1dGNobGt5UGpZbGVFa2ptb25KTUxtMDllakN5U2NXMjRFS0tfS1hKWTlDUFg2UnlwdlpIOGRXWEpFYUtvQlk1ZmJONE9OVURZcF9JVVp2N0taanhxVlN6blQyeC1ncG5OS3R2X0ZEcEhGaUJTcEVlMklFRklBYy1Eb18zWUdINXJtU3pMaUIzeVJhVzFybHEzU1lRdWFtNjBtUlFZc2JrcUpJTnh5ZFZpTnFWcEJTOUR6eXFOSVhOTUFDRGRJUE4tMFU3MjlPa3ZvTkQ0TzVESC1FNVY3bXpQdlU?oc=5"
+   ],
+   "first_seen": "2026-10-10",
+   "minor": false,
+   "police_src": false,
+   "newslink_src": false,
+   "report_date": "2026-09-28",
+   "place_reported": "Son In … Delhi",
+   "place_reported_by": "The Daily Jagran",
+   "place_reported_in": "headline",
+   "geocode": "Locality/police-station name “Son In” with city “Delhi”; geocoded with OpenStreetMap Nominatim query “Son In, Delhi, Delhi, India” → Sri Ram & Son (shop), accepted because within 40 km of Delhi; pin approx ±2–5 km",
+   "last_updated": "2026-10-10",
+   "verifiable": true,
+   "hidden_reason": null
+  },
+  {
+   "id": "inc0554",
+   "type": "rape",
+   "type_label": "Rape / sexual assault",
+   "channel": "news",
+   "date": "2026-10-05",
+   "place": "Nagpur, Maharashtra",
+   "state": "Maharashtra",
+   "city": "Nagpur",
+   "lat": 21.1498,
+   "lon": 79.0821,
+   "precision": "City/district level (approx., ±10–30 km)",
+   "headline": "नागपुर में नाबालिग से दुष्कर्म का आरोप, धमकी देकर कराया चुप",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Nagpur, Maharashtra area. Status in reports: Complaint / allegation, police action not stated.",
+   "status": "Complaint / allegation, police action not stated",
+   "verification": "News report – 1 outlet (single source)",
+   "sources": [
+    {
+     "name": "Nagpur Today",
+     "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBIOGhDZU05SWcxWXktb25ZVHN4X0VaZ3FRRDdBeVk3SEVQdW8wNS1jMzNFMWkyLVBNbW5jMGJmQmMxemNkNy1vNFpLTFNFMThYeVI1bm5HOGpxdUZtLWoyLWVCQXZfUmI3?oc=5",
+     "date": "2026-10-05",
+     "kind": "article",
+     "outlet_url": "https://www.nagpurtoday.in"
+    }
+   ],
+   "all_urls": [
+    "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBIOGhDZU05SWcxWXktb25ZVHN4X0VaZ3FRRDdBeVk3SEVQdW8wNS1jMzNFMWkyLVBNbW5jMGJmQmMxemNkNy1vNFpLTFNFMThYeVI1bm5HOGpxdUZtLWoyLWVCQXZfUmI3?oc=5"
+   ],
+   "first_seen": "2026-10-10",
+   "minor": true,
+   "police_src": false,
+   "newslink_src": false,
+   "report_date": "2026-10-05",
+   "place_reported": "नागपुर",
+   "place_reported_by": "Nagpur Today",
+   "place_reported_in": "headline",
+   "geocode": "City/district name “नागपुर” matched; geocoded with OpenStreetMap Nominatim query “Nagpur, Maharashtra, India” → Nagpur (city); pin approx ±10–30 km",
+   "last_updated": "2026-10-10",
+   "verifiable": true,
+   "hidden_reason": null
+  },
+  {
+   "id": "inc0555",
+   "type": "rape",
+   "type_label": "Rape / sexual assault",
+   "channel": "news",
+   "date": "2026-10-09",
+   "place": "Kanpur, Uttar Pradesh",
+   "state": "Uttar Pradesh",
+   "city": "Kanpur",
+   "lat": 26.4609,
+   "lon": 80.3218,
+   "precision": "City/district level (approx., ±10–30 km)",
+   "headline": "नाबालिग से दुष्कर्म, गर्भवती होने पर कराया गर्भपात, कानपुर की छात्रा के साथ कन्नौज में दरिंदगी का आरोप",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Kanpur, Uttar Pradesh area. Status in reports: Complaint / allegation, police action not stated.",
+   "status": "Complaint / allegation, police action not stated",
+   "verification": "News report – 1 outlet (single source)",
+   "sources": [
+    {
+     "name": "India TV Hindi",
+     "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxQYXZQTDM1dE1kajdNd3A3dVlMeUhXcGFCYXNHb3lFRUgzOXRfSFpBQi0wdHFxbEhtUXk3ZTBQdzRTMkppdnBFVlFWcFV4c2pVNVhRT1BKbVV3YjRUMXlHejRpdUNkR2J2dVFOYkdNYmxEc21VSnc2SVU4ZlNoeERrVFlmVHd3OGJxRVlmRHlPTER0SXBSX19UMWt2b29TM29oeTZ0X25TcWF1ZGdEUFJUNnpCc1dHbkY2REE1R2hoVGE4WEZjSHcyQjBRTkJQSHBCZTNDVFBjb3BiTGdlSjU0bEpSTTdxcFVLVllwTdIB7AFBVV95cUxQYXZQTDM1dE1kajdNd3A3dVlMeUhXcGFCYXNHb3lFRUgzOXRfSFpBQi0wdHFxbEhtUXk3ZTBQdzRTMkppdnBFVlFWcFV4c2pVNVhRT1BKbVV3YjRUMXlHejRpdUNkR2J2dVFOYkdNYmxEc21VSnc2SVU4ZlNoeERrVFlmVHd3OGJxRVlmRHlPTER0SXBSX19UMWt2b29TM29oeTZ0X25TcWF1ZGdEUFJUNnpCc1dHbkY2REE1R2hoVGE4WEZjSHcyQjBRTkJQSHBCZTNDVFBjb3BiTGdlSjU0bEpSTTdxcFVLVllwTQ?oc=5",
+     "date": "2026-10-09",
+     "kind": "article",
+     "outlet_url": "https://www.indiatv.in"
+    }
+   ],
+   "all_urls": [
+    "https://news.google.com/rss/articles/CBMi7AFBVV95cUxQYXZQTDM1dE1kajdNd3A3dVlMeUhXcGFCYXNHb3lFRUgzOXRfSFpBQi0wdHFxbEhtUXk3ZTBQdzRTMkppdnBFVlFWcFV4c2pVNVhRT1BKbVV3YjRUMXlHejRpdUNkR2J2dVFOYkdNYmxEc21VSnc2SVU4ZlNoeERrVFlmVHd3OGJxRVlmRHlPTER0SXBSX19UMWt2b29TM29oeTZ0X25TcWF1ZGdEUFJUNnpCc1dHbkY2REE1R2hoVGE4WEZjSHcyQjBRTkJQSHBCZTNDVFBjb3BiTGdlSjU0bEpSTTdxcFVLVllwTdIB7AFBVV95cUxQYXZQTDM1dE1kajdNd3A3dVlMeUhXcGFCYXNHb3lFRUgzOXRfSFpBQi0wdHFxbEhtUXk3ZTBQdzRTMkppdnBFVlFWcFV4c2pVNVhRT1BKbVV3YjRUMXlHejRpdUNkR2J2dVFOYkdNYmxEc21VSnc2SVU4ZlNoeERrVFlmVHd3OGJxRVlmRHlPTER0SXBSX19UMWt2b29TM29oeTZ0X25TcWF1ZGdEUFJUNnpCc1dHbkY2REE1R2hoVGE4WEZjSHcyQjBRTkJQSHBCZTNDVFBjb3BiTGdlSjU0bEpSTTdxcFVLVllwTQ?oc=5"
+   ],
+   "first_seen": "2026-10-10",
+   "minor": true,
+   "police_src": false,
+   "newslink_src": false,
+   "report_date": "2026-10-09",
+   "place_reported": "कानपुर",
+   "place_reported_by": "India TV Hindi",
+   "place_reported_in": "headline",
+   "geocode": "City/district name “कानपुर” matched; geocoded with OpenStreetMap Nominatim query “Kanpur, Uttar Pradesh, India” → Kanpur (city); pin approx ±10–30 km",
+   "last_updated": "2026-10-10",
+   "verifiable": true,
+   "hidden_reason": null
+  },
+  {
+   "id": "inc0556",
+   "type": "rape",
+   "type_label": "Rape / sexual assault",
+   "channel": "news",
+   "date": "2026-10-10",
+   "place": "Jalaun, Uttar Pradesh",
+   "state": "Uttar Pradesh",
+   "city": "Jalaun",
+   "lat": 26.1049,
+   "lon": 79.3919,
+   "precision": "City/district level (approx., ±10–30 km)",
+   "headline": "जालौन : कोल्ड ड्रिंक में नशीला पदार्थ पिलाकर नाबालिग से दुष्कर्म, आरोपी की तलाश जारी",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Jalaun, Uttar Pradesh area. Status in reports: Complaint / allegation, police action not stated.",
+   "status": "Complaint / allegation, police action not stated",
+   "verification": "News report – 1 outlet (single source)",
+   "sources": [
+    {
+     "name": "ETV Bharat",
+     "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQd0N3TzFtTk1SNkNJM0dXemlKV19wMld0cGRNNzRLQTI2S3ppaUNucm9rV1FhaG9ZR3BSb3I1X0F6VS1XaGk3Y293N0RGMS1VR0RBdEM5a1hVYlRNckxRbVRFLUZINThpZ0MtMDdpanh3Yk5mb2dXRk8tc0hwdE1pX21IMWtfYnJhMlpGQUU2SUloaG95NXfSAZsBQVVfeXFMT0o5ZXNrRXQ2YUI1SEtxRzl5emc5bnNqNGZjTldqS1hzUVJLbVhnbHZrU01hbWtqNDcxQWVVOTRrblJTWm1CVWFCd2l5TlhROUs3bkx5MnI4TWRUYldVLWxyX0d3dkExeFViX2pwU3B0VXJLUXEzaUJiNUpOdkl6Umt2SUN4eTNLREU2ZGdkTGZVZnhYMEhNSG1jV2M?oc=5",
+     "date": "2026-10-10",
+     "kind": "article",
+     "outlet_url": "https://www.etvbharat.com"
+    }
+   ],
+   "all_urls": [
+    "https://news.google.com/rss/articles/CBMilgFBVV95cUxQd0N3TzFtTk1SNkNJM0dXemlKV19wMld0cGRNNzRLQTI2S3ppaUNucm9rV1FhaG9ZR3BSb3I1X0F6VS1XaGk3Y293N0RGMS1VR0RBdEM5a1hVYlRNckxRbVRFLUZINThpZ0MtMDdpanh3Yk5mb2dXRk8tc0hwdE1pX21IMWtfYnJhMlpGQUU2SUloaG95NXfSAZsBQVVfeXFMT0o5ZXNrRXQ2YUI1SEtxRzl5emc5bnNqNGZjTldqS1hzUVJLbVhnbHZrU01hbWtqNDcxQWVVOTRrblJTWm1CVWFCd2l5TlhROUs3bkx5MnI4TWRUYldVLWxyX0d3dkExeFViX2pwU3B0VXJLUXEzaUJiNUpOdkl6Umt2SUN4eTNLREU2ZGdkTGZVZnhYMEhNSG1jV2M?oc=5"
+   ],
+   "first_seen": "2026-10-10",
+   "minor": true,
+   "police_src": false,
+   "newslink_src": false,
+   "report_date": "2026-10-10",
+   "place_reported": "जालौन",
+   "place_reported_by": "ETV Bharat",
+   "place_reported_in": "headline",
+   "geocode": "City/district name “जालौन” matched; geocoded with OpenStreetMap Nominatim query “Jalaun, Uttar Pradesh, India” → Jalaun (state_district); pin approx ±10–30 km",
+   "last_updated": "2026-10-10",
+   "verifiable": true,
+   "hidden_reason": null
+  },
+  {
+   "id": "inc0557",
+   "type": "snatching",
+   "type_label": "Chain / phone snatching",
+   "channel": "news",
+   "date": "2026-10-10",
+   "place": "Durg, Chhattisgarh",
+   "state": "Chhattisgarh",
+   "city": "Durg",
+   "lat": 21.1983,
+   "lon": 81.4008,
+   "precision": "City/district level (approx., ±10–30 km)",
+   "headline": "दुर्ग में रिटायर्ड कर्मचारी के साथ चेन स्नेचिंग: पता पूछने के बहाने पत्नी के गले से झपटा मंगलसूत्र, सफेद एक...",
+   "summary": "News media reported an alleged chain / phone snatching incident involving a woman in the Durg, Chhattisgarh area. Status in reports: Not stated in source.",
+   "status": "Not stated in source",
+   "verification": "News report – 1 outlet (single source)",
+   "sources": [
+    {
+     "name": "Dainik Bhaskar",
+     "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxObzUtZkJTcnFVWnFMZXBVU1JQUHdEZE5ubVJkd25sV0dTMUhtRnFkc1NGaEhCOU5HLVUtN2laMjJyQWxwUEstWC04NVJJcWVhREJVWHV2WEoyNWs1MHJBVTZfTm10TXBxb1JUM25ETDJucXk4cmFDcnYxRy14RUVOTkwxcW5DVS1oUzFLSGYwNEEwX25uUzdJVTlKY3RRYUdycmQ3dDNQdkR2QjU5OFdmN0FLNWphVFdPMFZpbVpyeXJwSHRycDJMUHYwUmhtTHNwZUIydWFQSWVLYXF30gHiAUFVX3lxTE1RN25fdHlOVVVTLTNwdUNEckhCb29hTjhJSnJZTkZLUHlqcURKRlNUaDZTMldtUWF5VUUtQTM4MmpyTEE1UTZCVFBFUkYyMHhiNjZjWDZ1anVsM0ZoMXFhVGx0NS0zaHpfWGRXTGF6LTI5cGhpanBwU0ZIZE1iUDRxbktQc1ZYdE1RbUxUX3Y0SFpJMHZLNFBJanNMNF85c3BoX3I0SnEydllxTmlGRUUxbm9aekdRWWdObmtJTG9SdEY0RHRiS1BnQzZGSVJlTVRwS09RdlAwVW4zb0ZlRWtEc0E?oc=5",
+     "date": "2026-10-10",
+     "kind": "article",
+     "outlet_url": "https://www.bhaskar.com"
+    }
+   ],
+   "all_urls": [
+    "https://news.google.com/rss/articles/CBMi3AFBVV95cUxObzUtZkJTcnFVWnFMZXBVU1JQUHdEZE5ubVJkd25sV0dTMUhtRnFkc1NGaEhCOU5HLVUtN2laMjJyQWxwUEstWC04NVJJcWVhREJVWHV2WEoyNWs1MHJBVTZfTm10TXBxb1JUM25ETDJucXk4cmFDcnYxRy14RUVOTkwxcW5DVS1oUzFLSGYwNEEwX25uUzdJVTlKY3RRYUdycmQ3dDNQdkR2QjU5OFdmN0FLNWphVFdPMFZpbVpyeXJwSHRycDJMUHYwUmhtTHNwZUIydWFQSWVLYXF30gHiAUFVX3lxTE1RN25fdHlOVVVTLTNwdUNEckhCb29hTjhJSnJZTkZLUHlqcURKRlNUaDZTMldtUWF5VUUtQTM4MmpyTEE1UTZCVFBFUkYyMHhiNjZjWDZ1anVsM0ZoMXFhVGx0NS0zaHpfWGRXTGF6LTI5cGhpanBwU0ZIZE1iUDRxbktQc1ZYdE1RbUxUX3Y0SFpJMHZLNFBJanNMNF85c3BoX3I0SnEydllxTmlGRUUxbm9aekdRWWdObmtJTG9SdEY0RHRiS1BnQzZGSVJlTVRwS09RdlAwVW4zb0ZlRWtEc0E?oc=5"
+   ],
+   "first_seen": "2026-10-10",
+   "minor": false,
+   "police_src": false,
+   "newslink_src": false,
+   "report_date": "2026-10-10",
+   "place_reported": "दुर्ग",
+   "place_reported_by": "Dainik Bhaskar",
+   "place_reported_in": "headline",
+   "geocode": "City/district name “दुर्ग” matched; geocoded with OpenStreetMap Nominatim query “Durg, Chhattisgarh, India” → Durg (state_district); pin approx ±10–30 km",
+   "last_updated": "2026-10-10",
+   "verifiable": true,
+   "hidden_reason": null
   }
  ],
- "generated": "2026-10-10T13:50:07+05:30"
+ "generated": "2026-10-10T14:52:26+05:30"
 }

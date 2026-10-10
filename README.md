@@ -1,6 +1,11 @@
-# Mahila Suraksha Map – women's safety risk map (India)
+# SafeNaksha – women's safety awareness map (India) · महिला सुरक्षा जागरूकता नक्शा
 
-Live: https://abalendup-26.github.io/mahila-suraksha-map/
+Live: https://abalendup-26.github.io/mahila-suraksha-map/  (installable as a PWA: browser menu → "Install app" / "Add to Home screen")
+
+> Formerly "Mahila Suraksha Map". Renamed because several existing apps/schemes use "Mahila Suraksha"/"Suraksha"
+> (e.g. Govt of Rajasthan's *Raj Mahila Suraksha Tracker*). The repository name/URL is unchanged so existing links keep working.
+> **Information only. Not an official government or police app.** See `terms.html`, `privacy.html`, `disclaimer.html`
+> (drafts – to be reviewed by a lawyer; placeholders are marked `TODO`).
 
 A single-page web app (Leaflet + OpenStreetMap, no API keys) that shows
 * **Layer A – district colours:** NCRB *Crime in India 2024* district-wise Crime against Women data
@@ -13,16 +18,22 @@ A single-page web app (Leaflet + OpenStreetMap, no API keys) that shows
   emergency numbers 112 / 181, and a "Sources & method" panel.
 
 Victim identities are never stored or shown (BNS Sec. 72): no names, ages, photos; X post text is not reproduced.
-Data is incomplete – no markers or a green district does **not** mean an area is safe.
+Data is incomplete – no markers or a light-coloured district does **not** mean an area is safe.
 
 ## Repository layout
 ```
 index.html                 the app (static, served by GitHub Pages)
+terms.html privacy.html disclaimer.html legal.css   legal pages (drafts; fill every TODO)
+manifest.webmanifest sw.js PWA manifest + network-first service worker
+assets/                    logo.svg, favicons, PWA icons (192/512/maskable), apple-touch-icon, og-image.png
+.github/ISSUE_TEMPLATE/correction.yml   public "Report an error / request correction" form
 .nojekyll
 data/
   districts.geojson        Layer A: district polygons + NCRB 2022/2023/2024 values + Census-2011 female pop
   incidents.json           Layer B: cumulative incident log (append-only, schema 4)
+  incidents.app.json       slim copy for the web app (verifiable incidents, UI fields only) – built by make_app_data.py
   incidents.csv            same, flat (verifiable incidents only)
+  takedowns.json           hand-maintained correction/takedown list (see "Corrections & takedowns")
   incident_reports.pdf     full printable report (with Hindi text)
   ncrb_raw.geojson         raw NCRB district layer download (input to build_districts.py)
   census.csv               Census 2011 district population (input to build_districts.py)
@@ -33,7 +44,11 @@ scripts/
   gazetteer.py             district/city name list (English from NCRB layer + hand-written Devanagari)
   build_districts.py       builds data/districts.geojson
   make_report_pdf.py       renders data/incident_reports.pdf via headless Chrome
-  verify.py / verify_live.py  headless Playwright checks + screenshots
+  make_app_data.py         writes data/incidents.app.json
+  make_icons.py            re-renders assets/ icons + OG image from assets/logo.svg (manual)
+  test_ui.py               full Playwright audit, desktop + mobile (filters, time edge cases, geolocation denied,
+                           search no-result, zero-row export, XSS probe, spiderfy, popups, legal pages)
+  verify_live.py           live smoke check + desktop/mobile screenshots
 requirements.txt, .gitignore
 ```
 Not in the repo (kept locally in the build folder): raw fetched news/X dumps (`data/raw_news/YYYY-MM-DD/`,
@@ -77,14 +92,27 @@ Exact daily procedure:
    - search_news: "rape molestation women India police arrested", "women harassment stalking acid attack dowry India police"
    (Skipping this step is fine: the run then uses news only.)
 2. Run: `bash /workspace/safety-map/scripts/daily_update.sh`
-   - fetches Google News RSS (EN+HI) into today's archive folder, merges, rebuilds CSV + full PDF only if data changed,
-     copies site files + source code (scripts/, README, requirements, .gitignore, NCRB/census inputs) to /workspace/safety-map-site, commits and pushes to `main` only if something differs.
+   - fetches Google News RSS (EN+HI) into today's archive folder, merges (applying data/takedowns.json), rebuilds CSV +
+     full PDF only if data changed, writes data/incidents.app.json, copies site files (app, legal pages, PWA files, assets) + source code (scripts/, README, requirements, .gitignore, NCRB/census inputs) to /workspace/safety-map-site, commits and pushes to `main` only if something differs.
    - Options: `--no-fetch` (re-ingest archived files only), `--no-push` (commit locally only). A lock prevents parallel runs.
    - Log: `logs/daily_<timestamp>.log`; look for `RESULT: CHANGED|NOCHANGE` and `Pushed to main.`
 3. Optional check: `gh api repos/abalendup-26/mahila-suraksha-map/pages/builds/latest --jq .status` → `built`.
 
-Rebuild district layer: `python3 scripts/build_districts.py`. Local check: `.venv/bin/python scripts/verify.py`;
-live check: `.venv/bin/python scripts/verify_live.py https://abalendup-26.github.io/mahila-suraksha-map/ screenshots/live.png`.
+Rebuild district layer: `python3 scripts/build_districts.py`. Local audit: `python3 -m http.server 8765` then
+`.venv/bin/python scripts/test_ui.py http://localhost:8765/ screenshots/test`; live check:
+`.venv/bin/python scripts/verify_live.py https://abalendup-26.github.io/mahila-suraksha-map/ screenshots/live`.
+
+## Corrections & takedowns
+Requests arrive by email (address in the legal pages – `TODO`) or the public GitHub issue form
+(`.github/ISSUE_TEMPLATE/correction.yml`; the form warns users not to post personal details).
+To remove an item, add it to `data/takedowns.json` and run the daily script:
+```json
+{"incidents": {"inc0123": "Removed on request (identity concern)"}, "urls": {"https://example.com/article": "Retracted by outlet"}}
+```
+The builder then strips the incident's headline, place, coordinates and links from incidents.json/CSV/PDF/app data,
+keeps only its id + SHA-1 hashes of its source URLs (so the same articles are never re-added), and marks it hidden.
+Victim/child-identity complaints: act within 24 h (IT Rules 2021, Rule 3(2)(b)). Note: older git commits still contain
+earlier versions of the data; purging those needs a history rewrite (force-push) – a separate, deliberate decision.
 
 ## Privacy
 Ages are regex-removed from headlines (digits and Hindi number words), names after victim nouns are removed,

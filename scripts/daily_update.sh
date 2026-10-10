@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Daily update for Mahila Suraksha Map. Safe to run repeatedly (idempotent).
+# Daily update for SafeNaksha (repo/URL: mahila-suraksha-map). Safe to run repeatedly (idempotent).
 #
 # What it does
 #   1. Fetches Google News RSS (English + Hindi) -> data/raw_news/<YYYY-MM-DD IST>/*.xml (archived, never deleted)
@@ -37,10 +37,18 @@ if grep -q "RESULT: CHANGED" "$LOG" || [ ! -f data/incident_reports.pdf ] || [ d
   python3 scripts/make_report_pdf.py 2>&1 | tee -a "$LOG"
 fi
 
+# slim JSON used by the web app (deterministic; only changes when incidents.json does)
+python3 scripts/make_app_data.py 2>&1 | tee -a "$LOG"
+
 # PDF bytes differ on every render, so it is only re-rendered (and thus only copied as changed) when data changed.
-mkdir -p "$SITE/data"
-cp index.html "$SITE/index.html"
-for f in districts.geojson incidents.json incidents.csv incident_reports.pdf; do
+mkdir -p "$SITE/data" "$SITE/assets" "$SITE/.github/ISSUE_TEMPLATE"
+# static site files (app shell, legal pages, PWA files, icons, issue template)
+for f in index.html terms.html privacy.html disclaimer.html legal.css manifest.webmanifest sw.js assets/* .github/ISSUE_TEMPLATE/*; do
+  [ -f "$f" ] || continue
+  if ! cmp -s "$f" "$SITE/$f"; then cp "$f" "$SITE/$f"; fi
+done
+for f in districts.geojson incidents.json incidents.app.json incidents.csv incident_reports.pdf takedowns.json; do
+  [ -f "data/$f" ] || continue
   if ! cmp -s "data/$f" "$SITE/data/$f"; then cp "data/$f" "$SITE/data/$f"; fi
 done
 for f in census.csv ncrb_raw.geojson layer_meta.json; do

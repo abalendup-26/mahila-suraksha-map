@@ -300,6 +300,24 @@ def main():
         sim = len(tk & g["_tok"]) / max(1, len(tk | g["_tok"]))
         return g["type"] == r["type"] and g["city"] == r["city"] and abs((r["date"] - g["_last"]).total_seconds()) <= 2.5*86400 \
             and g["_kind"] == ("news" if r["kind"] == "news" else "social") and sim >= 0.2  # wording must overlap (prevents merging different incidents in one city)
+    # 0) takedown / correction requests (data/takedowns.json, maintained by hand; see README "Corrections & takedowns").
+    #    Format: {"incidents": {"inc0123": "short generic reason"}, "urls": {"https://...": "reason"}}
+    #    Removed incidents keep only their id (append-only numbering) and SHA-1 hashes of their source URLs, so the same
+    #    articles are never re-added by a later run. Their text, place and links are stripped from every published file.
+    TK = os.path.join(DATA, "takedowns.json")
+    takedowns = json.load(open(TK, encoding="utf-8")) if os.path.exists(TK) else {}
+    td_ids = dict(takedowns.get("incidents") or {}); td_urls = dict(takedowns.get("urls") or {})
+    h1 = lambda u: "sha1:" + hashlib.sha1(u.encode("utf-8")).hexdigest()
+    blocked = {h1(u) for u in td_urls}
+    _JF = os.path.join(DATA, "incidents.json")
+    if os.path.exists(_JF):
+        for e0 in json.load(open(_JF)).get("incidents", []):
+            urls0 = e0.get("all_urls") or [x["url"] for x in e0.get("sources", [])]
+            if e0["id"] in td_ids or any(u in td_urls for u in urls0) or e0.get("removed"):
+                blocked |= {u if u.startswith("sha1:") else h1(u) for u in urls0}
+    nb = len(recs); recs = [r for r in recs if h1(r["link"]) not in blocked]
+    if nb != len(recs): print("takedown filter dropped", nb - len(recs), "raw records")
+
     # 1) group this batch (all raw records) exactly like before
     recs.sort(key=lambda r: (r["date"], r["link"]))
     groups = []
@@ -375,7 +393,7 @@ def main():
         hit = next((url2inc[x["link"]] for x in rs if x["link"] in url2inc), None)
         if hit is None:  # attach to an existing incident by grouping rule
             for e in existing:
-                if e["type"] != g["type"] or e["city"] != g["city"] or e["channel"] != g["_kind"]: continue
+                if e.get("removed") or e["type"] != g["type"] or e["city"] != g["city"] or e["channel"] != g["_kind"]: continue
                 last = max(datetime.fromisoformat(s_["date"]).replace(tzinfo=IST) for s_ in e["sources"])
                 tk = toks(e.get("headline")) | g["_tok"] if g["_kind"] == "news" else set()
                 pseudo = {"type": e["type"], "city": e["city"], "_kind": e["channel"], "_tok": toks(e.get("headline")), "_last": last}
@@ -406,7 +424,7 @@ def main():
             if RESOLVE and "article_url" not in sx and sx["kind"] == "article":
                 au = resolve_gnews(sx["url"])
                 if au: sx["article_url"] = au
-        if not e.get("place_reported"):
+        if not e.get("place_reported") and not e.get("removed"):
             rs = [rec_by_url[u] for u in e["all_urls"] if u in rec_by_url]
             pick = next((r for r in rs if r["place"] == e["place"]), rs[0] if rs else None)
             if pick: set_place_info(e, pick)
@@ -417,6 +435,13 @@ def main():
         e["hidden_reason"] = None if ok else "No verifiable source link (only an aggregated X news-story summary)"
         if e.get("headline") and DEBUNK_RE.search(e["headline"]):
             e["verifiable"] = False; e["hidden_reason"] = "Report says the claim was debunked/false"
+        urls_e = e.get("all_urls") or []
+        if e["id"] in td_ids or any(u in td_urls for u in urls_e) or e.get("removed"):
+            reason = td_ids.get(e["id"]) or next((td_urls[u] for u in urls_e if u in td_urls), None) or e.get("hidden_reason") or "Removed after a correction/takedown request"
+            e.update(removed=True, verifiable=False, hidden_reason=reason, headline=None, sources=[],
+                     summary="Removed after a correction/takedown request.", place_reported="", place_reported_by="",
+                     place_reported_in="", geocode="", place="(removed)", city="(removed)", lat=None, lon=None,
+                     all_urls=[u if u.startswith("sha1:") else h1(u) for u in urls_e])
         if json.dumps(e, sort_keys=True, ensure_ascii=False) != before_e: enriched += 1
     print("enriched/updated metadata on", enriched, "incidents; not verifiable (hidden):", sum(not e["verifiable"] for e in existing))
     changed = added_src > 0 or enriched > 0 or old.get("schema") != 4
@@ -434,7 +459,10 @@ def main():
     out["generated"] = out["last_updated"]  # backward-compat
     json.dump(out, open(JF, "w"), ensure_ascii=False, indent=1)
     with open(os.path.join(DATA, "incidents.csv"), "w", newline="", encoding="utf-8-sig") as fh:
-        w = csv.writer(fh); w.writerow(["id", "report_date", "first_seen", "crime_type", "channel", "outlets", "article_urls", "publish_dates",
+        class _W:  # neutralise spreadsheet formula injection in text cells (=, +, -, @ at start)
+            def __init__(s_, f): s_.w = csv.writer(f)
+            def writerow(s_, row): s_.w.writerow([("'" + c) if isinstance(c, str) and c[:1] in ("=", "+", "-", "@", "\t", "\r") else c for c in row])
+        w = _W(fh); w.writerow(["id", "report_date", "first_seen", "crime_type", "channel", "outlets", "article_urls", "publish_dates",
                                         "place_as_reported", "place_reported_by", "geocoding_method", "map_place", "state", "lat", "lon", "precision",
                                         "headline", "summary", "status", "verification"])
         for o in existing:

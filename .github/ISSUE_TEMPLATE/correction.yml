@@ -1,0 +1,38 @@
+name: Report an error / request correction
+description: Report a wrong, outdated or harmful item on the SafeNaksha map (this issue is PUBLIC).
+title: "Correction request: "
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **This issue is public.** Do NOT include names, phone numbers, addresses, photos or any detail that could identify a victim, a child or any private person.
+        For anything sensitive (e.g. victim identity, your own personal data), email the contact address in the Privacy Policy instead.
+  - type: input
+    id: incident
+    attributes:
+      label: Incident ID (shown at the bottom of the marker popup, e.g. inc0123) or district name
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong?
+      options:
+        - Wrong place / pin location
+        - Wrong crime type or status
+        - Report was corrected / retracted / accused acquitted
+        - Not a real incident / duplicate
+        - Could identify a victim or child (please also email us)
+        - Copyright / rights-holder objection
+        - District statistics error
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details and supporting link (e.g. outlet correction notice)
+      description: Please keep it factual and do not include personal details.
+    validations:
+      required: true

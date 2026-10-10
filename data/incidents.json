@@ -1,13 +1,13 @@
 {
  "schema": 4,
- "last_updated": "2026-10-10T13:46:25+05:30",
+ "last_updated": "2026-10-10T13:48:06+05:30",
  "first_collected": "2026-10-10",
  "date_span": [
   "2026-09-10",
   "2026-10-10"
  ],
  "count": 471,
- "count_visible": 454,
+ "count_visible": 453,
  "incidents": [
   {
    "id": "inc0001",
@@ -20951,7 +20951,7 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "दिल्ली में दरिंदगी की तीन वारदातें: किशोरी से सामूहिक दुष्कर्म, 11 और छह साल की बच्चियों से भी की गई हैवानियत",
+   "headline": "दिल्ली में दरिंदगी की तीन वारदातें: किशोरी से सामूहिक दुष्कर्म, [उम्र हटाई] बच्चियों से भी की गई हैवानियत",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Delhi, Delhi area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
@@ -21141,8 +21141,8 @@
    "place_reported_in": "headline",
    "geocode": "City/district name “Pune” matched; geocoded with OpenStreetMap Nominatim query “Pune, Maharashtra, India” → Pune (city); pin approx ±10–30 km",
    "last_updated": "2026-10-10",
-   "verifiable": true,
-   "hidden_reason": null
+   "verifiable": false,
+   "hidden_reason": "Report says the claim was debunked/false"
   },
   {
    "id": "inc0470",
@@ -21227,5 +21227,5 @@
    "hidden_reason": null
   }
  ],
- "generated": "2026-10-10T13:46:25+05:30"
+ "generated": "2026-10-10T13:48:06+05:30"
 }

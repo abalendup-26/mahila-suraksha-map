@@ -64,6 +64,10 @@ select{width:100%;padding:5px}
   </div>
   <div id="legendA" class="small"></div>
 
+  <h3>Time period / Samay</h3>
+  <select id="tPreset"><option value="all" selected>All time</option><option value="today">Today</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="custom">Custom range…</option></select>
+  <div class="row" id="tCustom" style="display:none">From <input type="date" id="tFrom"> To <input type="date" id="tTo"></div>
+  <div class="small" id="tInfo"></div>
   <h3>Layer B – Reported incidents (news &amp; social media)</h3>
   <div id="typeFilters"></div>
   <label class="row"><input type="checkbox" id="chNews" checked> <span class="mk" style="width:18px;height:18px;background:#555;font-size:10px">●</span> News reports</label>
@@ -140,7 +144,7 @@ function esc(s){return (s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<'
 function incPopup(i){const t=TYPES[i.type];
   return `<div class="popup" style="max-width:290px"><h4>${t.icon} ${esc(i.type_label)}</h4>
   <span class="tag" style="background:${i.channel==='social'?'#616161':'#2e7d32'}">${i.channel==='social'?'SOCIAL MEDIA – UNVERIFIED':'NEWS REPORT'}</span>
-  <table><tr><td>Date</td><td>${esc(i.date)} <span class="small">(report date)</span></td></tr>
+  <table><tr><td>Date</td><td>${esc(i.date)} <span class="small">(report date)</span>${i.first_seen?`<br><span class="small">First seen by this map: ${esc(i.first_seen)}</span>`:""}</td></tr>
   <tr><td>Place</td><td>${esc(i.place)}</td></tr>
   <tr><td>Precision</td><td>${esc(i.precision)}</td></tr>
   ${i.headline?`<tr><td>Headline</td><td>${esc(i.headline)}</td></tr>`:''}
@@ -149,18 +153,29 @@ function incPopup(i){const t=TYPES[i.type];
   <tr><td>Verification</td><td>${esc(i.verification)}</td></tr>
   <tr><td>Source(s)</td><td>${i.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a> (${esc(s.date)})`).join('<br>')}</td></tr></table>
   <div class="small">Victim identity is never shown (BNS Sec. 72).</div></div>`;}
+const istDate=d=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata'}).format(d);
+function addDays(ymd,n){const d=new Date(ymd+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);}
+function range(){const p=document.getElementById('tPreset').value,t=istDate(new Date());
+  if(p==='all') return [null,null,'All time']; if(p==='today') return [t,t,'Today ('+t+')'];
+  if(p==='7'||p==='30') return [addDays(t,-(+p-1)),t,'Last '+p+' days'];
+  const f=document.getElementById('tFrom').value||null,to=document.getElementById('tTo').value||null; return [f,to,(f||'start')+' to '+(to||'today')];}
+function inTime(i){const [f,t]=range(); return (!f||i.date>=f)&&(!t||i.date<=t);}
 function visible(){const ts=[...document.querySelectorAll('.tchk:checked')].map(x=>x.value);
   const n=document.getElementById('chNews').checked, s=document.getElementById('chSocial').checked;
-  return incidents.filter(i=>ts.includes(i.type)&&((i.channel==='news'&&n)||(i.channel==='social'&&s)));}
+  return incidents.filter(i=>inTime(i)&&ts.includes(i.type)&&((i.channel==='news'&&n)||(i.channel==='social'&&s)));}
 function renderInc(){markerLayer.clearLayers(); const v=visible(); const seen={};
   v.forEach(i=>{const key=i.lat+','+i.lon; const k=(seen[key]=(seen[key]||0)+1)-1; // spread markers sharing a point
     const ang=k*2.4, r=k?0.004*Math.sqrt(k):0; const ll=[i.lat+r*Math.cos(ang), i.lon+r*Math.sin(ang)];
     const t=TYPES[i.type]; const icon=L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],
       html:`<div class="mk ${i.channel==='social'?'social':''}" style="background:${t.color}"><span>${t.icon}</span></div>`});
     const m=L.marker(ll,{icon,title:i.type_label}).bindPopup(()=>incPopup(i),{maxWidth:300}); m.inc=i; markerLayer.addLayer(m);});
-  for(const k in TYPES){const c=incidents.filter(i=>i.type===k).length;document.getElementById('cnt_'+k).textContent=`(${c})`;}
-  document.getElementById('countB').textContent=`Showing ${v.length} of ${incidents.length} reported incidents (${incidents.filter(i=>i.channel==='news').length} news, ${incidents.filter(i=>i.channel==='social').length} social media).`;}
-document.querySelectorAll('.tchk,#chNews,#chSocial').forEach(x=>x.onchange=renderInc);
+  const inT=incidents.filter(inTime);
+  for(const k in TYPES){const c=inT.filter(i=>i.type===k).length;document.getElementById('cnt_'+k).textContent=`(${c})`;}
+  document.getElementById('countB').textContent=`Showing ${v.length} of ${incidents.length} reported incidents for ${range()[2]} (${v.filter(i=>i.channel==='news').length} news, ${v.filter(i=>i.channel==='social').length} social media).`;
+  if(lastArea) showArea(...lastArea,true);}
+let lastArea=null;
+document.querySelectorAll('.tchk,#chNews,#chSocial,#tFrom,#tTo').forEach(x=>x.onchange=renderInc);
+document.getElementById('tPreset').onchange=e=>{document.getElementById('tCustom').style.display=e.target.value==='custom'?'flex':'none';renderInc();};
 
 // point in polygon for "which district am I in"
 function inRing(pt,ring){let x=pt[0],y=pt[1],ins=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const xi=ring[i][0],yi=ring[i][1],xj=ring[j][0],yj=ring[j][1];
@@ -168,17 +183,18 @@ function inRing(pt,ring){let x=pt[0],y=pt[1],ins=false;for(let i=0,j=ring.length
 function districtAt(lat,lon){for(const f of distData.features){const g=f.geometry;if(!g)continue;const polys=g.type==='Polygon'?[g.coordinates]:g.coordinates;
   for(const p of polys){if(inRing([lon,lat],p[0])) return f.properties;}}return null;}
 function km(a,b,c,d){const R=6371,r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
-function showArea(lat,lon,label){
-  if(userMarker) map.removeLayer(userMarker);
-  userMarker=L.marker([lat,lon]).addTo(map).bindPopup(esc(label)).openPopup(); map.setView([lat,lon],11);
-  const p=districtAt(lat,lon); const near=incidents.filter(i=>km(lat,lon,i.lat,i.lon)<=25);
+function showArea(lat,lon,label,refresh){
+  lastArea=[lat,lon,label];
+  if(!refresh){ if(userMarker) map.removeLayer(userMarker);
+  userMarker=L.marker([lat,lon]).addTo(map).bindPopup(esc(label)).openPopup(); map.setView([lat,lon],11);}
+  const p=districtAt(lat,lon); const near=visible().filter(i=>km(lat,lon,i.lat,i.lon)<=25);
   const bt={}; near.forEach(i=>bt[i.type]=(bt[i.type]||0)+1);
   const el=document.getElementById('nearby'); el.style.display='block';
   let h=`<b>📍 ${esc(label)}</b><br>`;
   if(p){const v=val(p),l=level(v);h+=`District: <b>${esc(p.d)}, ${esc(p.s)}</b> – <b style="color:${l?COL[l]:'#666'}">${l||'No data'}</b> for “${CATS[catSel.value]}” (${p[catSel.value]??'n/a'} cases in 2024; ${p.rape??'n/a'} rape cases).<br>`;}
   else h+='District: not found in NCRB layer.<br>';
-  h+=`Reported incidents within 25 km (last ~45 days): <b>${near.length}</b>${near.length?' – '+Object.entries(bt).map(([k,c])=>TYPES[k].icon+' '+c).join(' '):''}.<br><span class="small">Few/no reports ≠ safe. Stay alert; call 112 in an emergency.</span>`;
-  el.innerHTML=h; document.getElementById('panel').classList.add('open');}
+  h+=`Reported incidents within 25 km (${esc(range()[2])}, current filters): <b>${near.length}</b>${near.length?' – '+Object.entries(bt).map(([k,c])=>TYPES[k].icon+' '+c).join(' '):''}.<br><span class="small">Few/no reports ≠ safe. Stay alert; call 112 in an emergency.</span>`;
+  el.innerHTML=h; if(!refresh) document.getElementById('panel').classList.add('open');}
 document.getElementById('loc').onclick=()=>{if(!navigator.geolocation) return alert('Geolocation not supported');
   navigator.geolocation.getCurrentPosition(p=>showArea(p.coords.latitude,p.coords.longitude,'Your location'),e=>alert('Location not available: '+e.message+'\n(Browser location needs https or localhost.)'),{enableHighAccuracy:true,timeout:15000});};
 document.getElementById('sform').onsubmit=async e=>{e.preventDefault();const q=document.getElementById('q').value.trim();if(!q)return;
@@ -189,26 +205,29 @@ addEventListener('resize',fitTop);fitTop();
 document.getElementById('toggle').onclick=()=>document.getElementById('panel').classList.toggle('open');
 
 // downloads
-const COLS=['id','date','type_label','channel','place','state','precision','headline','summary','status','verification','sources'];
+const COLS=['id','date','first_seen','type_label','channel','place','state','precision','headline','summary','status','verification','sources'];
 function rowOf(i){return COLS.map(c=>c==='sources'?i.sources.map(s=>s.name+': '+s.url).join(' | '):(i[c]??''));}
 document.getElementById('dlcsv').onclick=()=>{const rows=[COLS.join(',')].concat(visible().map(i=>rowOf(i).map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')));
   const b=new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='incident_reports.csv';a.click();};
 document.getElementById('dlpdf').onclick=()=>{
   if(!window.jspdf){ window.open('data/incident_reports.pdf'); return; }
   const doc=new jspdf.jsPDF({orientation:'landscape',unit:'pt',format:'a4'});
-  doc.setFontSize(13);doc.text('Mahila Suraksha Map – Incident reports (news & social media)',30,30);
+  doc.setFontSize(13);doc.text('Mahila Suraksha Map – Incident reports (news & social media) – '+range()[2],30,30);
   doc.setFontSize(8);doc.text('Auto-collected from public news (Google News RSS) and X posts. Locations approximate. Social media items unverified. No victim identities (BNS Sec. 72). Emergency 112, Women helpline 181.',30,44);
   // Hindi glyphs are not in the built-in PDF font; non-Latin text is replaced. Use the CSV for Hindi headlines.
   const clean=s=>String(s).replace(/[^\x20-\x7E\u00A0-\u00FF–—’“”•]/g,'').replace(/\s+/g,' ').trim()||'(Hindi text – see CSV/source)';
   doc.autoTable({startY:54,styles:{fontSize:6.5,cellPadding:2,overflow:'linebreak'},headStyles:{fillColor:[123,31,162]},
-    head:[['Date','Type','Channel','Place','Summary','Status','Verification','Source links']],
+    head:[['Report date','Type','Channel','Place','Summary','Status','Verification','Source links']],
     body:visible().map(i=>[i.date,i.type_label,i.channel,clean(i.place),clean(i.summary),i.status,i.verification,i.sources.map(s=>clean(s.name)+': '+s.url).join('\n')]),
     columnStyles:{4:{cellWidth:170},7:{cellWidth:200}}});
   doc.save('incident_reports.pdf');};
 
 Promise.all([fetch('data/districts.geojson').then(r=>r.json()),fetch('data/incidents.json').then(r=>r.json())]).then(([d,inc])=>{
   distData=d; renderDist(); incidents=inc.incidents; renderInc();
-  document.getElementById('gen').textContent='on '+inc.generated.slice(0,10)+' (last '+inc.max_age_days+' days)';
+  const lu=new Date(inc.last_updated||inc.generated).toLocaleString('en-IN',{timeZone:'Asia/Kolkata',dateStyle:'medium',timeStyle:'short'})+' IST';
+  const span=inc.date_span||[incidents.map(i=>i.date).sort()[0],incidents.map(i=>i.date).sort().pop()];
+  document.getElementById('gen').textContent='continuously since '+(inc.first_collected||span[0])+' (cumulative; last updated '+lu+')';
+  document.getElementById('tInfo').innerHTML=`Incident data covers report dates <b>${span[0]}</b> to <b>${span[1]}</b>. Last updated: <b>${lu}</b>.`;
   window.__ready={districts:d.features.length,withData:d.features.filter(f=>f.properties.rape!=null).length,incidents:incidents.length};
 });
 </script>

@@ -1,6 +1,6 @@
 {
- "schema": 4,
- "last_updated": "2026-10-10T14:52:26+05:30",
+ "schema": 5,
+ "last_updated": "2026-10-10T15:13:22+05:30",
  "first_collected": "2026-10-10",
  "date_span": [
   "2026-09-10",
@@ -21,7 +21,7 @@
    "lat": 20.0112,
    "lon": 73.7902,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Roses, chocolates dropped at Nashik woman’s home; cops nab [age removed] stalker",
+   "headline": "Roses, chocolates dropped at Nashik woman’s home; cops nab 30-year-old stalker",
    "summary": "News media reported an alleged stalking incident involving a woman in the Nashik, Maharashtra area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -63,7 +63,7 @@
    "lat": 18.5214,
    "lon": 73.8545,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Pune Crime: [age removed] Woman Fractures Wrist After Bike-Borne Thieves Snatch ₹1.2 Lakh Mangalsutra In",
+   "headline": "Pune Crime: 57-Year-Old Woman Fractures Wrist After Bike-Borne Thieves Snatch ₹1.2 Lakh Mangalsutra In",
    "summary": "News media reported an alleged chain / phone snatching incident involving a woman in the Pune, Maharashtra area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
@@ -240,8 +240,8 @@
    "lat": 27.4362,
    "lon": 79.4895,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Farrukhabad News: दहेज हत्या में [उम्र हटाई] बाद पति व उसके भाइयों को [उम्र हटाई] कैद",
-   "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Farrukhabad, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
+   "headline": "Farrukhabad News: दहेज हत्या में 17 साल बाद पति व उसके भाइयों को 10 वर्ष की कैद",
+   "summary": "News media reported an alleged dowry death / domestic violence incident involving a minor in the Farrukhabad, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -258,7 +258,7 @@
     "https://news.google.com/rss/articles/CBMimgJBVV95cUxOZlRPcUYzVjVHb2V1TXdPd3FwVjJoV0NkVGFpeHJmTzAzVFNaRGFzZzNZN1hfY0xfREFoYjdnUHctTWQwVUxGWFRFdGdDZmY1VzQ0Tm8yV2wtcFpDQ2MwbXQtdE8zd05OZ0JzVFFCVHQyUlg2ckVER0oxbjhQY1FIcUlkbXlYNE5TcXlRM0xCYkxGUnlaM2ZJOEktSWh6dzZPU253NGQ1VGVtV0RCOVBVWGVpbnZ4VE5zY0tNNlVGcGVOT3JMUFpvU3Nsc1AxQmFmNUpuV2ZtaXY0QTBabEhyMTMwbjZjb0xhaEdtZE9zb1FCNURHRWF3OTdkZmFaUFhfbHEyS2UwdmVPV1IyX3BxVWE2YkN2TlVaTUHSAZ8CQVVfeXFMTUQxQjFsSUJRT1VlVEtsRFVoOW1PQ1prXzFRY3JOcDBrSWlpeFU1UEpmOEM1NGZrQ29KMDY4RDROZEVxRHhaOWRMZm5rdkVpS0VhX3lhSlp3NXcxUnByQkhjVW5fTWhXTUR1UmhIc3J5azRYRGxBVVFwemNTc2twSDY4MEtqUjNyNHVQN0tUbGRnRGdmYnM3SlhLblo5cW9iZjRWWkhrMEJZd3FmRkoyZHhMSW1mUjViVWEybGR1OTZ3ZjVxZmhGbThmVnB6WnJTM2pxLWJLaEF6MU1OY2g1Y0gwYUJRc0E1LUJQa3hiMWpPOWo5bjhUSzRzU0kxeVAtU2c4blI1YjRqcWpkcG9rQ3NOTS12NlUxczBXeDhQc2M?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-10",
@@ -282,8 +282,8 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "पत्नी पर तेजाब फेंकने वाले पति को दिल्ली कोर्ट ने सुनाई [उम्र हटाई] कठोर सजा, 1 लाख का जुर्माना भी लगाया",
-   "summary": "News media reported an alleged acid attack incident involving a woman in the Delhi, Delhi area. Status in reports: Convicted / sentenced (court).",
+   "headline": "पत्नी पर तेजाब फेंकने वाले पति को दिल्ली कोर्ट ने सुनाई 14 साल की कठोर सजा, 1 लाख का जुर्माना भी लगाया",
+   "summary": "News media reported an alleged acid attack incident involving a minor in the Delhi, Delhi area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -300,7 +300,7 @@
     "https://news.google.com/rss/articles/CBMitwFBVV95cUxPbkhSLWdObFktN1VrMVVDTlpwZjVaRDEzbEQxYVltby1peFFjblFhYmlnN25XQVdkbnUxb3ZiRFVjdkMzRERYU0VqNThaM3YtSGt4dEh4ckk1dFlMVFFucjdnTktRM2FDWUJ2eE0wb0Q0WVI2N1V5eU9KUnUwRDRuRmV1Z1dSM0FEODhXbFVManVNdC1RTFlRVzN5eDNtblZvTXhrMUd6eHVYdTNVTGV0dmNHUmEzSms?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-10",
@@ -1689,7 +1689,7 @@
    "lat": 15.499,
    "lon": 73.8282,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Tarun Tejpal Surrenders to Serve [age removed] Rape Sentence in Goa",
+   "headline": "Tarun Tejpal Surrenders to Serve 10-Year Rape Sentence in Goa",
    "summary": "Social-media posts reported an alleged rape / sexual assault incident involving a woman in the Goa, Goa area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "Social media – unverified (post links to / summarises news reports)",
@@ -1782,7 +1782,8 @@
      "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxPbVpiUl91V3JYeDlEODRhbW5tMHFsSFFoRXdUclkzbWdmZkdUSlZTbjlNRFRRTUpnc0FWc2UwMEFJQ1p5dGZrNEdndGZUTDRRSU9YTUhNeHpDWXE0a2YzUkJlYzhFbVRxeWo2VGo4ZjJ4OG04ZmFrbWR6aEZvUTM4bVN0U1lLZEZLaWlkVGlPX0xUOVhiVzJDVFlCWVozS0pnREZDeFE5WFBzUEpUU2xoQXdRSS1qUHVQNHcwYTY1c3BXZFZIeWdoNXNnY0ViLWFqQXhPRzU1V2k0NXA1Mm1FTkV2UUY3MHBGT0xkWE96Z3dSc0pSakNaaUsxSDlhYW5a0gGGAkFVX3lxTFBOZ2k4SGhlNTNfN1ZoTTlodzZGc3ltU2xsZXlrYUlXbDY1T2ItMjhKQVVnb09rVDdSeEtZYUZ3RTJid0VxMTZtS29admlQS1Z2ZER3MXN2WFFOWUhFNmJaaUVLYjJpRk1UWVBQWE5NSkdROE5IaEtHOXoyOXJiY2FHd0hYQUNOcFptNzFCTlRydENCU2stVHhIa3g5RjZrOTVGM0MzcDMzU3NsZEVIS0Z3NlBGN3hEWWhzLUlqYXZNT1NvYzZ2dE1MRF9KLU03RUhGalBtSGpKS200bEVIbVI1RjNKSVpuZlFfSmRKMkNNUTR3VjFfX2sxVzlKQ0EtWVhFUlJiOFE?oc=5",
      "date": "2026-09-15",
      "kind": "article",
-     "outlet_url": "https://www.livehindustan.com"
+     "outlet_url": "https://www.livehindustan.com",
+     "article_url": "https://www.livehindustan.com/bihar/gopalganj/story-violence-and-theft-incidents-reported-in-baikunthpur-assaults-sand-mining-cases-and-road-accidents-201789488798640.html"
     }
    ],
    "all_urls": [
@@ -2042,7 +2043,8 @@
      "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPSXEtVTQxOXJ5cTRQcUhfZmFOYkdabUNaeFlMTkpkcW8zM3dhS2ZlTTkzSmptdTY3aU9kN0dHTnhvVWZYMW80aTBYSUVDVVNFcjd6OF9pa183azFfWnA4QlBZM0w2dWJDbTQ1S3RadTNNeWhfWEV3NjFpWUpLWi1lM1B6aGpnUzZCMnpmZF80U0Z6SHpRaWZhM2JhTWJnbVg1YkhxVUVaS3ZfUlRsZXY2X05ISC1FZW1yRUR3VmI1UzNac3NsR1c2VHRDZWpyM1UtMmZhaGc1Rkh0cDcyLVRPYmtFT2lQem5fU0HSAe8BQVVfeXFMTk4wajZ3QWI2NmFkS0VhejM0cXduTGdEcndPc0pDNnl1SmlXVm5SSHNJeVZQR0pDYWtIOWY0TlpwR3gtXzlrWWx4ZkxEbDRUS1NpckpxeEN3dWw3LVB3dHhvSnlrR0xVZ0ZOSnM5WER2cjAxWkRUa18xbVA1YnV5dGVyZkkwN1RvQTk1TnBxeDlzeXM4NTB0X0xfQ0ZkdnVPaDBEWVN6eTNCdVZ5cS1POTg3N21tTzJPYnB3alZYWGRidzdVQ3RTSnRZRnZ5X2NnbS1wUVNqa01qVGNsd0hpZkZNVDJPWG1lRnZPbTFJQnc?oc=5",
      "date": "2026-09-16",
      "kind": "article",
-     "outlet_url": "https://www.mid-day.com"
+     "outlet_url": "https://www.mid-day.com",
+     "article_url": "https://www.mid-day.com/mumbai/mumbai-news/article/mumbai-womans-memory-of-bike-number-helps-powai-police-crack-rs-2-25-lakh-chain-snatching-case-23650182"
     }
    ],
    "all_urls": [
@@ -2083,7 +2085,8 @@
      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOLUxTcmNSVHVCZHNJdFpnYmpOZkZRTHQ5MTlRSWRvWERja3RFU1A5UVlKUHJscTJUS2UzZkVyemcyUVIwdFlSNFhpWV9WT1h6SG5aeTFyalZQdTZfTWpHZm9wSW14aEI4aW42LWFLelBnazVYYUxDR0FLN1V4ZldIMnRjZzBDLWF1V3VMUFNOMNIBjwFBVV95cUxOLUxTcmNSVHVCZHNJdFpnYmpOZkZRTHQ5MTlRSWRvWERja3RFU1A5UVlKUHJscTJUS2UzZkVyemcyUVIwdFlSNFhpWV9WT1h6SG5aeTFyalZQdTZfTWpHZm9wSW14aEI4aW42LWFLelBnazVYYUxDR0FLN1V4ZldIMnRjZzBDLWF1V3VMUFNOMA?oc=5",
      "date": "2026-09-16",
      "kind": "article",
-     "outlet_url": "https://www.onmanorama.com"
+     "outlet_url": "https://www.onmanorama.com",
+     "article_url": "https://www.onmanorama.com/news/kerala/2026/09/16/wayanad-chain-snatching-arrests.html"
     }
    ],
    "all_urls": [
@@ -2124,7 +2127,8 @@
      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOcmdHUHZNNFJoZWNaM3Zpa09Fal9PR044Ulg5NkNXUWI1WTQ5bWFtRVgyZDN4bTVBejRUeGdOcFdPUjVETHR1WUlJVjlBcDQ5VlBJRl9OX1lIdVJwWElPekZUR3ZKT25vZEpTalJRNUNXVUZWOHk2bGJQVVN5RFk3bUdDQzBzTmpiOTVfRHA5Um8tdnhvRjUxSmpfdzN5dTF2SjdZS1owYlZERXZicG85QWQ1a9IBtgFBVV95cUxQYUhNZGZZREt3QTlfbXhXU3d2R3l2dTdtN3JOWXplOV9ad0dhS21ndGhtQjRzR1QyU0J2Yk1BOGZvZk1KSXI4TzF2XzhlN2J5dS12ZURiODU3WTBVYU4yTlo1NGNxa0t5TUFYbDJ2dTdLRG5FVnNlMUtiN1Zjc0pZaEZRUHJhTFZ2YlZoaWlkcjE5Q085NklDdWN3aGtxdEM0bVNKS09kUkduX2tIXzhMblRwQzhadw?oc=5",
      "date": "2026-09-16",
      "kind": "article",
-     "outlet_url": "https://www.rediff.com"
+     "outlet_url": "https://www.rediff.com",
+     "article_url": "https://www.rediff.com/news/report/85-year-old-man-arrested-for-sexual-assault-of-four-year-old-girl/20260916.htm"
     }
    ],
    "all_urls": [
@@ -2207,7 +2211,8 @@
      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOcV9KZl83SGR0ZldmYXA1bzJ4a1phRlExNHRDbVJFVnZwWlhYZDdQZWVzdS1VelNzOUpDVmV6QUdtbmdHQWxoRThrOGoyeUNIYURlTms5dXJ4UW1QcG1TRk9Ka3hXVkh6WTNNUUpKTW01a1U1c0hwdk1rbHBWT0RIUVRrMFRsNEVlOU9FTWtZUXhMbzhqRlJIYUNIN1pxVEdvSWcwbTZhWDV5NXVKQU94anVGN1Uta1kzVGx6NFVWbjk2aVdVV3JEdFptWnNUa3NF?oc=5",
      "date": "2026-09-17",
      "kind": "article",
-     "outlet_url": "https://www.tv9hindi.com"
+     "outlet_url": "https://www.tv9hindi.com",
+     "article_url": "https://www.tv9hindi.com/state/bengaluru-jp-nagar-husband-attacks-wife-acid-like-substance-sharp-weapon-venkatesh-arrested-3909516.html"
     }
    ],
    "all_urls": [
@@ -2256,7 +2261,8 @@
      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxOandxelA1S3BBT2F2b1prYllMQ05EeVN5TG45c2lqb0ZrSFd0c01JRzdhMnJqU0R5SlZBVW1HTlVLUmtqa0tHemFIUEp1b1RYQmwwTVpmaDNzNWhEUTVPMzZsZ05TU0J0aEI1YUJZclRUMXZVSVBYM0YzV3VjU0p0STBZLWszZVBzTjhPS0xNOWNPd2lWUU9qdExDWU1LTnc4eWQ4dlZ6ZC1CRURxRUVsU0Y5LS12S2dBc0RLaERUZnFmc3d0MFUyQXZrV09Qd3JlcFoxdlFhT1UtWEwwbGlpWGRmWUHSAewBQVVfeXFMTWJsSkRCQkJpNVpUYkROMlREV3pPNXRIakM0QTdhUkJ0NXgwNFVBVzVpUi1SX2gyeGc0cUx5aVVDZ01tUFRDeEdqVm0zdEVXaFVfa3gyM0ZIODNCZTFWYXhjdzJSX2x2QlFEZGxFOHFtd0lKYmszeHFnc0RpNGxqeGpGNVRpZWo0Q1NLZFBqclFJNzhJcUxrUzlBN3JndVNmbmFrczU2QTYzU29qOFBQMkZRak9HQ056b2dhLUx0VHpKdnpMWkh0MjhGSDRPQnpJSUU1OGxFTjZNeDg2dlc2YUFBNjZrcEhzenBtVGU?oc=5",
      "date": "2026-09-17",
      "kind": "article",
-     "outlet_url": "https://www.ndtv.com"
+     "outlet_url": "https://www.ndtv.com",
+     "article_url": "https://www.ndtv.com/bangalore-news/bengaluru-man-attacks-wife-on-camera-bengaluru-man-throws-acid-on-estranged-wife-attacks-her-with-machete-12058934"
     },
     {
      "name": "The Times of India",
@@ -2306,8 +2312,8 @@
    "lat": 25.4439,
    "lon": 80.5595,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Banda News: दहेज हत्या में पति को [उम्र हटाई] कैद",
-   "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Banda, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
+   "headline": "Banda News: दहेज हत्या में पति को 10 साल की कैद",
+   "summary": "News media reported an alleged dowry death / domestic violence incident involving a minor in the Banda, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -2324,7 +2330,7 @@
     "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQY05mejdhNVNxNFR5R0xyM2gtR3hTQVhwYnE2ZHA1UXVCVnhOYm1QelBmSGR1TGpOUkJFRVlfZEQzTXBCQldRNTRrUFk1cTVUQVdZNDJjWFZMaXZPMF9aQjRWY3hiaE0zREpIaDlFQ2c5bkZpNFo2dENYZGFfQXdNcnpoVnphSGxSdjJIcnhoRHRJZExsUTAxOFRVamw1cUdGN1N2S214eE5jUXVOakVpb00wZGZ5ZVBCTUYxaC1RaDV2TzhfYWNtVHhBZDdKQVlTc3Rkc1JYSlFYZ1MzaTRj?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-17",
@@ -2400,7 +2406,8 @@
      "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxON1FHMGRQOHkxeDhNMzhCRDJWdy1CUDNXQjlVRlFhQ0Y5Zkw4RXg4SjJxRDdvM3FqZnVFMTByVXdUNmRFTlR6VGdDbmdGY2VrckF4SVREcGF4Sml5MXFfanFjQTdxdU10NWl4aVE5SG84LTVGVFVhekdWNzNIX1hCaTk5UzB1VzQzUHJGTVhJaFoyME9fU2hyZGg4NEN0clVFWEd0MEJaai1wYmtGMXQ4djdFQm9sNjY4eXZBTHR4ekNkWkk1aUttSTgzTmFvZkl5UGwxSU9zTmc0MHdTbEI2MGFSSHJTcWpmVVNFR1BuZ3VhN1FPYkJHOUJQNGxZUEFQNU9PVWsyMUfSAY4CQVVfeXFMTXhvR2prNDJRZlByVlh1NHlrTXkwWDdCWWp1bnZxdFBiRXVBQndZOGxEUklrLWJIUmNSQ0ZIZ2E2QTVVRDE3M2wtellWcEZJclhoV21NT0JjMndWN0hTZE43SWJFc1djUFYyWmRYVnYtWDc3elNROWNlVXNIQjBYdmFwcGd5N3Zab1RZYlVPamkwc1FBQnB1bHlfaGZ4N0Z3cjRXamNlY0JkcEwzNk1yQ0pFSXhkajl0WDRuTTJ4UlBORXpXTFlYNkExeERHb3pyS044LW1IVFBadXVnR2hZMFZncXRFZEhmWHlOT25xNTJHQUxKamt4dFhxcnZGWWp5OVhJNUxpZHZBMTIwMHdn?oc=5",
      "date": "2026-09-17",
      "kind": "article",
-     "outlet_url": "https://www.amarujala.com"
+     "outlet_url": "https://www.amarujala.com",
+     "article_url": "https://www.amarujala.com/uttar-pradesh/budaun/father-in-law-and-mother-in-law-arrested-in-dowry-death-case-husband-already-in-jail-badaun-news-c-123-1-bdn1038-173347-2026-09-17"
     }
    ],
    "all_urls": [
@@ -2441,7 +2448,8 @@
      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOYzktc0dIaFJ3NXZGM2hrdjNHeFc3TGM2emxuSm9hLXJvT0d4cjUwanpRS1pHTTZDQ1RTaFhjYzV0RUxld3JWNlY3c182endpV3RPc04xOXcwU0FuMWRBZzVhYkdOcXhxZUFHY21iblFEY2NSbjdfbktJWTJXZGF2WmtCdTFJbEtEQ2J5NVFONjVYaDVzeC1ORTBSN1dibmJIc1pId3dLeGg3MTRF?oc=5",
      "date": "2026-09-17",
      "kind": "article",
-     "outlet_url": "https://www.jagran.com"
+     "outlet_url": "https://www.jagran.com",
+     "article_url": "https://www.jagran.com/news/national-bengaluru-nurse-attacked-with-acid-by-husband-in-jp-nagar-40376357.html"
     }
    ],
    "all_urls": [
@@ -2555,7 +2563,7 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Delhi News: बच्ची से छेड़छाड़ के आरोप में [उम्र हटाई] आरोपी गिरफ्तार",
+   "headline": "Delhi News: बच्ची से छेड़छाड़ के आरोप में 50 वर्षीय आरोपी गिरफ्तार",
    "summary": "News media reported an alleged molestation / sexual harassment / eve-teasing incident involving a minor in the Delhi, Delhi area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -2681,7 +2689,7 @@
    "lon": 77.5901,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "Family Abducts Rajasthan Woman from Bengaluru Home, Chase Injures Six",
-   "summary": "Social-media posts reported an alleged kidnapping / abduction of woman incident involving a woman in the Bengaluru, Karnataka area. Status in reports: Arrest reported.",
+   "summary": "Social-media posts reported an alleged kidnapping / abduction of woman incident involving a minor in the Bengaluru, Karnataka area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "Social media – unverified (post links to / summarises news reports)",
    "sources": [
@@ -2697,7 +2705,7 @@
     "https://x.com/i/trending/2100500510239285615"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": true,
    "report_date": "2026-09-17",
@@ -2763,7 +2771,7 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "[age removed] raped, stabbed to death in Delhi; 3 minors among four held",
+   "headline": "Minor raped, stabbed to death in Delhi; 3 minors among four held",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Delhi, Delhi area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 5 outlets (multiple reports); 5 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
@@ -2843,7 +2851,7 @@
    "headline": "One peculiar symbol, 50 CCTV footage: Inside Delhi Police probe of a teen's gang rape, murder",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Delhi, Delhi area. Status in reports: Complaint / allegation, police action not stated.",
    "status": "Complaint / allegation, police action not stated",
-   "verification": "News report – 2 outlets (multiple reports); 2 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
+   "verification": "News report – 3 outlets (multiple reports); 3 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
    "sources": [
     {
      "name": "Deccan Herald",
@@ -2860,11 +2868,19 @@
      "kind": "article",
      "outlet_url": "https://www.jagran.com",
      "article_url": "https://www.jagran.com/delhi/new-delhi-city-delhi-gang-rape-murder-adult-accused-to-tihar-minors-to-juvenile-home-40377703.html"
+    },
+    {
+     "name": "Rediff",
+     "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPSjR2ZWVIYTZfQWF4VkFueGIwZHA4a2tiV3J4ZUZqQTRmUE82VE1GNk5YY2lUdXJWLUhLTzV2b1J5YnFqVE94UTY4b0dYY0FkNzRBM0dlVFB4dmZKM2gwcy1yV01ieC1fRzVvRUJCSXZGbTNqMDNVeHZhbVZJZUhSc3R1ZnBrQ0dHLV8xLV9MSGRMSVlMTGYxNDBYNmJIQW_SAaIBQVVfeXFMT0pRNnJWUXNyT0VKZkh1cjU0cGhXVVJzODM0OXVSd1QyYlNzTk1rZlhDbXBKdWhNWTdVNm1qZHdZc3JIaEFGdER0bHNJc0g2cVpLTTdJNkYwVDBfOVN5Szh4RGZDUC1XUVM1Z1pmUGJvVzlHcDZsSmM1M181X1o1YzhtZGJ5Rl9BNHQwME5RTWdVMll0MFRwbjZEaE5zQVlZUWln?oc=5",
+     "date": "2026-09-17",
+     "kind": "article",
+     "outlet_url": "https://www.rediff.com"
     }
    ],
    "all_urls": [
     "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQaWduTkxKbEFNcG9pczRpTjBheDd1LW5adTlaZnAwdXhhNDlad0pDa0k4a1N1czVEVU1Pby1HOU1NWGxHdTJVdVVvVjZLU014RUp0ZjZ4N0J3OUZRWW92QlBwVDdFaUM4VE1MOXJ6U3JfVXZXaGZMYmVlOFZxN3YzdlZmTk9rYXRwU29CUnVVSS01WkJPenMyWV9oVDUzcVNPVkxPeVBuall3LUNDUGpGa25xTE1FWktOckU1dzczQm1ZTzVRZEFQeGxwU1BpTlFGMi1TQw?oc=5",
-    "https://news.google.com/rss/articles/CBMixgFBVV95cUxQQ0RrSFpHa1BEN3ZCUW40cmt5ZnpWdXBkUUtyVzQzazBRd1VENVdSTl94c19VUjJnQ2FwaHVVT3BwSXV6MVZZYll4ejJKYlhkVERueEdzS0ZJNkNOeG52eGJFV0h0OV9KQ0I1ZW8tRzJOY05YSjdaMjY4dHJzNUdUa3R1YnRDLUxLZ3RDdXg1TkVwS3lXUUxNZG1Jb1NkOWpCSUdabTBidV9qWnNUR09aRHcxdWRVVUdSTXk2ZnRNSmFncWhfbGc?oc=5"
+    "https://news.google.com/rss/articles/CBMixgFBVV95cUxQQ0RrSFpHa1BEN3ZCUW40cmt5ZnpWdXBkUUtyVzQzazBRd1VENVdSTl94c19VUjJnQ2FwaHVVT3BwSXV6MVZZYll4ejJKYlhkVERueEdzS0ZJNkNOeG52eGJFV0h0OV9KQ0I1ZW8tRzJOY05YSjdaMjY4dHJzNUdUa3R1YnRDLUxLZ3RDdXg1TkVwS3lXUUxNZG1Jb1NkOWpCSUdabTBidV9qWnNUR09aRHcxdWRVVUdSTXk2ZnRNSmFncWhfbGc?oc=5",
+    "https://news.google.com/rss/articles/CBMinwFBVV95cUxPSjR2ZWVIYTZfQWF4VkFueGIwZHA4a2tiV3J4ZUZqQTRmUE82VE1GNk5YY2lUdXJWLUhLTzV2b1J5YnFqVE94UTY4b0dYY0FkNzRBM0dlVFB4dmZKM2gwcy1yV01ieC1fRzVvRUJCSXZGbTNqMDNVeHZhbVZJZUhSc3R1ZnBrQ0dHLV8xLV9MSGRMSVlMTGYxNDBYNmJIQW_SAaIBQVVfeXFMT0pRNnJWUXNyT0VKZkh1cjU0cGhXVVJzODM0OXVSd1QyYlNzTk1rZlhDbXBKdWhNWTdVNm1qZHdZc3JIaEFGdER0bHNJc0g2cVpLTTdJNkYwVDBfOVN5Szh4RGZDUC1XUVM1Z1pmUGJvVzlHcDZsSmM1M181X1o1YzhtZGJ5Rl9BNHQwME5RTWdVMll0MFRwbjZEaE5zQVlZUWln?oc=5"
    ],
    "first_seen": "2026-10-10",
    "minor": true,
@@ -3015,7 +3031,7 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "दिल्ली में [उम्र हटाई] लड़की से गैंगरेप के बाद हत्या, तीन नाबालिग समेत 4 आरोपी गिरफ्तार",
+   "headline": "दिल्ली में नाबालिग लड़की से गैंगरेप के बाद हत्या, तीन नाबालिग समेत 4 आरोपी गिरफ्तार",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Delhi, Delhi area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -3306,8 +3322,8 @@
    "lat": 28.8797,
    "lon": 78.8095,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "मुरादाबाद में पत्नी पर तेजाब फेंकने वाला पति दोषी: कोर्ट ने [उम्र हटाई] कठोर कारावास और 36 हजार का जुर्माना लग...",
-   "summary": "News media reported an alleged acid attack incident involving a woman in the Moradabad, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
+   "headline": "मुरादाबाद में पत्नी पर तेजाब फेंकने वाला पति दोषी: कोर्ट ने 5 साल की कठोर कारावास और 36 हजार का जुर्माना लग...",
+   "summary": "News media reported an alleged acid attack incident involving a minor in the Moradabad, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -3324,7 +3340,7 @@
     "https://news.google.com/rss/articles/CBMi3AFBVV95cUxObVNIYmVCUDlkZnBLSE1zcFB2WHdvbnMzUjlZeC0yQlBWQ1hfZllqV0NIcUlMT2JEbjZjTGRIZlR1WVZWeXdUWEpQVDFsVml1MjZSTnBsTkdrZHB6OVk0Wl9qTUd3RTQydDgzR2I1U181SnFielFoSWdKMEliQUh5bkpvQnRkUWozb3Z6X3Q1clViMUZjTGg0R0NpVTZZN2VpNWE1X0pmc04zYTRTWUdKcFNrazVmR01Mc0JhRkNBWlBtUFJSWGVpTGEyU1JpbXRwYWFuM1FjUy1aaXFH0gHiAUFVX3lxTE1zX25pMFdjOURBMWVKX0tyOFVhQUVkYmpKRVV2NnY3V2VnckZVb2ZlTkZmTkFBNVYzeVlpTHpNRlV3cnlxdHJwSVpOUnhnNzQteVhpVEd4cHJUSm5CSkltdVFLUUg1dEhoVEJwWmVXU0NtdzdLMDVQWE1Fa1FocHNvS0h0ZkZETDhId1ZKcmgzMTN2RVJVLVZfMTE3MVhlcjEzX0JSTmlBajBFVEpnRTJtRHRjZjhuaW9mUGR1c29QMXo2UnRTUnRDa2RoYTlzTUcyN0NBMlVMR1BzNmkzcmRPcVE?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-19",
@@ -3391,7 +3407,7 @@
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "3-star tattoo, sustained CCTV scanning help police solve Delhi gangrape-murder case | Latest News Delhi",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Delhi, Delhi area. Status in reports: Not stated in source.",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Delhi, Delhi area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source); 2 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
    "sources": [
@@ -3416,7 +3432,7 @@
     "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQQ2dxRWszamh6X2lyU1N6cE5BUWR2N2c5cy1GMWRQWWlia1lnc2x1MHlZYkwzd1E5YUh1NFpPcUZRRVpkVEVCME5adFdZeFVIRW9aZTRqVThOa0dodnpOaEJqblJDdzBWdWxXeGlVRV9sN0RxUEJ0d2FLNHFRSlNrdm54NnRFdXF4ckRJTGpCUmo1ZUF2RFVQaEJwQUw5T3ZRb1d3NkNuY0NwTkcwY0k3WnlSV0ROcGxKZjUwZ202eVU1SDFpczdrZ2ktZnhXdEMxcUxPS29KdUdiT0hkRnc40gHkAUFVX3lxTFBWbDhraE92MllCMnRVM0hIMy15Sk1hQ3JzUkhtYkVuSTBmbFdtcWdtcE9tRm54VmxQc2RmcnZrLWFtZUpLYjgwZzdtSHliWngtOUs4SmdvZnVCVndreEJJNVpFaDRjdm9PcldaaXZtakZrRk85NFNfekRld2pvRUplWHNFaThmSGtjaHNfSlBlR3h0eFh1c2lubWVwcjV3U3l6V3laYXdVdmJmVlpMa0Vlckx3RDlyaTFweWFoTjBBcnpXdEY5Nlh1S3ZRTHRNN3lqVm5QZGhiU1ZQODhWSFZxU0FZdg?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-19",
@@ -4120,7 +4136,7 @@
    "lat": 28.5469,
    "lon": 77.2588,
    "precision": "Locality / police-station area (approx., ±2–5 km)",
-   "headline": "Delhi Horror: Minor Girl Allegedly Sexually Assaulted Inside Shop, [age removed] Accused Held",
+   "headline": "Delhi Horror: Minor Girl Allegedly Sexually Assaulted Inside Shop, 56-Year-Old Accused Held",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Kalkaji, Delhi, Delhi area. Status in reports: Accused shot/held after police encounter.",
    "status": "Accused shot/held after police encounter",
    "verification": "News report – 13 outlets (multiple reports); 15 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
@@ -4502,7 +4518,7 @@
    "lat": 26.8381,
    "lon": 80.9346,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Pension row, mobile demand and an acid attack: Lucknow cops probe into [age removed] woman's suicide | Hindustan Times",
+   "headline": "Pension row, mobile demand and an acid attack: Lucknow cops probe into 65-year-old woman's suicide | Hindustan Times",
    "summary": "News media reported an alleged acid attack incident involving a woman in the Lucknow, Uttar Pradesh area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
@@ -4544,7 +4560,7 @@
    "lon": 80.3218,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "कानपुर: सामूहिक दुष्कर्म और हत्या में चार साल से फरार 50 हजार का इनामी राशिद जालौन में गिरफ्तार",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Kanpur, Uttar Pradesh area. Status in reports: Arrest reported.",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Kanpur, Uttar Pradesh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -4560,7 +4576,7 @@
     "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPeXptSnJuRlAxaW96VHFUdXhUZlNTZlExb3FwdWtHcXlTOGU3djF3SjYxSklHSUdwYlQ0T3JPUHl1OEEtRTBWcGd3bHdjTC1WTDduSE1zdGw2eWlVeTZUYVJaUEJaNDZ0Ym0zQURaQklOU1ZoMHZuTi1GY3F0WEtqT1hjLV8yUEVhd2pfd0d3SFZKb0tZcGVRQnliNXZ5QWk2MElWa2FmOFRiVjhaZ0ZBOUxWUmhJOTdsLWN6TXAtbU1FTEZnbE5ibjhJU2QzYmJ4TzRkeldrOTZKUzlrWnhhaTFlUU82MzRaZTIyUnFreG01cjFJ0gH6AUFVX3lxTFBoU2FfSVN3ODIzOXd5TmtJRmswcHBYNm1HZFNicUFGZ1hOWW9NNVZMcFVpSjg5bzMwanlWUmg0OGpaY3I2ZDlNSklJeHF2cGpKRU5IY3Z1Y011bUk3cmFid3dLN0xfYnpwaHo2TU5VbUlJakZxRUp0cy1SVjB5R3VMMXpDRnJzR3NaQzR6NmVmZUpyOVRhS3Z2UlFjWlNtUldnLWRyczQ1VTR5RlVnUzhvRFJyc0ZMbVk4bzh3MjFDNXB5c2dndjJUTVY2QmxtaWxPMWROR1k3eEdOZ2VOQ1l6djJXVlFyQ0dSSnl4b3hsSkdlWW9KWENOcnc?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-21",
@@ -4957,7 +4973,7 @@
    "lat": 28.6295,
    "lon": 77.0868,
    "precision": "Locality / police-station area (approx., ±2–5 km)",
-   "headline": "[age removed] Girl Sexually Assaulted in Delhi Shop, Accused Arrested",
+   "headline": "Minor Girl Sexually Assaulted in Delhi Shop, Accused Arrested",
    "summary": "Social-media posts reported an alleged rape / sexual assault incident involving a minor in the Mithaas by Grover, Delhi, Delhi area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "Social media – unverified (post links to / summarises news reports)",
@@ -5081,7 +5097,7 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "दिल्ली में दरिंदगी की तीन वारदातें: किशोरी से सामूहिक दुष्कर्म, [उम्र हटाई] बच्चियों से भी की गई हैवानियत",
+   "headline": "दिल्ली में दरिंदगी की तीन वारदातें: किशोरी से सामूहिक दुष्कर्म, नाबालिग बच्चियों से भी की गई हैवानियत",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Delhi, Delhi area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
@@ -5125,7 +5141,7 @@
    "headline": "3 men posing as cops rape teen in park in Delhi's Kalkaji",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Kalkaji, Delhi, Delhi area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
-   "verification": "News report – 5 outlets (multiple reports); 7 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
+   "verification": "News report – 6 outlets (multiple reports); 8 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
    "sources": [
     {
      "name": "India Today",
@@ -5175,6 +5191,13 @@
      "date": "2026-09-24",
      "kind": "article",
      "outlet_url": "https://indianexpress.com"
+    },
+    {
+     "name": "India's News.Net",
+     "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQQzI1WlVsNzdJbndTSXVYQ0dKbVFBOTZSQWZqc0FOR2pCUzFMZGpMMXgzUEdMWkVXc3FxVmU3ZmhmWG5zbUlfcjNhUkphS0lCUVZ6Y0lfcXpnbnJTUXBSNkZCRnhMaDF5TWNZdjVSUGlCUEhCY0RPaklVNVd3bm5ucHRZSzBqWGFQTnJoZUxxMVNaWjItYXlfUUZjS1FoeVpON1pxeXc4UmZoYU4xNFRNNmZvaGs2dF9ndEROVUZ3VVl0SEZo?oc=5",
+     "date": "2026-09-22",
+     "kind": "article",
+     "outlet_url": "https://www.indiasnews.net"
     }
    ],
    "all_urls": [
@@ -5184,7 +5207,8 @@
     "https://news.google.com/rss/articles/CBMizgFBVV95cUxOY2tjb2cxUldfcWluLWVmTzQ1TFVLajJCRUJCbl9DOEFHbVpVTklKMkJOelNhOEFQSUJpN1E3eGJmYmhkR19nM0ItbnFPaTFQU1AwMkVDWm5oeWFQSHNDeHR2N1hDczJXVlBTd2NRT3dpaVVkMXRCRWk1SFh1UHBRRmVLX0FiVmZwaEFjQWMtN2xLRWdRbVd5dnQtV0RGWjFxUWdWdmQ1T2wtUFJQMzBrNEpEQTNldWV2MllyTlpBQVVGRXZ5bWxNNnNGcEZGdw?oc=5",
     "https://news.google.com/rss/articles/CBMi3AFBVV95cUxNS2FhMHpuNE5UZi1FeDhNWWtWdTMwM2ROeDBzM3dMLS1NTjEySWxrVWNSX0cxelhRSWVTU083VU0xNkM3MFJ2RGNPeTFpcHZTSWFxdFl5NmpHSVVJeDQxZXZnNTF5RUNRbGo3bnFMSWhqamt6SWN1N1JSZW1CZDNvWElIcWVkUUVhZlZERFJEZUoxZ3BwS25JVDNqWFQyclRNWmlXdm81NW4yV3NRUGNfTUQxUlhMb2ZWWksxcW56QnZhWVd1dHVNczYtenk2MHR0VGk2ZUdDVS1iQmxa0gHiAUFVX3lxTE1tNm14cDhBNkd2bXk0Vk1XNWVldEZCM3lMbTZPaGVPVnZScXhYQUpic0NUYW1jWF9xUWI5bkxwYU1FS185RzdlWlV5blVrRm1sRlpkbUNESDdsZW5oRFdlUzU0eWtvR3h4VldPanlZV21iWHBOUXJxZUFTY1U5MGQ2cVZ3TjdhYXJJRTI0LURmR0pVUnZWc3lsUklUWmpVazdnb251TkYyTW9lRWR0ekpvR1F4Z21rU19sNmlFOTR4ZlRadXVMTzc3Z0xfSFc5cVd5V1VjXzN1cEJwQUtOa1lrSXc?oc=5",
     "https://news.google.com/rss/articles/CBMi7AFBVV95cUxNZ3JUZS1PT2pmbmZIRWRVV1Y4RExyQWU2OXNTWnB3S1pYa2N5VjJvTVBUT0VMRFhCUjJDbUh6NjJ2c21rV0djQUNfbExjR3M4Y3FDN2FRZUNTZVJMZjIzUDFqQzF6cXA3Y2VnQXlDdHppcENyZ2x4Z3ZxaDg3WGV2dzBrUEpQSHl4ZTBUTUx5enJOVFZ0azU5UjdGeGhoLW1wQ2pWb2pmdDF5d0h3WkJkQm1xcEhxaTJ0VHg3cWNVVWlEbEhKX0FOaWxzejJnd1l6TkVnOFo4TUhGTVFMYUlxOHNlYVJwXzVjQzdxdNIB8gFBVV95cUxPUUdBa1lYQkpMQW5uSndZZGozQmxIOHBEZFNxZkhoNk5kVG9uVEVhY05qXzNna0dpOEVkWHBkenUtdHlZMENtamN4ckFRSElUeUhGLTlHVWctYnIwN05SQ3VpYjFfUGpjWGItUldSWl9DeUk1MTIzRGVkNkpKQkJkaEpUQ0NJaUpkUXFwanJVbVQwN19KeHZTMFRjbEoyYXVQeGZBNnBVazBVOU02bEVWM1JQX0dJdFRUdUJ1SWpOX2ZtQ3hxUGROamhqYllMNzhsM3hfS3kxTmZaZkR4OHJydU0ta3N5RXJIWTR3VFJaY1dKQQ?oc=5",
-    "https://news.google.com/rss/articles/CBMiswFBVV95cUxNYS1XN2xRZ2NoRUNSMExmZ0hKWDJoWjN5X3F1R2tGQkNGV1VPcWpoV3BkeFhQZUpaXy1jQkgtNXZyb0FKZlhsM211aXJkLXdGRmhwUnFUYUFNcktJRm55YUVoZE5xT3Z0ekhkU0I1Vzk4Yl9rT2d4Y3ZRc1JYSjZSNWtIZm5yZU5pS2JGVy1pZjU1eW5kVzFHeVlReEF2R0pna3RMTF90TU9hYlZ6MlZaTDYwVdIBugFBVV95cUxOVy14Z0JGTUlNLU1MMHdmMWlNdUloc1NSd19PTm41ZHMxUVB6WGJmSXg4c1Zrb2RNa2oyRVAxd1RJUUtWRGRrWDdxam0zb2N6bkNoeXRRQ2cxZXhCWUlJcWJudGdtbzhFSzdEUFE1T2Y0LVBNTThtX0VfQTBTaHE4dUhlM3ZaTG50Z3c4Skc1NHV0Qkx4MHJMY0w3X1doZTdXcExadUFnTmFJOVVPUUhDVXcyb0ctUi1lRkE?oc=5"
+    "https://news.google.com/rss/articles/CBMiswFBVV95cUxNYS1XN2xRZ2NoRUNSMExmZ0hKWDJoWjN5X3F1R2tGQkNGV1VPcWpoV3BkeFhQZUpaXy1jQkgtNXZyb0FKZlhsM211aXJkLXdGRmhwUnFUYUFNcktJRm55YUVoZE5xT3Z0ekhkU0I1Vzk4Yl9rT2d4Y3ZRc1JYSjZSNWtIZm5yZU5pS2JGVy1pZjU1eW5kVzFHeVlReEF2R0pna3RMTF90TU9hYlZ6MlZaTDYwVdIBugFBVV95cUxOVy14Z0JGTUlNLU1MMHdmMWlNdUloc1NSd19PTm41ZHMxUVB6WGJmSXg4c1Zrb2RNa2oyRVAxd1RJUUtWRGRrWDdxam0zb2N6bkNoeXRRQ2cxZXhCWUlJcWJudGdtbzhFSzdEUFE1T2Y0LVBNTThtX0VfQTBTaHE4dUhlM3ZaTG50Z3c4Skc1NHV0Qkx4MHJMY0w3X1doZTdXcExadUFnTmFJOVVPUUhDVXcyb0ctUi1lRkE?oc=5",
+    "https://news.google.com/rss/articles/CBMixAFBVV95cUxQQzI1WlVsNzdJbndTSXVYQ0dKbVFBOTZSQWZqc0FOR2pCUzFMZGpMMXgzUEdMWkVXc3FxVmU3ZmhmWG5zbUlfcjNhUkphS0lCUVZ6Y0lfcXpnbnJTUXBSNkZCRnhMaDF5TWNZdjVSUGlCUEhCY0RPaklVNVd3bm5ucHRZSzBqWGFQTnJoZUxxMVNaWjItYXlfUUZjS1FoeVpON1pxeXc4UmZoYU4xNFRNNmZvaGs2dF9ndEROVUZ3VVl0SEZo?oc=5"
    ],
    "first_seen": "2026-10-10",
    "minor": true,
@@ -5425,7 +5449,7 @@
    "lat": 25.5125,
    "lon": 86.0883,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "बेगूसराय में नाबालिग से दुष्कर्म ,अस्पताल से पुलिस को मिली सूचना; [उम्र हटाई] आरोपी गिरफ्तार,जानें पूरा मामला",
+   "headline": "बेगूसराय में नाबालिग से दुष्कर्म ,अस्पताल से पुलिस को मिली सूचना; 50 वर्षीय आरोपी गिरफ्तार,जानें पूरा मामला",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Begusarai, Bihar area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -5657,7 +5681,7 @@
    "lat": 25.5586,
    "lon": 87.6457,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "कटिहार में आधी रात एसिड अटैक से दहली [उम्र हटाई] बच्ची; खिड़की से फेंका तेजाब, बचाने में पिता व बहन भी झुलसे",
+   "headline": "कटिहार में आधी रात एसिड अटैक से दहली नाबालिग बच्ची; खिड़की से फेंका तेजाब, बचाने में पिता व बहन भी झुलसे",
    "summary": "News media reported an alleged acid attack incident involving a minor in the Katihar, Bihar area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
@@ -6586,8 +6610,8 @@
    "lat": 28.8797,
    "lon": 78.8095,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "महिला पर तेजाब फेंकने के 3 दोषी भाइयों को सजा: मुरादाबाद में कोर्ट ने 10-[उम्र हटाई] जेल और 31,500 रुपए जुर्म...",
-   "summary": "News media reported an alleged acid attack incident involving a woman in the Moradabad, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
+   "headline": "महिला पर तेजाब फेंकने के 3 दोषी भाइयों को सजा: मुरादाबाद में कोर्ट ने 10-10 साल की जेल और 31,500 रुपए जुर्म...",
+   "summary": "News media reported an alleged acid attack incident involving a minor in the Moradabad, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -6604,7 +6628,7 @@
     "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNSUpXS0Zmbng4V2xCRmlVeGgtZHNJT3VfdmcxYlpkekVOdjYxbzFJbVBWcXpIRUFTd3JMTUlkcXN0dkUwb2UtandZTlJXTkU4dlJhWnVrOEZwRFJhTGZuRHluaV90akhoSktxenlObVVTN2RyckFpbjNvSFYtVXZLLWlKbDRtbHZnVXY1NEotSzdtXzVhNW9KRVpWU2RRMGpRQlRrb3dIZVQ3ak5uX1c1UUNscWI2TEh1cDhGVWw2MG1LSWNQOVZ4Y00xYmwxbzE40gHWAUFVX3lxTE5JX3FDVThxQktEdlc5WHRsZ0lMS3JUakp2RDhNQVlqYUloczhrRW0wZjJsYkEweFlNcHQ5YjVnbGV4MUwxLWhHNXRVcFNDQ0JYVU5Rdnpoa3VIMkQzSE5kNkxEQTk1d2gyREhKTWI5SzIzeEgtSG1ZdEo2SkJEaDVRaFhwLUViN0J5WS14QXVabnBJSEpLcldQOW5GdEVfUDF6ZGwyZHBRb21GSGE3bG0teEJFT2tuNnh5ZXNFVFVRZ0c2TzB2U1g0enFNMlV4REVtclI0ZkE?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-24",
@@ -7720,7 +7744,7 @@
    "lon": 85.8672,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "Videos Question Bihar Police Encounter After Girl's Harassment",
-   "summary": "Social-media posts reported an alleged molestation / sexual harassment / eve-teasing incident involving a woman in the Samastipur, Bihar area. Status in reports: Accused shot/held after police encounter.",
+   "summary": "Social-media posts reported an alleged molestation / sexual harassment / eve-teasing incident involving a minor in the Samastipur, Bihar area. Status in reports: Accused shot/held after police encounter.",
    "status": "Accused shot/held after police encounter",
    "verification": "Social media – unverified (post links to / summarises news reports)",
    "sources": [
@@ -7736,7 +7760,7 @@
     "https://x.com/i/trending/2102598955552948477"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": true,
    "report_date": "2026-09-25",
@@ -8344,7 +8368,7 @@
    "lat": 25.75,
    "lon": 80.0,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "हमीरपुर में नाबालिग से सामूहिक दुष्कर्म-अपहरण का मामला, तीन दोषियों को 20-[उम्र हटाई] सजा",
+   "headline": "हमीरपुर में नाबालिग से सामूहिक दुष्कर्म-अपहरण का मामला, तीन दोषियों को 20-20 साल की सजा",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Hamirpur, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -8549,7 +8573,7 @@
    "lat": 23.0215,
    "lon": 72.5801,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "नाश्ते का लालच, फिर छत पर ले जाकर छेड़छाड़! अहमदाबाद में [उम्र हटाई] बच्ची से वारदात, पड़ोसी गिरफ्तार",
+   "headline": "नाश्ते का लालच, फिर छत पर ले जाकर छेड़छाड़! अहमदाबाद में नाबालिग बच्ची से वारदात, पड़ोसी गिरफ्तार",
    "summary": "News media reported an alleged molestation / sexual harassment / eve-teasing incident involving a minor in the Ahmedabad, Gujarat area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -8959,7 +8983,7 @@
    "lat": 26.8381,
    "lon": 80.9346,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "लखनऊ में [उम्र हटाई] महिला के साथ गैंगरेप के बाद हत्या मामले में दो आरोपी गिरफ्तार, भेजा गया जेल",
+   "headline": "लखनऊ में 70 साल की महिला के साथ गैंगरेप के बाद हत्या मामले में दो आरोपी गिरफ्तार, भेजा गया जेल",
    "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Lucknow, Uttar Pradesh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -9082,7 +9106,7 @@
    "lat": 26.8381,
    "lon": 80.9346,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "[age removed] Woman Gang-Raped and Murdered in Lucknow After Objecting to Men Drinking",
+   "headline": "70-Year-Old Woman Gang-Raped and Murdered in Lucknow After Objecting to Men Drinking",
    "summary": "Social-media posts reported an alleged rape / sexual assault incident involving a woman in the Lucknow, Uttar Pradesh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "Social media – unverified (post links to / summarises news reports)",
@@ -9303,7 +9327,7 @@
    "lat": 28.7935,
    "lon": 79.1846,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Rampur Bushahar News: नाबालिग से दुष्कर्म मामले में दोषी को [उम्र हटाई] कैद, भाई बरी",
+   "headline": "Rampur Bushahar News: नाबालिग से दुष्कर्म मामले में दोषी को 20 साल की कैद, भाई बरी",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Rampur, Uttar Pradesh area. Status in reports: Acquitted by court.",
    "status": "Acquitted by court",
    "verification": "News report – 1 outlet (single source); 2 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
@@ -9910,7 +9934,7 @@
    "lat": 30.7334,
    "lon": 76.7797,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Chandigarh News: [उम्र हटाई] बच्ची से छेड़छाड़ का आरोप, पेंटर गिरफ्तार",
+   "headline": "Chandigarh News: नाबालिग बच्ची से छेड़छाड़ का आरोप, पेंटर गिरफ्तार",
    "summary": "News media reported an alleged molestation / sexual harassment / eve-teasing incident involving a minor in the Chandigarh, Chandigarh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -10033,7 +10057,7 @@
    "lat": 24.7606,
    "lon": 79.6782,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "छतरपुर में [उम्र हटाई] बच्ची से दुष्कर्म! [उम्र हटाई] आरोपी गिरफ्तार; चॉकलेट का लालच देकर हैवानियत",
+   "headline": "छतरपुर में नाबालिग बच्ची से दुष्कर्म! 75 वर्षीय आरोपी गिरफ्तार; चॉकलेट का लालच देकर हैवानियत",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Chhatarpur, Madhya Pradesh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -10074,7 +10098,7 @@
    "lat": 22.5726,
    "lon": 88.3639,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Kolkata Man, Arrested For Harassing Woman At Nightclub",
+   "headline": "Kolkata Man, 27, Arrested For Harassing Woman At Nightclub",
    "summary": "News media reported an alleged molestation / sexual harassment / eve-teasing incident involving a woman in the Kolkata, West Bengal area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -10328,7 +10352,7 @@
    "lat": 18.5214,
    "lon": 73.8545,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "[age removed] Pune Techie Dies By Suicide, Family Alleges Dowry Harassment",
+   "headline": "23-Year-Old Pune Techie Dies By Suicide, Family Alleges Dowry Harassment",
    "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Pune, Maharashtra area. Status in reports: Complaint / allegation, police action not stated.",
    "status": "Complaint / allegation, police action not stated",
    "verification": "News report – 1 outlet (single source)",
@@ -10706,7 +10730,7 @@
    "lon": 85.325,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "Woman gang-raped in Ranchi, 2 arrested; two minors detained",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Ranchi, Jharkhand area. Status in reports: Arrest reported.",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Ranchi, Jharkhand area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -10722,7 +10746,7 @@
     "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPbFEzZE5PaG1lSlQ2aVNXUWNhVUhjUThxbm10R3A2MzE4aGtwVUVVbE9UNkdxVFdCMW9uREVpN24wbkxobUZab3J4Vk5mdDg2YmhUWllSQm5mNzBjSlpPWlF2bFJFaWxMTHFPNGNmb3MyN2NCZWlJWDAzWUVWV1QzUDlVcHhXaGx6M0x0MHlrbEdlS3RHT0RoSFpyeEk4REtNRGtCeHVyTWFndkFIRTZDLW8wX2FONU1IakEzbGxfRzFRcFBCQkp0YXNsOUFCZzhucnNMX0liSQ?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-29",
@@ -11016,8 +11040,8 @@
    "lat": 12.5152,
    "lon": 78.0094,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "[age removed] Girl Dies By Suicide After Repeated Calls, Stalking And Harassment: Why 2 Polytechnic Students Arrested In Krishnagiri",
-   "summary": "News media reported an alleged stalking incident involving a woman in the Krishnagiri, Tamil Nadu area. Status in reports: Arrest reported.",
+   "headline": "Minor Girl Dies By Suicide After Repeated Calls, Stalking And Harassment: Why 2 Polytechnic Students Arrested In Krishnagiri",
+   "summary": "News media reported an alleged stalking incident involving a minor in the Krishnagiri, Tamil Nadu area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -11033,7 +11057,7 @@
     "https://news.google.com/rss/articles/CBMi_AFBVV95cUxPaDlrM2VSM0lVSUtycjV1VjBneTM0YkVfNzRsa3RZdl92LV9iNFJPdXZqYnNJZkF6MmZIMzJ6QmNIR0Jpd0JKMk9TYVppeF9kbjBCOF9jbzc4dDR4WTZfVHZ0ZjhYcDB0ZzIxSXJjNy05cTNjSUl4QlJIREZFUVV0NkFvR25LLTV4SUhaU094clAzc2trVmhMRi0zRXBxem5odndWdktxdlJxelVGbEZVel81QW5TWlc0OXI2Nm5OT2VFZWtVVGpjYUR1bEJmUC1YQ1hRWWxscVRRUllpTUVCdkJjbHNVVHBRY2JmazhDemtIUnVlbTJFVWloYmvSAYICQVVfeXFMT0JhWmo2bmpMMUxRblVMV3p3c3ptY2h6aEQ0T01VaTFteXQ3M0JxWHFVd0R5d3R2VjdGM2Y1c0Q4TnRYSXNMT1hsNFR2cXNsTnp3dDFDV1JWQXlGdldiSXVUZGFXcV9WVG5TMkdWZV8wUm9ZSTRrY2NYemJ5YUdrZlJEVWFoRHJKRzc4RTc4ZHB1TmpuM000eDZScW9zXzJPY1dzdWhVREZXRUt0d1E5cHM1Rk5HcUJDelZQMzlGTDZEMWVPQ0c4ZkotR0QzZU1kbXpDV1p2Rm1YdWFEckJOVjQyUU1FeDE5Q20zSHZfaHpxcHgzbkxfZGEzcEFqUnptMkV3?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-29",
@@ -11551,7 +11575,7 @@
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "Delhi University Students March for Safer Streets After Gang Rape",
-   "summary": "Social-media posts reported an alleged rape / sexual assault incident involving a woman in the Delhi, Delhi area. Status in reports: Complaint / allegation, police action not stated.",
+   "summary": "Social-media posts reported an alleged rape / sexual assault incident involving a minor in the Delhi, Delhi area. Status in reports: Complaint / allegation, police action not stated.",
    "status": "Complaint / allegation, police action not stated",
    "verification": "Social media – unverified (post links to / summarises news reports)",
    "sources": [
@@ -11567,7 +11591,7 @@
     "https://x.com/i/trending/2104456992857461050"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": true,
    "report_date": "2026-09-29",
@@ -11633,7 +11657,7 @@
    "lat": 28.0367,
    "lon": 79.1234,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Budaun News: सामूहिक दुष्कर्म में मुख्य आरोपी को आजीवन कारावास व तीन सगे भाइयों सहित पांच को 20-[उम्र हटाई] कैद",
+   "headline": "Budaun News: सामूहिक दुष्कर्म में मुख्य आरोपी को आजीवन कारावास व तीन सगे भाइयों सहित पांच को 20-20 साल की कैद",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Budaun, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source); 2 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
@@ -12333,7 +12357,7 @@
    "headline": "Motorbike-borne duo snatches Rs 7 lakh gold chain in Patna; police examine CCTV trail to catch miscreants",
    "summary": "News media reported an alleged chain / phone snatching incident involving a woman in the Patna, Bihar area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
-   "verification": "News report – 2 outlets (multiple reports); 2 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
+   "verification": "News report – 3 outlets (multiple reports); 3 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
    "sources": [
     {
      "name": "The Hawk",
@@ -12348,11 +12372,19 @@
      "date": "2026-09-30",
      "kind": "article",
      "outlet_url": "https://patnapress.com"
+    },
+    {
+     "name": "Social News XYZ",
+     "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPcS1wQUdpN2xFRWdRVkhpRlFIYVhLZmF3U2o4OTBJaWVSMjFjTXNXYmhyaklGakt6VTdpUUZNWGYzZzI4bXRjUzlZRG82aWlkeU1TbTF1ZXJnMGNUdmhXN1I0UEI4OVhvRnQ4YzhUcW00SFB6aEd2Ynl6Z0l0QlBqNnhqWk5fTWNGZ056WlM4aURoRV9JTGVWUFVFaWlqODl4RFZpdloyc2JDN0dHZmQwcWJkbDMzNHUtdS1ZZ09uZmRmNG0zWmltY0RzUC1qbXVOX3BVR2pDM2lFUkE?oc=5",
+     "date": "2026-09-30",
+     "kind": "article",
+     "outlet_url": "https://www.socialnews.xyz"
     }
    ],
    "all_urls": [
     "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNX2NrRW9IY3hMdmRNOW9aWnVSM1BBN0JPRU4xZ2pQaU1XVlJib0ZsbDN0SE9OdTBCYTk1VU1wN0kzdm12aUoyR291b2xaTkVsVk5kYl9tVUNybHdGbnNkVnAxakVfRzF1aV93QnRJMGt4b0h0ZnpqbDlPalA0dDZCYmhUYmIxQW16U3dPbmRjNFcxTlFBRTN1QzlFcTJId1JlWU1iWU5idGtIcEc5MHRodHdoelE4aFVwV1U1MlpFdzY0UGhaU2ttcExjdDNDSWZZeG0xbw?oc=5",
-    "https://news.google.com/rss/articles/CBMiigFBVV95cUxPb08yS3lVZ2p3VHZKWFZsclREU3hibXoyQnR3bmVJZ3RTZjJ2czlER2xyaEJOWXBTazNIa3lRUUdINnEySUxrV0tvZlRTSWhEdUZmVl82VVFtVXNyeF9yVHVmZHpyaFNET0thT05QTlRpcHFNUTFUUGtITzhMbktRVGFuWTN4Rzlja0E?oc=5"
+    "https://news.google.com/rss/articles/CBMiigFBVV95cUxPb08yS3lVZ2p3VHZKWFZsclREU3hibXoyQnR3bmVJZ3RTZjJ2czlER2xyaEJOWXBTazNIa3lRUUdINnEySUxrV0tvZlRTSWhEdUZmVl82VVFtVXNyeF9yVHVmZHpyaFNET0thT05QTlRpcHFNUTFUUGtITzhMbktRVGFuWTN4Rzlja0E?oc=5",
+    "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPcS1wQUdpN2xFRWdRVkhpRlFIYVhLZmF3U2o4OTBJaWVSMjFjTXNXYmhyaklGakt6VTdpUUZNWGYzZzI4bXRjUzlZRG82aWlkeU1TbTF1ZXJnMGNUdmhXN1I0UEI4OVhvRnQ4YzhUcW00SFB6aEd2Ynl6Z0l0QlBqNnhqWk5fTWNGZ056WlM4aURoRV9JTGVWUFVFaWlqODl4RFZpdloyc2JDN0dHZmQwcWJkbDMzNHUtdS1ZZ09uZmRmNG0zWmltY0RzUC1qbXVOX3BVR2pDM2lFUkE?oc=5"
    ],
    "first_seen": "2026-10-10",
    "minor": false,
@@ -12380,7 +12412,7 @@
    "lon": 80.0,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "हमीरपुर: दहेज हत्या में पति, सास-ससुर को दस-दस साल की सजा, अर्थदंड भी लगाया",
-   "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Hamirpur, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
+   "summary": "News media reported an alleged dowry death / domestic violence incident involving a minor in the Hamirpur, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -12396,7 +12428,7 @@
     "https://news.google.com/rss/articles/CBMi2wFBVV95cUxOdWhHc3d4LTY0SUx3ZGVzbTdzYUREOVlRdDFiZEVwSWNjUnNrX240OEVxQ3dUOVpKRElMZUliQWZ6a2lrV3ZMMjdJOG9UbVVBYjg3NENJaTl2MXFWbG5mNHZVMExqcFAxbUJLQlQwR0IzMHdocFo2TFlWSE9WejQ4X1ZKbnZpbjdyQ1JZbHE4cnlwTS1aZV9OOER4UlZFM2trZEhleEpjMXJnYlN0QlJrcXdYNFRyM1gwLUlJd2x3d0F5bEtMNTlhMWJ3NHV3eTlQbHBSTUgyOS1naWPSAeABQVVfeXFMTTV0U0hlMnE0eVJzRm9IWjMxRnk5ZjY5TnlxRzZRUEoyMGZ1Z2dtYS15U2VOdlRydVdSOFR1aG8yNDdvdDAxUTFScF9SeGV3QlcxVjVVck9aZHBkcnNETkhUX1RISndUNDlEOU8ydzRqanVhS0E1X1NJem05bGtTZXJ0S0YzOF96YVZ2TDNBX3IxcmpNTTFKcGY4OWtGVFdxNFd2THNKc0pqSDFjMDZUWG9OaHRLa0p3ZG9wZ3luUDJXUUJWUVN1dUh2MndtS1R4RjlBS3V3NGgyVnNmdFlZWFQ?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-09-30",
@@ -12551,8 +12583,8 @@
    "lat": 31.654,
    "lon": 76.5404,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Hamirpur News: दहेज हत्या में पति, सास-ससुर को 10-[उम्र हटाई] सजा",
-   "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Hamirpur, Himachal Pradesh area. Status in reports: Convicted / sentenced (court).",
+   "headline": "Hamirpur News: दहेज हत्या में पति, सास-ससुर को 10-10 साल की सजा",
+   "summary": "News media reported an alleged dowry death / domestic violence incident involving a minor in the Hamirpur, Himachal Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -12568,7 +12600,7 @@
     "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPWDJJWnp5c0VfZ1BjcmFMYmtWSXBiazFLd2ZjRE9LbVlYYVhVczFOSEo2aFREMm9icVktYlV1UW9VUkZWcFRBV19EYXFjOHZsVmxwVzNTUXRobXRYUjhwcmg1eS02VWNtdExsWGRXUG1RRWRLZmlXRTBEeGxxdmNkYVJfRTA5RkRVaXpjQm11VVlQbkExcFhPU3YzdXdkZUpuVVg4UzFfOG5EVjI1NEFRaEVYYUtUMmNLNV91c09obXhwTVdQZmxfV2VRY2JXeHE0WmdRZ2dva0pqM0h3LWcyUnM0eHp6Qm9vTzFvYnVaQk5UdjhHX2fSAfsBQVVfeXFMUDRkTWl1cTJXZlg1UENINHdTTzBRTkRpRUFEVVRVeE9GZlBZQTV1cTlYOXFNZElXbjBPOER5VmRwbEM3ZnFsSHZIWmh6UWtzX1MyUFp0cWFKbEpxSG53Q1NHVWRWNVZzeVlyWjJyVzg4OGtieDExRlgtTDNfeHN6Q25DYU1hVW9ZYzNmdVJkOVAyQmpJX2hGQzNhbjhyS0hySUxIV0lCY2ZhNmY5ck9HY3dLVkxFUG1PSTEyanJOTi1NZGJHWU1vM0lwdmxyUGVKSGw4MTdMVDhZNHdZa1NxYTZMQkdtMlZLcUxQcENWSDJyRDhtZG82MmdBV00?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-01",
@@ -13149,7 +13181,7 @@
    "lat": 28.4646,
    "lon": 77.0299,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Gurgaon News: नाबालिग से दुष्कर्म के दोषी को [उम्र हटाई] कैद",
+   "headline": "Gurgaon News: नाबालिग से दुष्कर्म के दोषी को 20 साल की कैद",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Gurugram, Haryana area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -13190,7 +13222,7 @@
    "lat": 30.1231,
    "lon": 77.2863,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "इंसानियत शर्मसार; यमुनानगर में [उम्र हटाई] बच्ची से छेड़छाड़ के आरोप में [उम्र हटाई] आरोपी गिरफ्तार, पुलिस जांच जारी",
+   "headline": "इंसानियत शर्मसार; यमुनानगर में नाबालिग बच्ची से छेड़छाड़ के आरोप में 75 वर्षीय आरोपी गिरफ्तार, पुलिस जांच जारी",
    "summary": "News media reported an alleged molestation / sexual harassment / eve-teasing incident involving a minor in the Yamunanagar, Haryana area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -13477,8 +13509,8 @@
    "lat": 27.6624,
    "lon": 75.028,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Man accused of molesting [age removed] girl arrested: Fled Sikar for Jaipur after case was registered, hid th...",
-   "summary": "News media reported an alleged molestation / sexual harassment / eve-teasing incident involving a woman in the Sikar, Rajasthan area. Status in reports: Arrest reported.",
+   "headline": "Man accused of molesting minor girl arrested: Fled Sikar for Jaipur after case was registered, hid th...",
+   "summary": "News media reported an alleged molestation / sexual harassment / eve-teasing incident involving a minor in the Sikar, Rajasthan area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -13494,7 +13526,7 @@
     "https://news.google.com/rss/articles/CBMixAFBVV95cUxQSnQ1amN3Yl9EdC1JZ01WaERWUV9CaGhGS0E0VVhJS2UwTjUtNEJELWYtdDBsZU5FN2hjMDlpeFFyOHl3WS15MFVnSTNZSXBHQjQ1ZVF3d2Y0LTdnSU50UHMyUTJDYzdnd0VfaHNtY29sVnptN3I5N1RIcmtWVW9id3M3YXdIUVJSWGs1T0xWUldGeWdOcjBtSjlFc0dETWQxN3FaMHRoV0ZuYmRoWjdJUlNWUGFxTFFCUUV5c1ZENWg3Ullq0gHKAUFVX3lxTE1LUWVHQ2dueEpjeGlua1ZURWd4T2VuQWpVbGluQW8zZzRWNG5fOEdBRkRKRnV1d1JGTTN1QjZqWUhwS0R1QlVfYWRwRmFhWHRWMTM2LXpPUHVZMXJRN09HcFZnd1hyQVpYSEd2Z0dDak9jazMwYnRoMUk0ZXZLV2Fob21EZWE0dUJqTDRjWU9FQ0s0WEdMZ0o5Mm5OR244ZTR2ZEMwWFFseEprLTJZaERkWFpWMFdzVUoyckg5ZmhzWlduUFhqbTc3Mmc?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-02",
@@ -13854,7 +13886,7 @@
    "lat": 22.5198,
    "lon": 82.635,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "कोरबा: जंगल में मवेशी चराने गई [उम्र हटाई] नाबालिग से दुष्कर्म, धमकी देकर वारदात; आरोपी गिरफ्तार",
+   "headline": "कोरबा: जंगल में मवेशी चराने गई नाबालिग से दुष्कर्म, धमकी देकर वारदात; आरोपी गिरफ्तार",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Korba, Chhattisgarh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -13936,7 +13968,7 @@
    "lat": 26.9155,
    "lon": 75.819,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "जयपुर में नाबालिग से दुष्कर्म के दोषी को [उम्र हटाई] सजा, कोर्ट ने लगाया डेढ़ लाख का जुर्माना",
+   "headline": "जयपुर में नाबालिग से दुष्कर्म के दोषी को 20 साल की सजा, कोर्ट ने लगाया डेढ़ लाख का जुर्माना",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Jaipur, Rajasthan area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -14141,7 +14173,7 @@
    "lat": 28.775,
    "lon": 77.4587,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Ghaziabad man gets life term for wife’s dowry death [age removed] ago",
+   "headline": "Ghaziabad man gets life term for wife’s dowry death 14 years ago",
    "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Ghaziabad, Uttar Pradesh area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
@@ -14469,8 +14501,8 @@
    "lat": 24.7,
    "lon": 78.5186,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "ललितपुर में [उम्र हटाई] मासूम से दुष्कर्म; एनकाउंटर में आरोपी गिरफ्तार, पैर में लगी गोली",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Lalitpur, Uttar Pradesh area. Status in reports: Arrest reported.",
+   "headline": "ललितपुर में नाबालिग मासूम से दुष्कर्म; एनकाउंटर में आरोपी गिरफ्तार, पैर में लगी गोली",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Lalitpur, Uttar Pradesh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -14486,7 +14518,7 @@
     "https://news.google.com/rss/articles/CBMixAFBVV95cUxQeHIyNEhTZDd6d2d5bEZ5aEtBemlDSWE4Slk5alRGVzFwaFBZcFlBMUNEVjZvMEFhUkliYlJJNEZKSmplLW5Gc1J3ZWxVMV85MkhEdmJxYVNHbGN4ZEtPRzF1Z1dETlAxMXU4ckM0Z1lRMmJrWlU0bkx2WWExWTRrNV9scFZ6Ql8ybF9sYXNEVHB6bnktc01LT3hySDA5amJGUTkyNnNqOHVkM05XZHpRZ2dWT0NEZGZlQmhmc3NrUUFIQXFS0gHKAUFVX3lxTE5QV01YWmtsNll6bTZYMldZOE4wV3VEd19wZUtGVkJ2Q1RoVzNKWjdKMWg3YzRsSVhkVzZIcDh4NUdRdEJVcDN6eGFxNmNobGpiLVJLeDJPY3k0UVNaenZIWDNFZjVZRkR0SFdORkZiRjBSbzA5b0VycmVKeW5VTU1zN3REcTQ0QUNNd2FEMWxMRDlINl8waXNDNUxEMTNzYVhXS2ZPSW1mTm9DOHVJOFZMZTZTdXJrWE1DdDVjb3JUV0dxY2J3b3Fmenc?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-03",
@@ -14551,8 +14583,8 @@
    "lat": 24.7,
    "lon": 78.5186,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "UP: Man accused of raping [age removed] girl arrested after encounter in Lalitpur",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Lalitpur, Uttar Pradesh area. Status in reports: Accused shot/held after police encounter.",
+   "headline": "UP: Man accused of raping minor girl arrested after encounter in Lalitpur",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Lalitpur, Uttar Pradesh area. Status in reports: Accused shot/held after police encounter.",
    "status": "Accused shot/held after police encounter",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -14568,7 +14600,7 @@
     "https://news.google.com/rss/articles/CBMisgFBVV95cUxNbHlwWE5FV3IyN1F4SVJUTFdaNUN2UW5DR1ZRdGNadFpCSUJoN0JRaXJQa2p1eTJFYW45VG1EY2F2eWVLd3pWYUlNT2RsVkpfbkVsMkxzNE0za2p6VDY1bHc2Q0JaaldjX2M2enB0TGFWS05GTllJYlNScE1vanhHRGJOY01sZmw5OUhhZHhuLUYwMGZLSkRQNmRQeFhucFlxMUdWTTM5X254QnplcFRLY1RB0gG3AUFVX3lxTE1zNnN1TGxiTlFuTFY3Zy05azJqWTFjcjdfNGFqZHZGZ1owTE5XQWttNnVPclJiQm1VRnJOdWdycmhDZlJFYUktekstbThMaXI1MC0yWlJwNkRsd0JYYzJZWW0ybFdnWVJZVWxjMC1jX0haZkNuUnZNeDI4Z2t0S1JmNUhvR3FXQ0trTFlnS3ZtejduWVlfaHQ5bWFEZ3NvYkJldkhwR0VHUHNIYWxQUllQcm9zUUlvTQ?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-03",
@@ -14633,7 +14665,7 @@
    "lat": 28.3874,
    "lon": 77.9744,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "नाबालिग से दुष्कर्म के दोषी को [उम्र हटाई] कैद: बुलंदशहर में कोर्ट ने सुनाया फैसला, 25 हजार रुपये का जुर्माना...",
+   "headline": "नाबालिग से दुष्कर्म के दोषी को 20 साल की कैद: बुलंदशहर में कोर्ट ने सुनाया फैसला, 25 हजार रुपये का जुर्माना...",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Bulandshahr, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -14715,8 +14747,8 @@
    "lat": 25.6035,
    "lon": 83.5076,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "‘पैसा लौटाने के बहाने बुलाया और फेंक दिया तेजाब’, गाजीपुर कोर्ट का ऐतिहासिक फैसला: महिला को [उम्र हटाई] सजा",
-   "summary": "News media reported an alleged acid attack incident involving a woman in the Ghazipur, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
+   "headline": "‘पैसा लौटाने के बहाने बुलाया और फेंक दिया तेजाब’, गाजीपुर कोर्ट का ऐतिहासिक फैसला: महिला को 10 साल की सजा",
+   "summary": "News media reported an alleged acid attack incident involving a minor in the Ghazipur, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -14732,7 +14764,7 @@
     "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPNWVDcWZZZUlLckhITzBDOTYtLUtVa2N2UjBCY29ucy1CLTh3RFIyb2RkNVNnTVhWT0pnYWxKeUhlQnNSUEprRDZXMjJuLUVnR2JMbHN5RlFOT19NOTFITGFDTG9WbWRzQjRRS1R1UFZlNjBUS2xickFFckg5eE9hVnFfTW55Q1BpaWdISThRcmU5X0xheUx5Rzl1YW5oRC1rU3BvZm1jU3E3QdIBrwFBVV95cUxNWE9lcHNTWk1CQ3hpOURxTmxUWFpjMnJlZWo3U053SFo0Mmh6QU9SRXZRS1h2dlZLS0twazluMFE3bVB6clNTZ2QwbWdWT0x6V3k3d0xMU2pNdmpsN1pWanVNSUVxWGh3QnNxRktnb3h6Mlc1QmNCM0N0aUlUenZuS2xUdy1laHRmWFFlazRaZmRRNFhUanpZNnJYY2ZrTGpQTDFLRmdjVnRDTUNVZjlN?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-03",
@@ -14797,7 +14829,7 @@
    "lat": 19.055,
    "lon": 72.8692,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Mumbai: Woman detained within two hours for allegedly snatching [age removed]'s gold mangalsutra",
+   "headline": "Mumbai: Woman detained within two hours for allegedly snatching 70-year-old's gold mangalsutra",
    "summary": "News media reported an alleged chain / phone snatching incident involving a woman in the Mumbai, Maharashtra area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -15797,7 +15829,7 @@
    "lon": 77.7429,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "मुजफ्फरनगर: साढ़े चार साल से लापता युवती का नहीं मिला सुराग, पिता ने भाई पर जताया अपहरण का शक",
-   "summary": "News media reported an alleged kidnapping / abduction of woman incident involving a woman in the Muzaffarnagar, Uttar Pradesh area. Status in reports: Not stated in source.",
+   "summary": "News media reported an alleged kidnapping / abduction of woman incident involving a minor in the Muzaffarnagar, Uttar Pradesh area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -15813,7 +15845,7 @@
     "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPT1gzQm10QkVXRUYtSG9GQzZnS0dOblJpdTllUXdIa3JOV1ZVNTM2NFRHUVd6LXdPTzRRWkNBT3pwZjNhSm85dWRWOWhGbXMyNHRLS2lFX2hwRlNZaGtGX0ZMN093M1FtajhBWVR6d09BVEl3QmMzdVp0SWJBbG1xSmZuU18tWmtQa0JsYlYyZ3RzRVNRTUd0RmYzTmtybC1MbXdlWjY2WDVnTUFodDBYZ3NyX1RYQzA4QVhjOUxhMXF0bmRDLTdnMXM4ZHZtMTdGUi1hRVV3?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-04",
@@ -16258,7 +16290,7 @@
    "headline": "मुज़फ्फरनगर में कॉलेज जा रही छात्रा से छेड़छाड़ और मारपीट का मामला; आरोपी अरमान गिरफ्तार, पुलिसकर्मियों के कंधों पर लंगड़ाता नजर आया",
    "summary": "News media reported an alleged molestation / sexual harassment / eve-teasing incident involving a minor in the Muzaffarnagar, Uttar Pradesh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
-   "verification": "News report – 1 outlet (single source)",
+   "verification": "News report – 1 outlet (single source); 2 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
    "sources": [
     {
      "name": "Royal Bulletin",
@@ -16266,10 +16298,18 @@
      "date": "2026-10-05",
      "kind": "article",
      "outlet_url": "https://royalbulletin.in"
+    },
+    {
+     "name": "Royal Bulletin",
+     "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPUXRSeHR6cS1iNFl3aDZiV05JODNJb0V5Q3lSMHNJY2pvc2RpTS1ERXFBMXBOSVZWdjBUZGhONXNrenFQZm9sSjF0cG1TRThuTzFVYzhsNXJ6ZUM0bmJRZG8zVmtCR1V4MUdqNFNZX1R3VmxoaTZtNGt5eGE2dUk3dkxMYWpiV3dwVHJqckw1b0ZMUVRuZjA5UDlqc3pmdlNLMDJ2ejhxYTU?oc=5",
+     "date": "2026-10-05",
+     "kind": "article",
+     "outlet_url": "https://royalbulletin.in"
     }
    ],
    "all_urls": [
-    "https://news.google.com/rss/articles/CBMirgFBVV95cUxNRlJHWEtIQkhGRWpFbHdBTXBJY1VwZEhuQWgzdURfblhxYkduendZRGNzQkctdDBuakNSdUwzN0xQUWR4U1ZEUlowX0FZU3RXalZHdnI5M1pRVG9nVkt2X0g0UE9qOWNET3p4cmdJZkFydmt1UWVaZ1NmR3UyTExuUnBTR1V2cVVpaERBQlUyaGNuRWt0NVFWcTJPWkFnUV95SUhtUmtJNGQ1NW1ZOEE?oc=5"
+    "https://news.google.com/rss/articles/CBMirgFBVV95cUxNRlJHWEtIQkhGRWpFbHdBTXBJY1VwZEhuQWgzdURfblhxYkduendZRGNzQkctdDBuakNSdUwzN0xQUWR4U1ZEUlowX0FZU3RXalZHdnI5M1pRVG9nVkt2X0g0UE9qOWNET3p4cmdJZkFydmt1UWVaZ1NmR3UyTExuUnBTR1V2cVVpaERBQlUyaGNuRWt0NVFWcTJPWkFnUV95SUhtUmtJNGQ1NW1ZOEE?oc=5",
+    "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPUXRSeHR6cS1iNFl3aDZiV05JODNJb0V5Q3lSMHNJY2pvc2RpTS1ERXFBMXBOSVZWdjBUZGhONXNrenFQZm9sSjF0cG1TRThuTzFVYzhsNXJ6ZUM0bmJRZG8zVmtCR1V4MUdqNFNZX1R3VmxoaTZtNGt5eGE2dUk3dkxMYWpiV3dwVHJqckw1b0ZMUVRuZjA5UDlqc3pmdlNLMDJ2ejhxYTU?oc=5"
    ],
    "first_seen": "2026-10-10",
    "minor": true,
@@ -16451,8 +16491,8 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "[age removed] Allegedly Gang-Raped By Three Men Posing As Cops In Delhi Park Near Kalkaji Temple",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Delhi, Delhi area. Status in reports: Complaint / allegation, police action not stated.",
+   "headline": "Minor Allegedly Gang-Raped By Three Men Posing As Cops In Delhi Park Near Kalkaji Temple",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Delhi, Delhi area. Status in reports: Complaint / allegation, police action not stated.",
    "status": "Complaint / allegation, police action not stated",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -16468,7 +16508,7 @@
     "https://news.google.com/rss/articles/CBMi2wFBVV95cUxOMEJSUVVqdEtyX2tJVnBscUxtU3dDaWswYmw4aTF0Y2ZBN1lhSzJ1YzBkNlZRYXlwX3h4ekdadUZfTXg5OTJ2N1dzaEhvc1BUNmtqbFBiRDc2UlZidDg1SF9GLVdabmhFVHNzVmhZSlRrQ2xXeFBlXzM4WVhIN2tpVnAyM2JKXzJ5MnFZQTg5eENxSElLVDJfcmFwc0t2WmRCVi1WRGN3MmZ5NE1uaUdRN1ZqSjNIRzJDODFtaGFuLV82SUZEYkk3YUZNQ281UnNYMlRrZ3RvbGNEM1U?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-05",
@@ -16615,8 +16655,8 @@
    "lat": 27.0378,
    "lon": 88.2632,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Darjeeling Rape Case: [age removed] Hindu girl raped repeatedly for months; Muhammad Aabtaar, Alam & Iltar arrested",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Darjeeling, West Bengal area. Status in reports: Arrest reported.",
+   "headline": "Darjeeling Rape Case: Minor Hindu girl raped repeatedly for months; Muhammad Aabtaar, Alam & Iltar arrested",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Darjeeling, West Bengal area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -16632,7 +16672,7 @@
     "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPOGRnMDVsVE41MzhjY0s1OXVpN0RrVnJSZThQWE95TnJBZ09uUzlwdUlqNDNlYVNISlJCdVk5bVB6Mk5TZTNEd0FBSVYxYVdPU01JcWJIMm4wc0JGcG8zNzUtYnNkOUFtU3pRaFVtTmlBR1BhZm5iRjZJaE43QnF1Y0dpQUc5dm1kSXNKWm5PaVlKS0lCSUFBY1c5ZENoSnJUaG5ESHA3RzJZNUR0eWxDZk9kWlVlTkhmU2R0WmgweGpuZnR0UUZBcXd5SzZhbEVoTFNhV0dKNDJXSVF6NngzbkNmd1pPTVVla3ltN9IB8gFBVV95cUxNQ0NmeFc5TkthLXFFNWxmY1hLQ1hBRkpxeHpabTJRekRsRy1sTVpyRFNqV3o2NGEzcTdyWHU0RldMV1EwQXh4YzhuTGw3QVpCYlFuYk5veEk0clZiT1BySTh1bGM1V1h2NEdmRGlSWkEwSTJaTGlwQ1NZdkRyZUc4Q2w5U3ZfQ3lmWXNGcUprUDBhWDBsazBLS3VVd1Vua0pjdzFXUjJLY21uc0RRZHRlNk1YODZlbEQ3ek9HNk5vMjJWdEZ2SXh6M2RtOWw0OTQ3LTMzdmpwZ0NMcl9pNFJBNlZRTl96TXZFUE5Dc3luV1JOQQ?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-05",
@@ -17213,8 +17253,8 @@
    "lat": 26.9155,
    "lon": 75.819,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "[age removed] girl raped in Jaipur: House painter kidnapped her and held her captive for a month",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Jaipur, Rajasthan area. Status in reports: Arrest reported.",
+   "headline": "Minor girl raped in Jaipur: House painter kidnapped her and held her captive for a month",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Jaipur, Rajasthan area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -17230,7 +17270,7 @@
     "https://news.google.com/rss/articles/CBMiyAFBVV95cUxORDJXX0hwSFNyQVhNeEttcmo2RmktaFp5dEJNS2VKbXUxOGtjYTdLLUxWYXBLUlFlcnRnYS1nbTZQR2hvdm9rZm1ERDVvU3VrVklsSjVWbnJiT1V6YVNvQndURVBlSVNqcXN3RS1EcTVERkQ4dWJxNnI3SHhvWGU1ZFVCRlhhMDB2emN5S1kxaGlYdjhEbkRtd3FPZkU3VDI4RTBXSlhzck5kdVRVUlM2azlCMHktOHJJMXc4SWl6czUxcUFEWmxtN9IBzgFBVV95cUxPSHQtODNZOUszUG5zdjRzVXdTbEVKLVEzUkEwSjlGWVpEZ3IzUi1weDFlSHpiY3k4bnZCanA2Z1pMeU9aNzhOMWVtTXVtaUVadk5hSGF1YklvOEYyd1FVRTZVSUlCTFAwMTdUTjNiMTQxYzJ0RmRPWklDWjlZZjhuLUYzTklWcGxJenVaVmUzYkpiY19Dc3NEMkR0TVQtakVFUWFpanlzYmw3U3lzdXRvRW5QQ1k4Q1NKeGF1MmhNdTJ0ek9LWDFtaWlCTE1SUQ?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-06",
@@ -17737,8 +17777,8 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "दिल्ली में युवती पर एसिड अटैक: [उम्र हटाई] लड़की पर पूर्व प्रेमी ने डाला तेजाब, तीन साल से लिव-इन में रह रहे थे",
-   "summary": "News media reported an alleged acid attack incident involving a woman in the Delhi, Delhi area. Status in reports: Not stated in source.",
+   "headline": "दिल्ली में युवती पर एसिड अटैक: 24 साल की लड़की पर पूर्व प्रेमी ने डाला तेजाब, तीन साल से लिव-इन में रह रहे थे",
+   "summary": "News media reported an alleged acid attack incident involving a minor in the Delhi, Delhi area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -17754,7 +17794,7 @@
     "https://news.google.com/rss/articles/CBMixwFBVV95cUxORV9CeE5MRUlDQ0R4VF9PaFhkX1YwbU5icGdjS3Y5Q0s3RkRmdkFjRnBQazc4WU1jdktDMndkWjMtdXVrWmtUYUNsczZCSUxHQ0VnZWFWajZiZE5xZjNZRUhiZ2xjNEVwOENId2Z0QmZOeUFCaVcwZTZJR0NsQ2k2Q25QMkcwcWZqcTZzckIzLUdoRnVXTEo2ZURSRHZwc0dWanFzeXpSNjRNQTBnMGNuakFaeVJKallOSGhwbm5pSGdnYktHdEU40gHMAUFVX3lxTE80dkprTnVPNUFmWjhrSHlPaXRDN01MaGE1cFczMVNSTHNfMVN3d09hd2p4eWVvMEFLOHpSLTNvT053WXBQV2J1dnNLRXJGM0ZqSVgxMHhCNkpVS2M0VTRWOVNZaHlsblltcGdIak1oYnMtM3lHLVNBdmxHZ055Q0dIaUNlOExiWDZtOW4zWUpBOUxUbGlyM3p3dFRuazZyYUdlU2VySVdNSF9fekZ1ZHlSSzdlSV9RWS1GRHBOMktZWEFKbjc4dXg2RWNmaA?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-06",
@@ -17778,7 +17818,7 @@
    "lat": 25.1737,
    "lon": 75.8574,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "[age removed] detained for raping minor girl in Kota",
+   "headline": "19-yr-old detained for raping minor girl in Kota",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Kota, Rajasthan area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -17901,7 +17941,7 @@
    "lat": 27.555,
    "lon": 78.5992,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "एटा में नाबालिग से दुष्कर्म के दोषी को [उम्र हटाई] कठोर कारावास, 83 हजार रुपये जुर्माना लगाया",
+   "headline": "एटा में नाबालिग से दुष्कर्म के दोषी को 20 साल की कठोर कारावास, 83 हजार रुपये जुर्माना लगाया",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Etah, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -18065,8 +18105,8 @@
    "lat": 26.4211,
    "lon": 84.3739,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "गोपालगंज में अपहरण के केस ने लिया नया मोड़, [उम्र हटाई] बताई गई युवती कोर्ट में निकली बालिग; प्रेमी के साथ जाने की मिली अनुमति",
-   "summary": "News media reported an alleged kidnapping / abduction of woman incident involving a woman in the Gopalganj, Bihar area. Status in reports: Not stated in source.",
+   "headline": "गोपालगंज में अपहरण के केस ने लिया नया मोड़, 17 साल की बताई गई युवती कोर्ट में निकली बालिग; प्रेमी के साथ जाने की मिली अनुमति",
+   "summary": "News media reported an alleged kidnapping / abduction of woman incident involving a minor in the Gopalganj, Bihar area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -18082,7 +18122,7 @@
     "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQV29wdEo4cUhxV21Rdlo3MFdwX2sxYkpVQkNkbkVjUURtUU1nZXBReDR6QUlzblZkeEd1Nk41MDQ5UUcweDVlRG9nRE83Njd4amEtQ1AyaTAzQ09pM3dBcS1wa0xkY2hoR05NX1MwYWFCOUNSUzl3X1pjODVuYzdZZDFrQXVpUDRBM2JvUlRvZlJ1bXVtOWx1N0VRTE1ueDB3LUY3TjdpUXRYTUNKeWlSZ2VIV2w0ZjQ4QmRZ?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-06",
@@ -18229,8 +18269,8 @@
    "lat": 21.2381,
    "lon": 81.6337,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "[age removed] girl kidnapped from Raipur rescued at Mouda toll naka, suspect arrested",
-   "summary": "News media reported an alleged kidnapping / abduction of woman incident involving a woman in the Raipur, Chhattisgarh area. Status in reports: Arrest reported.",
+   "headline": "Minor girl kidnapped from Raipur rescued at Mouda toll naka, suspect arrested",
+   "summary": "News media reported an alleged kidnapping / abduction of woman incident involving a minor in the Raipur, Chhattisgarh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -18246,7 +18286,7 @@
     "https://news.google.com/rss/articles/CBMi6wFBVV95cUxOMHJzVExPT2NiRHc0NnpFQ0RwWXFWOUhTMEFocUJGZGpaQ2x3OFoyRkRDTFFhTXpwTnJDdWoxVWJkS2NldXdHU3ZGWDBaQmt6a3hGa1gyMTk4RXNiV0c4TF9HMWk1UEtiZzBTQmVMN0FlYThBZzF6RVNuaHhzN2hmcVhreTdmSUIzUlFZX2tudU1GU3VUWmNVVGxwQnY0QWxuaGZvTWs4eUdtZEVPS3g2Z3cxLUh3aWlWblF2UUUyQ0VzQm1RemFYaGpYNjdpRmh5cEVqd3lmYnVIVEVCaGp4YTZJdnVrYlFkeXhB0gHwAUFVX3lxTE0xNWxlS20yS3R2UDVZVE1uVjJJdzN1NkNiSjlCSUw0c0pOcTNHam14T2UwQnBnWnpwaVBNYTJrTXdmbEl6S2pOLUdob3UxWWVFRVIydDdTdDZiSUNEMVZBSEEwUXVmZVFNaWlCVUNtQWRBN2tEV05jeUlOLUloMFF3MjQ5T1pwaklpY3A1dVpuQ2ZiTTVZQ3h5djZ6NjZyRGVVNkFORVl6eC05U2RZUXVTbEZGTUZHbmRobWlydFFaM0JGRXA1TnRLemg1TWlieDFQWU9PM2Q5QlJIOUhVN0RISFhNdko0SW91bkFFb0QzOQ?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-07",
@@ -18311,7 +18351,7 @@
    "lat": 26.8381,
    "lon": 80.9346,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Lucknow News: नाबालिग से दुष्कर्म के दोषी को [उम्र हटाई] कैद",
+   "headline": "Lucknow News: नाबालिग से दुष्कर्म के दोषी को 20 साल की कैद",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Lucknow, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -18434,7 +18474,7 @@
    "lat": 28.7009,
    "lon": 77.2618,
    "precision": "Locality / police-station area (approx., ±2–5 km)",
-   "headline": "[age removed] woman suffers burns to her face, body after acid attack by [age removed] stalker in Delhi's Bhajanpura | Latest News Delhi",
+   "headline": "24-year-old woman suffers burns to her face, body after acid attack by 41-year-old stalker in Delhi's Bhajanpura | Latest News Delhi",
    "summary": "News media reported an alleged acid attack incident involving a woman in the Bhajanpura, Delhi, Delhi area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 2 outlets (multiple reports); 2 reports from the same city/type within ~2 days were auto-grouped (likely the same incident)",
@@ -19450,7 +19490,7 @@
    "lat": 28.6665,
    "lon": 77.217,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Stalker Throws Acid At [age removed] Woman In Delhi, Leaves Her With Burns On Face And Body",
+   "headline": "Stalker Throws Acid At 24-Year-Old Woman In Delhi, Leaves Her With Burns On Face And Body",
    "summary": "News media reported an alleged stalking incident involving a woman in the Delhi, Delhi area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
@@ -19655,7 +19695,7 @@
    "lat": 28.4646,
    "lon": 77.0299,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Gurgaon News: दहेज हत्या में [उम्र हटाई] से फरार आरोपी गिरफ्तार",
+   "headline": "Gurgaon News: दहेज हत्या में 18 साल से फरार आरोपी गिरफ्तार",
    "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Gurugram, Haryana area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -20072,7 +20112,7 @@
    "lat": 28.775,
    "lon": 77.4587,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "गाजियाबाद में सौतेले पिता को नाबालिग से दुष्कर्म मामले में [उम्र हटाई] सजा",
+   "headline": "गाजियाबाद में सौतेले पिता को नाबालिग से दुष्कर्म मामले में 20 साल की सजा",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Ghaziabad, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -21892,7 +21932,7 @@
    "lat": 25.2203,
    "lon": 86.5161,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Munger News: नाबालिग से दुष्कर्म मामले में दोषी को [उम्र हटाई] कठोर कारावास",
+   "headline": "Munger News: नाबालिग से दुष्कर्म मामले में दोषी को 10 साल का कठोर कारावास",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Munger, Bihar area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -21974,8 +22014,8 @@
    "lat": 26.6558,
    "lon": 79.5161,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Auraiya News: दहेज के लिए पत्नी की हत्या में पति को [उम्र हटाई] कैद",
-   "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Auraiya, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
+   "headline": "Auraiya News: दहेज के लिए पत्नी की हत्या में पति को 10 साल की कैद",
+   "summary": "News media reported an alleged dowry death / domestic violence incident involving a minor in the Auraiya, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -21991,7 +22031,7 @@
     "https://news.google.com/rss/articles/CBMi9AFBVV95cUxQYlVhSnFnTm9QUEg3QmpJX1MyeGtwUE5vMHlPVjF6Nko0WmllRGUtSjdPLXR6V1huUXRycUZkMU5qdjh1QnFoVlA0UEEwYUhnMXJnaWFXTWo2dkwxeC1vSFdXc3Y1QzVveHZMLUhKdWdpSFF1dzJGZFRwbDAzRUdrNVUwVTZJRWhVWjh3MS1lR3l1MXk1UXRMSVU0TWNZUmE0cnB4NUFrZEowVnNsNTM0Vm41TjVhVkVIbVdJWTE2T1RoQnJwM1FIQ2o5TUMxVjNid3BleFVSRmZpclBkZDFTX1Jjbkl1bVR1ZUxFWUZfWXdsaVhj0gH6AUFVX3lxTFBFeF82bjRXVnh4MXBMWGdIWGlBZ1Bkd1NRbGFMeHVBZEFBTEt6QlFNRUZ0MDUzVkZSajNrX241NkJNWmh0azQ5VTQxU2VwRkVpNTNnNFNRR01SMW9HckNOREpCSWZwUldSYTZEVlVSbVZ0cXdCOXVudnQxRXYzckZGU2t6OXg4TXJuaDhBcWtGQ2FNMk5YSUg2b3lhR1JqOXU3TGoxaHRHYk9RRzdIZDVOLWlvZXJhX09MWDhCdWFlOWpkRmRycWllM2JLZnhBRDNQRkRSMDNCZjNRZEZjbm01Q1hxV01sTHpXcGRKSUR2em1KalRVWVdfWnc?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-09",
@@ -22138,7 +22178,7 @@
    "lat": 26.9155,
    "lon": 75.819,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Jaipur minor, kidnapped; accused arrested: 900km chase to UP's Bhadohi, girl rescued",
+   "headline": "Jaipur minor, 14, kidnapped; accused arrested: 900km chase to UP's Bhadohi, girl rescued",
    "summary": "News media reported an alleged kidnapping / abduction of woman incident involving a minor in the Jaipur, Rajasthan area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
@@ -22851,7 +22891,7 @@
    "lat": 26.083,
    "lon": 86.0325,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "दरभंगा: [उम्र हटाई] बच्ची के साथ छेड़खानी और अपहरण की कोशिश, बचाने गयी युवती पर हमला",
+   "headline": "दरभंगा: नाबालिग बच्ची के साथ छेड़खानी और अपहरण की कोशिश, बचाने गयी युवती पर हमला",
    "summary": "News media reported an alleged kidnapping / abduction of woman incident involving a minor in the Darbhanga, Bihar area. Status in reports: Not stated in source.",
    "status": "Not stated in source",
    "verification": "News report – 1 outlet (single source)",
@@ -23097,7 +23137,7 @@
    "lat": 29.4497,
    "lon": 77.7429,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "मुजफ्फरनगर में नाबालिग से दुष्कर्म की कोशिश का मामला: आरोपी और सहयोगी महिला को [उम्र हटाई] सजा, [उम्र हटाई] पुराना ...",
+   "headline": "मुजफ्फरनगर में नाबालिग से दुष्कर्म की कोशिश का मामला: आरोपी और सहयोगी महिला को 10 साल की सजा, 7 साल पुराना ...",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Muzaffarnagar, Uttar Pradesh area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -23302,7 +23342,7 @@
    "lat": 23.3701,
    "lon": 85.325,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "सिल्ली में छात्रा से दुष्कर्म के दोषी को [उम्र हटाई] सजा, रांची की अदालत ने सुनाया फैसला",
+   "headline": "सिल्ली में छात्रा से दुष्कर्म के दोषी को 20 साल की सजा, रांची की अदालत ने सुनाया फैसला",
    "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Ranchi, Jharkhand area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
@@ -23343,8 +23383,8 @@
    "lat": 21.2381,
    "lon": 81.6337,
    "precision": "City/district level (approx., ±10–30 km)",
-   "headline": "Man Arrested In Raipur For Allegedly Raping [age removed]",
-   "summary": "News media reported an alleged rape / sexual assault incident involving a woman in the Raipur, Chhattisgarh area. Status in reports: Arrest reported.",
+   "headline": "Man Arrested In Raipur For Allegedly Raping minor",
+   "summary": "News media reported an alleged rape / sexual assault incident involving a minor in the Raipur, Chhattisgarh area. Status in reports: Arrest reported.",
    "status": "Arrest reported",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -23360,7 +23400,7 @@
     "https://news.google.com/rss/articles/CBMingFBVV95cUxQU3hNTGJRM2w0d2x2djhYQ0p5b2ZkQTI3MUxPd0diOUdoZmRkWmRhSlBhUTBDVF9Ga2xxLUh1SjJGYXJ1ZHpOWW1xbDR1ZEpFemZoQTdITjFLTTdSMG51TVJmNnNyNV9Remstc1BISzRfV1Q4d2k3YlYtLUx6ZUQ0bGJ4d2xCWmVjc1l0bWk0V3dXUVpLbVNDc1hNT0JVZ9IBoAFBVV95cUxPQUl1S00wY0RHMkhxSkw5RFJOZ0RkM0pIU2tCNDRXWFZVOFNmcGV0OFIwMHlFYk05ZVhOTHQ2b2hKTUVsQl9YSEc5eUlNZlNDVzVRTHJERl8zMXpabEFrTGYtWXRjdzhZRWMzb2ZKQWdxZmp2bzZqS2hiRloxRHliNVkyUWxSNWp5UzhJMVdua1E3OUI0N08tNF9JZ1ZWaWlO?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-09",
@@ -23549,7 +23589,7 @@
    "lon": 94.1993,
    "precision": "City/district level (approx., ±10–30 km)",
    "headline": "Lakhimpur Kheri News: दहेज हत्या के मामले में पति को दस साल कैद, 10 हजार जुर्माना",
-   "summary": "News media reported an alleged dowry death / domestic violence incident involving a woman in the Lakhimpur, Assam area. Status in reports: Convicted / sentenced (court).",
+   "summary": "News media reported an alleged dowry death / domestic violence incident involving a minor in the Lakhimpur, Assam area. Status in reports: Convicted / sentenced (court).",
    "status": "Convicted / sentenced (court)",
    "verification": "News report – 1 outlet (single source)",
    "sources": [
@@ -23565,7 +23605,7 @@
     "https://news.google.com/rss/articles/CBMimgJBVV95cUxQTzdPaVZOZjVoSU02Z0dLUUhIZHppcjVJbktTaFUtLXRZWk1tTlZ5WWhLckpyVTFzYUJ6cWZjYmp2M01GZklSR1JOM1R4aWlJX2l4WjVOYVktVU45MUJUeS0xZks2SXJkUGJhOWEzLVpPd1h4WkNGUkNDcGphUnRRV0hudjAtYnhzU2tQb2M1NEk4SURYTUFVdGx2eEdVVlo5TGctdFEyaVRIZ0JFVEx6QmZkcDhZU3ZIQWYwSnZiMi1RajRlSVdRZ1hyODhfc0JMOUJCdmYtN2hpVXlrMWd5ZnBEODNnekZWLVdTNS1sQ2ZDRnVLZHAteXV5dUJzMS1URkdONDE5NWdNQ1NYUUR3S1V0QUNQeTVabkHSAZ8CQVVfeXFMTXJHb1h2SWxTSTBycWJlZzVwQnhGSmJQQm9PNGt4b1ZEYVNtalBFOWwzSU5Ja054d3BoZXNjazV2MjNoOUo4T1V3a1NVVEp6c0Q4VmpKdEpfVmk1M1VVdjYyRml0LTZQcXYtNm9BQ2RVY2h5MWZGOVZ0QzdFN3Y2T2dDS2pXOHBCUUVIUUFRa0hiVUg5RkFCSGZ4NkxPUFZXalc4ZHM1UndSWnItXzhmZmF5VlVYdnB4MVJiLVJTcTRodndZZ3FRSU9uRlh0WS0yNzViNlZUdGRBUXVia2M0bDdTejAwcHFyUklBa3NhSDhRN2RiVFV3MTR4bHY2c3RjQlhLTXB5dmhkYVRWYmFUM053MXRQUWNHczBiVmNmLVU?oc=5"
    ],
    "first_seen": "2026-10-10",
-   "minor": false,
+   "minor": true,
    "police_src": false,
    "newslink_src": false,
    "report_date": "2026-10-09",
@@ -24119,5 +24159,5 @@
    "hidden_reason": null
   }
  ],
- "generated": "2026-10-10T14:52:26+05:30"
+ "generated": "2026-10-10T15:13:22+05:30"
 }

@@ -50,7 +50,7 @@ TYPES = [  # (id, label, regex) - priority order
 TYPE_LABEL = {t[0]: t[1] for t in TYPES}
 # Must look like it is about a woman/girl for kidnap/snatching/stalking (those words are generic)
 WOMAN_RE = re.compile(r"\b(woman|women|girl|girls|minor|teen|wife|bride|student|lady|daughter)\b|महिला|युवती|किशोरी|नाबालिग|छात्रा|लड़की|बच्ची|पत्नी|विवाहिता|बहू", re.I)
-MINOR_RE = re.compile(r"\bminor\b|\bchild\b|\bteen|\bschoolgirl|\bgirl student|नाबालिग|किशोरी|बच्ची|छात्रा|POCSO|पॉक्सो", re.I)
+MINOR_RE = re.compile(r"\bminors?\b|\bchild\b|\bteen|\bschoolgirl|\bgirl student|\bna+ba+lig|\bbachchi|नाबालिग|नाबालिका|किशोरी|बच्ची|बालिका|मासूम|छात्रा|POCSO|पॉक्सो", re.I)
 STATUS = [
  ("Acquitted by court", r"acquit|बरी"),
  ("Convicted / sentenced (court)", r"convicted|sentenced|life imprisonment|death sentence|सजा|उम्रकैद|दोषी|कैद"),
@@ -69,39 +69,103 @@ NEWS_DOMAINS = re.compile(r"timesofindia|indiatimes|hindustantimes|ndtv|thehindu
                           r"etvbharat|tv9|firstpost|newindianexpress|telegraphindia|bhaskarenglish|royalbulletin|youtu", re.I)
 POLICE_HANDLE = re.compile(r"pol(ice)?$|police|^sp_|^ssp|^dcp|^cp|^dgp|^adg|^ig|uppolice", re.I)
 
+# Ages are SHOWN (user decision 2026-10-10). Only names and other identifying details are removed.
 HI_NUM = r"(?:\d{1,2}|एक|दो|तीन|चार|पांच|पाँच|छह|छः|सात|आठ|नौ|दस|ग्यारह|बारह|तेरह|चौदह|पंद्रह|सोलह|सत्रह)"
-AGE_PATTERNS = [
- (re.compile(HI_NUM + r"(?:\s*(?:और|व|,)\s*" + HI_NUM + r")*\s*(साल|वर्ष|बरस)\s*(की|के|का)?\s*(?=(बच्ची|बच्चि|बच्चे|लड़की|लड़कि|किशोरी|मासूम|छात्रा|महिला|युवती|बालिका|नाबालिग))"), "[उम्र हटाई] "),
- (re.compile(r"\d{1,2}\s*वर्षीय"), "[उम्र हटाई]"),
- (re.compile(r",\s*\d{1,2}\s*,"), ","),
- (re.compile(r"\b[\w-]+-(year|yr|month)s?-old\b", re.I), "[age removed]"),
- (re.compile(r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)[\s-]+(year|month)s?[\s-]+old\b", re.I), "[age removed]"),
- (re.compile(r"\b\d{1,2}\s*-?\s*(year|yr)s?\s*-?\s*old\b", re.I), "[age removed]"),
- (re.compile(r"\baged\s+\d{1,2}\b", re.I), "[age removed]"),
- (re.compile(r"\(\s*\d{1,2}\s*\)"), ""),
- (re.compile(r"\d{1,2}\s*(साल|वर्ष|बरस)\s*(की|के|का)?\s*"), "[उम्र हटाई] "),
- (re.compile(r"\d{1,2}\s*वर्षीय"), "[उम्र हटाई]"),
- (re.compile(r"\b\d{1,2}\s*-?\s*(year|yr)s?\b", re.I), "[age removed]"),
+HI_NUM_VAL = {"एक": 1, "दो": 2, "तीन": 3, "चार": 4, "पांच": 5, "पाँच": 5, "छह": 6, "छः": 6, "सात": 7, "आठ": 8, "नौ": 9, "दस": 10,
+              "ग्यारह": 11, "बारह": 12, "तेरह": 13, "चौदह": 14, "पंद्रह": 15, "सोलह": 16, "सत्रह": 17}
+EN_NUM_VAL = {w: i + 1 for i, w in enumerate("one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen".split())}
+AGE_EN = re.compile(r"\b(\d{1,2}|" + "|".join(EN_NUM_VAL) + r")[\s-]*(?:year|yr)s?[\s-]*old\b|\baged\s+(\d{1,2})\b", re.I)
+AGE_HI = re.compile(HI_NUM + r"\s*(?:साल|वर्ष|बरस)(?:ीय)?|(\d{1,2})\s*वर्षीय")
+def ages_in(t):
+    out = []
+    for m in AGE_EN.finditer(t or ""):
+        v = m.group(1) or m.group(2); out.append(int(v) if v.isdigit() else EN_NUM_VAL.get(v.lower(), 99))
+    for m in AGE_HI.finditer(t or ""):
+        w = re.match(HI_NUM, m.group(0)); v = (w.group(0) if w else m.group(1)) or ""
+        out.append(int(v) if v.isdigit() else HI_NUM_VAL.get(v, 99))
+    return out
+def is_minor(t):
+    """Minor victim: explicit words (minor / nabalig / bachchi …) or a stated age below 18."""
+    return bool(MINOR_RE.search(t or "")) or any(a < 18 for a in ages_in(t))
+# Other identifiers that are always removed (phone numbers, house/street addresses, institutions, relatives' names).
+ID_PATTERNS = [
+ (re.compile(r"(?:\+91[\s-]?)?\b[6-9]\d{4}[\s-]?\d{5}\b"), "[phone removed]"),
+ (re.compile(r"\b(?:house|h\.?\s?no|flat|plot|door)\s*(?:no\.?|number|#)?\s*[:.]?\s*[\w/-]*\d[\w/-]*", re.I), "[address removed]"),
+ (re.compile(r"\b(?:[A-Z][\w.]*\s){0,3}(?:street|lane|gali|marg|road)\s*(?:no\.?\s*)?\d+\b", re.I), "[address removed]"),
+ (re.compile(r"(?:मकान|घर|फ्लैट|प्लॉट)\s*(?:नंबर|नं\.?|संख्या)\s*[\w/-]+"), "[पता हटाया]"),
+ (re.compile(r"(?:गली|मोहल्ला)\s*(?:नंबर|नं\.?)\s*[\w/-]+"), "[पता हटाया]"),
+ ("INST_EN", None),
+ (re.compile(r"(?:[\u0900-\u097F]+\s){1,2}(?:पब्लिक स्कूल|इंटर कॉलेज|डिग्री कॉलेज|विद्या मंदिर|शिशु मंदिर|कान्वेंट स्कूल|मॉडल स्कूल|इंटरनेशनल स्कूल|एकेडमी|अकादमी)(?=[\s,।]|$)"), "[संस्थान हटाया] "),
+ (re.compile(r"\b(father|mother|husband|brother|sister|uncle|aunt|son|daughter|in-law)(\s+of)?\s+([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)(?=\W|$)"),
+  lambda m: m.group(1) + (m.group(2) or "") + " " + ("[name removed]" if m.group(3).split()[0] not in EN_OK else m.group(3))),
 ]
+# Ages of minors (< 18, incl. "N-month-old") are replaced by "minor" / "नाबालिग"; adult ages are kept as published.
+def _v(x):
+    x = (x or "").strip()
+    return int(x) if x.isdigit() else HI_NUM_VAL.get(x, EN_NUM_VAL.get(x.lower(), 99))
+_ENW = r"(?:\d{1,2}|" + "|".join(EN_NUM_VAL) + r")"
+AGE_SUBS = [
+ # "11 और छह साल की", "14, 15 वर्ष"
+ (re.compile(r"(" + HI_NUM + r"(?:\s*(?:और|व|,)\s*" + HI_NUM + r")*)\s*(?:साल|वर्ष|बरस)(?:ीय)?(\s*(?:की|के|का))?" + r"(?=\s*(?:बच्ची|बच्चि|बच्चे|बच्चा|बच्चों|लड़की|लड़कि|लड़के|लड़का|किशोरी|किशोर|मासूम|छात्रा|छात्र|महिला|युवती|युवक|बालिका|बालक|नाबालिग|बेटी|बेटा|पुत्री|पुत्र|भतीजी|भांजी|पोती|नातिन))"),
+  lambda m: "नाबालिग" if any(_v(n) < 18 for n in re.findall(HI_NUM, m.group(1))) else m.group(0)),
+ (re.compile(r"(\d{1,2})\s*वर्षीय"), lambda m: "नाबालिग" if int(m.group(1)) < 18 else m.group(0)),
+ (re.compile(r"\d{1,2}\s*(?:महीने|माह)\s*(?:की|के|का)?" + r"(?=\s*(?:बच्ची|बच्चि|बच्चे|बच्चा|बच्चों|लड़की|लड़कि|लड़के|लड़का|किशोरी|किशोर|मासूम|छात्रा|छात्र|महिला|युवती|युवक|बालिका|बालक|नाबालिग|बेटी|बेटा|पुत्री|पुत्र|भतीजी|भांजी|पोती|नातिन))"), lambda m: "नाबालिग "),
+ # "14-year-old", "fourteen year old", "14 and 16-year-old", "14-yr-old"
+ (re.compile(r"\b(" + _ENW + r"(?:\s*(?:,|and|&)\s*" + _ENW + r")*)[\s-]*(?:year|yr)s?[\s-]*old\b", re.I),
+  lambda m: "minor" if any(_v(n) < 18 for n in re.findall(_ENW, m.group(1), re.I)) else m.group(0)),
+ (re.compile(r"\b" + _ENW + r"[\s-]*months?[\s-]*old\b", re.I), lambda m: "minor"),
+ (re.compile(r"\baged\s+(\d{1,2})\b", re.I), lambda m: "a minor" if int(m.group(1)) < 18 else m.group(0)),
+ (re.compile(r"\(\s*(\d{1,2})\s*\)"), lambda m: "(minor)" if int(m.group(1)) < 18 else m.group(0)),
+]
+INST_EN = re.compile(r"\b(?:[A-Z][\w.'&-]*\s){1,4}(?:Public School|School|College|Vidyalaya|Vidya Mandir|Academy|Convent|Coaching|Pvt\.? Ltd)\b")
+INST_GENERIC = set("A An The At In Of Her His Their Govt Government Private Medical Engineering Law Degree Inter Local Village Coaching Night Day Boarding High Primary Senior Junior Middle".split())
+def is_title(t):
+    w = [x for x in re.findall(r"[A-Za-z][A-Za-z']+", t or "") if len(x) > 3]
+    return len(w) >= 4 and sum(x[0].isupper() for x in w) / len(w) > 0.6
+def _inst(m):
+    first = m.group(0).split()[0]
+    return m.group(0) if first in INST_GENERIC else "[institution removed]"
+
+def redact_ages(t):
+    for rx, fn in AGE_SUBS: t = rx.sub(fn, t)
+    t = re.sub(r"(नाबालिग)(\s+नाबालिग)+", r"\1", t)
+    t = re.sub(r"(^|[.:|;!?]\s*)minor\b", lambda m: m.group(1) + "Minor", t)
+    return t
+
 # Names of victims that appeared in collected items and must never be displayed (manual review list).
 NAME_BLOCKLIST = [r"Sowjanya", r"Nimisha\s+Thakuria"]
 
-VICTIM_NOUN_HI = r"(नवविवाहिता|विवाहिता|विवाहित|युवती|छात्रा|किशोरी|पीड़िता|मृतका)"
-HI_NOT_NAME = set("से के की का को ने पर में और ही भी थी था है हुई हुआ गई गया अपहरण हत्या मौत शव दुष्कर्म छेड़छाड़ छेड़खानी रेप गैंगरेप सुसाइड आत्महत्या उत्पीड़न हमला मामले मामला केस परिजनों परिवार साथ पति प्रेमी लापता घर कॉलेज स्कूल दहेज सामूहिक तेजाब एसिड शिकायत".split())
-def redact_names(t):
+VICTIM_NOUN_HI = r"(नवविवाहिता|विवाहिता|विवाहित|युवती|छात्रा|किशोरी|पीड़िता|मृतका|बच्ची|बालिका|पिता|माता|मां|पति|भाई|बहन|बेटी|पुत्री|ससुर|सास|चाचा)"
+HI_NOT_NAME = set("न्यायालय अदालत कोर्ट पुलिस साक्ष्य सबूत जेल थाने थाना गांव शहर बयान मौके इलाज अस्पताल बेटी बेटे बच्चों ससुराल मायके दोनों तीनों सभी लोगों पक्ष आरोपी दोषी युवक युवती महिला नाबालिग बच्ची किशोरी छात्रा लड़की सास ससुर देवर ननद जेठ से के की का को ने पर में और ही भी थी था है हुई हुआ गई गया अपहरण हत्या मौत शव दुष्कर्म छेड़छाड़ छेड़खानी रेप गैंगरेप सुसाइड आत्महत्या उत्पीड़न हमला मामले मामला केस परिजनों परिवार साथ पति प्रेमी लापता घर कॉलेज स्कूल दहेज सामूहिक तेजाब एसिड शिकायत".split())
+def redact_names(t, title=False):
     def hi(m):
         w = m.group(2)
         return m.group(1) + " " + ("" if w in HI_NOT_NAME else "[नाम हटाया]") + ("" if w not in HI_NOT_NAME else w)
     t = re.sub(VICTIM_NOUN_HI + r"\s+([\u0900-\u097F]{2,})(?=\s+(की|के|का|को|ने|पर|से)(\s|$))", hi, t)
-    t = re.sub(r"\b(victim|survivor|Justice for|woman|girl|student|wife|bride)\s+([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)(?=\W|$)",
+    if not title: t = re.sub(r"\b((?i:victim|survivor|Justice for|woman|girl|student|wife|bride|teen|minor|daughter))\s+([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)(?=\W|$)",
                lambda m: m.group(1) + " " + ("[name removed]" if m.group(2).split()[0] not in EN_OK else m.group(2)), t)
+    t = re.sub(r"\b(Justice for)\s+([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)", r"\1 [name removed]", t)
     return t
-EN_OK = set("In From Of At On And Who Was Is Found Dies Died Allegedly Raped Gang Molested Harassed Kidnapped Abducted Attacked Assaulted Stalked Murdered Killed Held Arrested Case Engineer Doctor Nurse Student Teacher Biker Police Cops Delhi Mumbai".split())
+EN_OK = set("Girl Girls Woman Women Boy Man Men Teen Teenager Minor Wife Husband Bride Student Students Daughter Mother Sister Father Brother Victim Survivor Family Rape Raped Gangraped Sexually Sexual Assault Harassment Molestation Murder Body Burnt Burns Set Shot Stabbed Beaten Thrashed Dies Missing Rescued Sold Forced Lured Trafficked Pregnant Minors Neighbour Relative Cousin Friend Lover Boyfriend Tutor Priest Driver Youth Accused Man's Two Three Four Five Six Seven Eight Nine Ten After Before For With By As To Into Over Near Inside Outside Under Behind During Was Were Has Had Gets Got Being Allegedly Assaulted Tortured Abused Groped Chased Followed Threatened Blackmailed Filmed Drugged Abducted Kidnapped Attacked Stalked Murdered Killed Held Arrested Booked Case FIR Police Cops Court Delhi Mumbai In From Of At On And Who Was Is Found Dies Died Allegedly Raped Gang Molested Harassed Kidnapped Abducted Attacked Assaulted Stalked Murdered Killed Held Arrested Case Engineer Doctor Nurse Student Teacher Biker Police Cops Delhi Mumbai".split())
 
-def redact(t):
+def redact(t, minor=None):
+    """Remove victim names and identifying details. Adult ages are kept; ages of minors become "minor"/"नाबालिग"."""
     t = html.unescape(t or "")
-    t = redact_names(t)
-    for rx, rep in AGE_PATTERNS: t = rx.sub(rep, t)
+    t = re.sub(r"\[age removed\]|\[उम्र हटाई\]", "", t)  # legacy markers (only if the original text is unavailable)
+    title = is_title(t)  # Title-Case headlines: capitalisation is no evidence of a name, so name heuristics are skipped
+    t = redact_names(t, title)
+    for rx, rep in ID_PATTERNS:
+        if rx == "INST_EN":
+            if not title: t = INST_EN.sub(_inst, t)
+            continue
+        if title and rep is not None and not isinstance(rep, str): continue  # relative-name rule
+        t = rx.sub(rep, t)
+    # "Name (16)" / "Name, 16," style: a capitalised word directly followed by an age is a person's name
+    if not title:
+        t = re.sub(r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)(?=\s*(?:\(\s*\d{1,2}\s*\)|,\s*\d{1,2}\s*,))",
+                   lambda m: m.group(1) if m.group(1).split()[0] in EN_OK else "[name removed]", t)
+    t = redact_ages(t)
+    t = re.sub(r"\b(minor)(\s+minor)+\b", r"\1", t, flags=re.I)
     for n in NAME_BLOCKLIST: t = re.sub(n, "[name removed]", t, flags=re.I)
     return re.sub(r"\s+", " ", t).strip()
 
@@ -289,7 +353,7 @@ def main():
                 geo = f"Locality/police-station name \u201c{a}\u201d with city \u201c{matched}\u201d; geocoded with OpenStreetMap Nominatim query \u201c{a}, {disp}, {state}, India\u201d \u2192 {eng} ({g.get('type')}), accepted because within 40 km of {disp}; pin approx \u00b12\u20135 km"
                 break
         recs.append({**it, "type": t, "place": place, "city": disp, "state": state, "lat": round(lat, 4), "lon": round(lon, 4),
-                     "precision": precision, "status": status_of(text), "minor": bool(MINOR_RE.search(text)),
+                     "precision": precision, "status": status_of(text), "minor": is_minor(text),
                      "place_reported": reported, "geocode": geo,
                      "reported_in": {"news": "headline", "x_post": "X post text", "x_story": "X news story title/summary"}[it["kind"]]})
     print("kept", len(recs), "skipped", skipped)
@@ -381,7 +445,7 @@ def main():
             if "Locality" in x["precision"] and "Locality" not in e["precision"]:
                 e.update(place=x["place"], lat=x["lat"], lon=x["lon"], precision=x["precision"]); set_place_info(e, x)
             if not e.get("place_reported"): set_place_info(e, x)
-            if not e.get("headline") and x["kind"] in ("news", "x_story"): e["headline"] = redact(x["title"])
+            if not e.get("headline") and x["kind"] in ("news", "x_story"): e["headline"] = redact(x["title"], x["minor"] or e["minor"])
         e["last_updated"] = TODAY; finalize(e)
 
     added_inc, added_src = 0, 0
@@ -405,7 +469,7 @@ def main():
         e = {"id": f"inc{next_id:04d}", "type": g["type"], "type_label": TYPE_LABEL[g["type"]], "channel": g["_kind"],
              "date": first["date"].astimezone(IST).strftime("%Y-%m-%d"), "place": first["place"], "state": first["state"],
              "city": first["city"], "lat": first["lat"], "lon": first["lon"], "precision": first["precision"],
-             "headline": redact(first["title"]) if first["kind"] in ("news", "x_story") else None, "summary": "",
+             "headline": redact(first["title"], first["minor"]) if first["kind"] in ("news", "x_story") else None, "summary": "",
              "status": "Not stated in source", "verification": "", "sources": [], "all_urls": [],
              "first_seen": TODAY, "minor": False, "police_src": False, "newslink_src": False}
         e["report_date"] = e["date"]
@@ -429,7 +493,13 @@ def main():
             pick = next((r for r in rs if r["place"] == e["place"]), rs[0] if rs else None)
             if pick: set_place_info(e, pick)
             else: e.update(place_reported=e["place"], place_reported_by="(raw record unavailable)", place_reported_in="", geocode="Place from earlier build; raw record unavailable")
-        if e.get("headline"): e["headline"] = redact(e["headline"])  # re-apply latest redaction rules (idempotent)
+        if not e.get("removed"):
+            rs_e = [rec_by_url[u] for u in e.get("all_urls", []) if u in rec_by_url]
+            e["minor"] = bool(e.get("minor") or any(r_["minor"] for r_ in rs_e))
+            src_head = next((r_ for r_ in rs_e if r_["kind"] in ("news", "x_story")), None)
+            if src_head: e["headline"] = redact(src_head["title"], e["minor"])  # rebuilt from the original text (ages kept)
+            elif e.get("headline"): e["headline"] = redact(e["headline"], e["minor"])
+            finalize(e)
         ok = [sx for sx in e["sources"] if sx["url"].startswith("http") and sx["kind"] in ("article", "x_post")]
         e["verifiable"] = bool(ok)
         e["hidden_reason"] = None if ok else "No verifiable source link (only an aggregated X news-story summary)"
@@ -444,7 +514,7 @@ def main():
                      all_urls=[u if u.startswith("sha1:") else h1(u) for u in urls_e])
         if json.dumps(e, sort_keys=True, ensure_ascii=False) != before_e: enriched += 1
     print("enriched/updated metadata on", enriched, "incidents; not verifiable (hidden):", sum(not e["verifiable"] for e in existing))
-    changed = added_src > 0 or enriched > 0 or old.get("schema") != 4
+    changed = added_src > 0 or enriched > 0 or old.get("schema") != 5
     print(f"before {before} incidents; added {added_inc} new incidents, {added_src} new source links; total {len(existing)}")
     if not changed:
         print("RESULT: NOCHANGE"); return
@@ -452,7 +522,7 @@ def main():
         os.makedirs(os.path.join(DATA, "backups"), exist_ok=True)
         import shutil; shutil.copy2(JF, os.path.join(DATA, "backups", f"incidents_{NOW.astimezone(IST).strftime('%Y%m%d_%H%M%S')}.json"))
     dates = sorted(e["date"] for e in existing)
-    out = {"schema": 4, "last_updated": NOW.astimezone(IST).isoformat(timespec="seconds"),
+    out = {"schema": 5, "last_updated": NOW.astimezone(IST).isoformat(timespec="seconds"),
            "first_collected": old.get("first_collected") or (old.get("generated") or NOW.isoformat())[:10],
            "date_span": [dates[0], dates[-1]] if dates else None, "count": len(existing),
            "count_visible": sum(e["verifiable"] for e in existing), "incidents": existing}

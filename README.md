@@ -17,7 +17,7 @@ A single-page web app (Leaflet + OpenStreetMap, no API keys) that shows
 * "Use my location", place search, time filter (Today / 7 / 30 days / All / custom), CSV + PDF export,
   emergency numbers 112 / 181, and a "Sources & method" panel.
 
-Victim identities are never stored or shown (BNS Sec. 72): no names, ages, photos; X post text is not reproduced.
+Ages shown; names and identifying details removed: adult ages as published, minors' ages replaced by "minor"/"नाबालिग"; no victim/family names, house addresses, school/college/workplace names, phone numbers or photos (BNS Sec. 72; POCSO Sec. 23). X post text is not reproduced.
 Data is incomplete – no markers or a light-coloured district does **not** mean an area is safe.
 
 ## Repository layout
@@ -115,5 +115,5 @@ Victim/child-identity complaints: act within 24 h (IT Rules 2021, Rule 3(2)(b)).
 earlier versions of the data; purging those needs a history rewrite (force-push) – a separate, deliberate decision.
 
 ## Privacy
-Ages are regex-removed from headlines (digits and Hindi number words), names after victim nouns are removed,
+Headlines are rebuilt from the archived original text on every run. Adult ages are kept; ages < 18 (digits, English/Hindi number words, months-old) become "minor"/"नाबालिग". Removed: names after victim/relative nouns, "Name (16)"-style names, "Justice for <name>", phone numbers, house/flat/street numbers, school/college/coaching/company names (name heuristics are skipped for Title-Case headlines to avoid false hits),
 X post text is never shown (template summary + link only), and redaction rules are re-applied to old incidents on every run.

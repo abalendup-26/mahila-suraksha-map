@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mahila Suraksha Map – Women's Safety Risk Map (India)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px;color:#222}
+#top{position:absolute;top:0;left:0;right:0;z-index:1000;background:#7b1fa2;color:#fff;padding:6px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#top h1{font-size:16px;margin:0 8px 0 0;white-space:nowrap}
+#top form{display:flex;flex:1;min-width:200px;gap:4px}
+#top input{flex:1;padding:7px;border-radius:6px;border:0;font-size:14px}
+#top button,.btn{padding:7px 10px;border-radius:6px;border:0;background:#fff;color:#7b1fa2;font-weight:600;cursor:pointer;font-size:13px}
+#sos{background:#d32f2f;color:#fff;padding:6px 10px;border-radius:6px;text-decoration:none;font-weight:700;white-space:nowrap}
+#map{position:absolute;top:48px;bottom:0;left:0;right:340px}
+#panel{position:absolute;top:48px;bottom:0;right:0;width:340px;overflow:auto;background:#fafafa;border-left:1px solid #ddd;padding:10px;z-index:900}
+#panel h3{margin:12px 0 6px;font-size:14px;color:#7b1fa2}
+.row{display:flex;align-items:center;gap:6px;margin:3px 0}
+select{width:100%;padding:5px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid #999;vertical-align:middle}
+.disc{background:#fff3e0;border:1px solid #ffb74d;padding:8px;border-radius:6px;font-size:12px;line-height:1.4}
+.emerg{background:#ffebee;border:1px solid #e57373;padding:8px;border-radius:6px;font-size:13px}
+.emerg a{color:#c62828;font-weight:700;font-size:16px;text-decoration:none}
+.small{font-size:11px;color:#555;line-height:1.4}
+.mk{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.mk.social{border-radius:4px;transform:rotate(45deg);border:2px dashed #fff}
+.mk.social span{transform:rotate(-45deg)}
+.popup h4{margin:0 0 4px;font-size:14px}.popup table{border-collapse:collapse;font-size:12px}.popup td{padding:2px 4px;vertical-align:top}
+.popup td:first-child{color:#666;white-space:nowrap}
+.tag{display:inline-block;padding:1px 6px;border-radius:10px;font-size:11px;color:#fff}
+#nearby{background:#e8eaf6;border-radius:6px;padding:8px;font-size:13px;display:none}
+#toggle{display:none}
+.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{background:rgba(123,31,162,.35)!important}.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{background:rgba(123,31,162,.85)!important;color:#fff!important;font-weight:700}
+@media(max-width:800px){#map{right:0}#panel{width:100%;top:auto;height:45%;border-top:2px solid #7b1fa2;transform:translateY(calc(100% - 40px));transition:transform .2s}
+ #panel.open{transform:none}#toggle{display:block;width:100%;margin-bottom:6px}#top h1{font-size:14px;flex:1}#top form{order:3;flex-basis:100%}#top{gap:5px}}
+</style>
+</head>
+<body>
+<div id="top">
+  <h1>🛡️ Mahila Suraksha Map</h1>
+  <form id="sform"><input id="q" placeholder="Search place / jagah search karein (e.g. Connaught Place, Delhi)"><button>Search</button></form>
+  <button id="loc">📍 Use my location</button>
+  <a id="sos" href="tel:112">SOS 112</a>
+</div>
+<div id="map"></div>
+<div id="panel">
+  <button id="toggle" class="btn" style="background:#7b1fa2;color:#fff">☰ Filters, legend &amp; help</button>
+  <div id="nearby"></div>
+  <div class="emerg">🚨 Emergency: <a href="tel:112">112</a> &nbsp;|&nbsp; Women Helpline: <a href="tel:181">181</a><br><span class="small">Tap to call. Use 112 if you are in danger right now.</span></div>
+
+  <h3>Layer A – District risk (NCRB data)</h3>
+  <label class="row"><input type="checkbox" id="showDist" checked> Show district colours</label>
+  <select id="cat"></select>
+  <div class="row" style="margin-top:4px">
+    <label><input type="radio" name="metric" value="count" checked> Cases (count)</label>
+    <label><input type="radio" name="metric" value="rate"> Per lakh women*</label>
+  </div>
+  <div id="legendA" class="small"></div>
+
+  <h3>Layer B – Reported incidents (news &amp; social media)</h3>
+  <div id="typeFilters"></div>
+  <label class="row"><input type="checkbox" id="chNews" checked> <span class="mk" style="width:18px;height:18px;background:#555;font-size:10px">●</span> News reports</label>
+  <label class="row"><input type="checkbox" id="chSocial" checked> <span class="mk social" style="width:16px;height:16px;background:#555;font-size:9px"><span>◆</span></span> Social media (X) – <b>unverified</b></label>
+  <div class="small" id="countB"></div>
+  <div class="row" style="margin-top:6px"><button class="btn" id="dlcsv" style="border:1px solid #7b1fa2">⬇ CSV reports</button><button class="btn" id="dlpdf" style="border:1px solid #7b1fa2">⬇ PDF reports</button></div>
+  <div class="small">CSV/PDF buttons export the incidents currently shown (filters applied; the quick PDF drops Hindi text). <a href="data/incident_reports.pdf" target="_blank">Full PDF report with Hindi text</a> · <a href="data/incidents.csv" download>full CSV</a>.</div>
+
+  <h3>Disclaimer</h3>
+  <div class="disc">
+    <b>Yeh data adhoora hai (this data is incomplete).</b> NCRB counts only crimes <i>registered</i> with police; many crimes are never reported. News/social-media markers cover only a small sample of recent reports picked up by automated search, and their locations are approximate (city/district or police-station area — never exact addresses).<br>
+    <b>No markers or a green district does NOT mean an area is safe.</b> Higher counts can also reflect larger population or better reporting. Social-media items are unverified. Use this as awareness only, not as a guarantee. No victim identities are stored or shown (BNS Sec. 72).
+  </div>
+  <h3>Sources</h3>
+  <div class="small" id="sources">
+    • District data: NCRB, <i>Crime in India 2024</i> (district-wise Crime Against Women tables; also 2022 &amp; 2023), via Esri India Living Atlas layer “NCRB/District_Wise_Crime_Against_Women_2022” (<a href="https://livingatlas.esri.in/server1/rest/services/NCRB/District_Wise_Crime_Against_Women_2022/MapServer/0" target="_blank">link</a>). District boundaries from the same layer.<br>
+    • *Rate uses Census 2011 female population (latest census; districts created after 2011 or split since show no rate, and split parents may be under-stated).<br>
+    • Incidents: Google News RSS search (English &amp; Hindi) and public X posts / X news stories, collected <span id="gen"></span>. Locations geocoded with OpenStreetMap Nominatim.<br>
+    • Map © OpenStreetMap contributors.
+  </div>
+</div>
+<script>
+const TYPES = {
+  rape:{label:"Rape / sexual assault",color:"#b71c1c",icon:"⚠"},
+  harassment:{label:"Molestation / harassment / eve-teasing",color:"#e65100",icon:"✋"},
+  stalking:{label:"Stalking",color:"#6a1b9a",icon:"👁"},
+  snatching:{label:"Chain / phone snatching",color:"#1565c0",icon:"⛓"},
+  kidnap:{label:"Kidnapping / abduction",color:"#00695c",icon:"🚐"},
+  acid:{label:"Acid attack",color:"#827717",icon:"🧪"},
+  dowry:{label:"Dowry death / domestic violence",color:"#4e342e",icon:"🏠"}
+};
+const CATS = {
+  rape:"Rape (Sec. 376 IPC / 64–68 BNS)", pocso:"POCSO – girl child victims", attempt:"Attempt to rape",
+  modesty:"Assault on modesty / molestation (354 IPC / 74 BNS)", sexh:"Sexual harassment (354A / 75 BNS)",
+  stalk:"Stalking (354D / 78 BNS)", kidnap:"Kidnapping & abduction of women", acid:"Acid attack",
+  dowry:"Dowry deaths", cruelty:"Cruelty by husband/relatives (498A)", total:"Total crime against women"
+};
+const map = L.map('map',{zoomControl:true}).setView([22.5,79],5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors | Data: NCRB Crime in India 2024'}).addTo(map);
+map.createPane('dist'); map.getPane('dist').style.zIndex=350;
+let distLayer, distData, incidents=[], markerLayer=(L.markerClusterGroup?L.markerClusterGroup({disableClusteringAtZoom:11,maxClusterRadius:35,showCoverageOnHover:false}):L.layerGroup()).addTo(map), userMarker, breaks=[0,0];
+const catSel=document.getElementById('cat');
+for(const [k,v] of Object.entries(CATS)){const o=document.createElement('option');o.value=k;o.textContent=v;catSel.appendChild(o);}
+const tf=document.getElementById('typeFilters');
+for(const [k,t] of Object.entries(TYPES)){tf.insertAdjacentHTML('beforeend',`<label class="row"><input type="checkbox" class="tchk" value="${k}" checked> <span class="mk" style="width:20px;height:20px;font-size:11px;background:${t.color}">${t.icon}</span> ${t.label} <span class="small" id="cnt_${k}"></span></label>`);}
+const metric=()=>document.querySelector('input[name=metric]:checked').value;
+function val(p){const c=p[catSel.value]; if(c==null) return null; if(metric()==='count') return c; return p.fpop11? c/p.fpop11*1e5 : null;}
+function quant(arr,q){const a=[...arr].sort((x,y)=>x-y);return a[Math.min(a.length-1,Math.floor(q*a.length))];}
+function computeBreaks(){const vs=distData.features.map(f=>val(f.properties)).filter(v=>v!=null);breaks=[quant(vs,1/3),quant(vs,2/3)];}
+function level(v){if(v==null) return null; return v<=breaks[0]?'Low':v<=breaks[1]?'Medium':'High';}
+const COL={Low:'#66bb6a',Medium:'#ffb300',High:'#e53935'};
+const fmt=v=>v==null?'n/a':(metric()==='rate'?v.toFixed(2):Math.round(v));
+function style(f){const l=level(val(f.properties));return {pane:'dist',weight:.5,color:'#555',fillOpacity:l?.45:.15,fillColor:l?COL[l]:'#9e9e9e'};}
+function distPopup(p){const v=val(p),l=level(v);
+  return `<div class="popup"><h4>${p.d}, ${p.s}</h4><b style="color:${l?COL[l]:'#666'}">${l?l+' (relative to other districts)':'No data'}</b><br>
+  <table><tr><td>${CATS[catSel.value]} 2024</td><td><b>${p[catSel.value]??'n/a'}</b></td></tr>
+  ${p.fpop11?`<tr><td>Per lakh women*</td><td>${p[catSel.value]!=null?(p[catSel.value]/p.fpop11*1e5).toFixed(2):'n/a'}</td></tr>`:''}
+  <tr><td>Rape cases 2022 / 2023 / 2024</td><td>${p.rape22??'–'} / ${p.rape23??'–'} / ${p.rape??'–'}</td></tr>
+  <tr><td>Total crime vs women 2024</td><td>${p.total??'n/a'}</td></tr></table>
+  <div class="small">Source: NCRB Crime in India 2024 (registered cases). *Census 2011 female population.</div></div>`;}
+function renderDist(){computeBreaks(); if(distLayer) map.removeLayer(distLayer);
+  distLayer=L.geoJSON(distData,{style,onEachFeature:(f,l)=>l.bindPopup(()=>distPopup(f.properties))});
+  if(document.getElementById('showDist').checked) distLayer.addTo(map);
+  const u=metric()==='rate'?' per lakh women':' cases';
+  document.getElementById('legendA').innerHTML=`<div class="row"><span class="sw" style="background:${COL.Low}"></span> Low: ≤ ${fmt(breaks[0])}${u}</div>
+  <div class="row"><span class="sw" style="background:${COL.Medium}"></span> Medium: ${fmt(breaks[0])} – ${fmt(breaks[1])}</div>
+  <div class="row"><span class="sw" style="background:${COL.High}"></span> High: &gt; ${fmt(breaks[1])}${u}</div>
+  <div class="row"><span class="sw" style="background:#9e9e9e"></span> No data</div>
+  Classes = thirds of all districts (relative ranking, NCRB 2024).`;}
+catSel.onchange=renderDist; document.querySelectorAll('input[name=metric]').forEach(r=>r.onchange=renderDist);
+document.getElementById('showDist').onchange=e=>{e.target.checked?distLayer.addTo(map):map.removeLayer(distLayer)};
+
+function esc(s){return (s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function incPopup(i){const t=TYPES[i.type];
+  return `<div class="popup" style="max-width:290px"><h4>${t.icon} ${esc(i.type_label)}</h4>
+  <span class="tag" style="background:${i.channel==='social'?'#616161':'#2e7d32'}">${i.channel==='social'?'SOCIAL MEDIA – UNVERIFIED':'NEWS REPORT'}</span>
+  <table><tr><td>Date</td><td>${esc(i.date)} <span class="small">(report date)</span></td></tr>
+  <tr><td>Place</td><td>${esc(i.place)}</td></tr>
+  <tr><td>Precision</td><td>${esc(i.precision)}</td></tr>
+  ${i.headline?`<tr><td>Headline</td><td>${esc(i.headline)}</td></tr>`:''}
+  <tr><td>Summary</td><td>${esc(i.summary)}</td></tr>
+  <tr><td>Status</td><td>${esc(i.status)}</td></tr>
+  <tr><td>Verification</td><td>${esc(i.verification)}</td></tr>
+  <tr><td>Source(s)</td><td>${i.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a> (${esc(s.date)})`).join('<br>')}</td></tr></table>
+  <div class="small">Victim identity is never shown (BNS Sec. 72).</div></div>`;}
+function visible(){const ts=[...document.querySelectorAll('.tchk:checked')].map(x=>x.value);
+  const n=document.getElementById('chNews').checked, s=document.getElementById('chSocial').checked;
+  return incidents.filter(i=>ts.includes(i.type)&&((i.channel==='news'&&n)||(i.channel==='social'&&s)));}
+function renderInc(){markerLayer.clearLayers(); const v=visible(); const seen={};
+  v.forEach(i=>{const key=i.lat+','+i.lon; const k=(seen[key]=(seen[key]||0)+1)-1; // spread markers sharing a point
+    const ang=k*2.4, r=k?0.004*Math.sqrt(k):0; const ll=[i.lat+r*Math.cos(ang), i.lon+r*Math.sin(ang)];
+    const t=TYPES[i.type]; const icon=L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],
+      html:`<div class="mk ${i.channel==='social'?'social':''}" style="background:${t.color}"><span>${t.icon}</span></div>`});
+    const m=L.marker(ll,{icon,title:i.type_label}).bindPopup(()=>incPopup(i),{maxWidth:300}); m.inc=i; markerLayer.addLayer(m);});
+  for(const k in TYPES){const c=incidents.filter(i=>i.type===k).length;document.getElementById('cnt_'+k).textContent=`(${c})`;}
+  document.getElementById('countB').textContent=`Showing ${v.length} of ${incidents.length} reported incidents (${incidents.filter(i=>i.channel==='news').length} news, ${incidents.filter(i=>i.channel==='social').length} social media).`;}
+document.querySelectorAll('.tchk,#chNews,#chSocial').forEach(x=>x.onchange=renderInc);
+
+// point in polygon for "which district am I in"
+function inRing(pt,ring){let x=pt[0],y=pt[1],ins=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const xi=ring[i][0],yi=ring[i][1],xj=ring[j][0],yj=ring[j][1];
+  if(((yi>y)!=(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi)) ins=!ins;}return ins;}
+function districtAt(lat,lon){for(const f of distData.features){const g=f.geometry;if(!g)continue;const polys=g.type==='Polygon'?[g.coordinates]:g.coordinates;
+  for(const p of polys){if(inRing([lon,lat],p[0])) return f.properties;}}return null;}
+function km(a,b,c,d){const R=6371,r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+function showArea(lat,lon,label){
+  if(userMarker) map.removeLayer(userMarker);
+  userMarker=L.marker([lat,lon]).addTo(map).bindPopup(esc(label)).openPopup(); map.setView([lat,lon],11);
+  const p=districtAt(lat,lon); const near=incidents.filter(i=>km(lat,lon,i.lat,i.lon)<=25);
+  const bt={}; near.forEach(i=>bt[i.type]=(bt[i.type]||0)+1);
+  const el=document.getElementById('nearby'); el.style.display='block';
+  let h=`<b>📍 ${esc(label)}</b><br>`;
+  if(p){const v=val(p),l=level(v);h+=`District: <b>${esc(p.d)}, ${esc(p.s)}</b> – <b style="color:${l?COL[l]:'#666'}">${l||'No data'}</b> for “${CATS[catSel.value]}” (${p[catSel.value]??'n/a'} cases in 2024; ${p.rape??'n/a'} rape cases).<br>`;}
+  else h+='District: not found in NCRB layer.<br>';
+  h+=`Reported incidents within 25 km (last ~45 days): <b>${near.length}</b>${near.length?' – '+Object.entries(bt).map(([k,c])=>TYPES[k].icon+' '+c).join(' '):''}.<br><span class="small">Few/no reports ≠ safe. Stay alert; call 112 in an emergency.</span>`;
+  el.innerHTML=h; document.getElementById('panel').classList.add('open');}
+document.getElementById('loc').onclick=()=>{if(!navigator.geolocation) return alert('Geolocation not supported');
+  navigator.geolocation.getCurrentPosition(p=>showArea(p.coords.latitude,p.coords.longitude,'Your location'),e=>alert('Location not available: '+e.message+'\n(Browser location needs https or localhost.)'),{enableHighAccuracy:true,timeout:15000});};
+document.getElementById('sform').onsubmit=async e=>{e.preventDefault();const q=document.getElementById('q').value.trim();if(!q)return;
+  try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=in&q='+encodeURIComponent(q));const j=await r.json();
+   if(!j.length) return alert('Place not found'); showArea(+j[0].lat,+j[0].lon,j[0].display_name.split(',').slice(0,3).join(','));}catch(err){alert('Search failed: '+err);}};
+function fitTop(){const h=document.getElementById('top').offsetHeight;document.getElementById('map').style.top=h+'px';if(innerWidth>800)document.getElementById('panel').style.top=h+'px';else document.getElementById('panel').style.top='auto';map.invalidateSize();}
+addEventListener('resize',fitTop);fitTop();
+document.getElementById('toggle').onclick=()=>document.getElementById('panel').classList.toggle('open');
+
+// downloads
+const COLS=['id','date','type_label','channel','place','state','precision','headline','summary','status','verification','sources'];
+function rowOf(i){return COLS.map(c=>c==='sources'?i.sources.map(s=>s.name+': '+s.url).join(' | '):(i[c]??''));}
+document.getElementById('dlcsv').onclick=()=>{const rows=[COLS.join(',')].concat(visible().map(i=>rowOf(i).map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')));
+  const b=new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='incident_reports.csv';a.click();};
+document.getElementById('dlpdf').onclick=()=>{
+  if(!window.jspdf){ window.open('data/incident_reports.pdf'); return; }
+  const doc=new jspdf.jsPDF({orientation:'landscape',unit:'pt',format:'a4'});
+  doc.setFontSize(13);doc.text('Mahila Suraksha Map – Incident reports (news & social media)',30,30);
+  doc.setFontSize(8);doc.text('Auto-collected from public news (Google News RSS) and X posts. Locations approximate. Social media items unverified. No victim identities (BNS Sec. 72). Emergency 112, Women helpline 181.',30,44);
+  // Hindi glyphs are not in the built-in PDF font; non-Latin text is replaced. Use the CSV for Hindi headlines.
+  const clean=s=>String(s).replace(/[^\x20-\x7E\u00A0-\u00FF–—’“”•]/g,'').replace(/\s+/g,' ').trim()||'(Hindi text – see CSV/source)';
+  doc.autoTable({startY:54,styles:{fontSize:6.5,cellPadding:2,overflow:'linebreak'},headStyles:{fillColor:[123,31,162]},
+    head:[['Date','Type','Channel','Place','Summary','Status','Verification','Source links']],
+    body:visible().map(i=>[i.date,i.type_label,i.channel,clean(i.place),clean(i.summary),i.status,i.verification,i.sources.map(s=>clean(s.name)+': '+s.url).join('\n')]),
+    columnStyles:{4:{cellWidth:170},7:{cellWidth:200}}});
+  doc.save('incident_reports.pdf');};
+
+Promise.all([fetch('data/districts.geojson').then(r=>r.json()),fetch('data/incidents.json').then(r=>r.json())]).then(([d,inc])=>{
+  distData=d; renderDist(); incidents=inc.incidents; renderInc();
+  document.getElementById('gen').textContent='on '+inc.generated.slice(0,10)+' (last '+inc.max_age_days+' days)';
+  window.__ready={districts:d.features.length,withData:d.features.filter(f=>f.properties.rape!=null).length,incidents:incidents.length};
+});
+</script>
+</body>
+</html>

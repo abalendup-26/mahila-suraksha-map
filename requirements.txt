@@ -1,0 +1,4 @@
+# Build pipeline (scripts/build_*.py, make_report_pdf.py) uses only the Python 3.10+ standard library.
+# Headless verification scripts (scripts/verify.py, scripts/verify_live.py):
+playwright>=1.40
+# System tools (not pip): google-chrome or chromium (PDF rendering + headless checks), git, gh (GitHub CLI), flock (util-linux)

@@ -1,0 +1,450 @@
+#!/usr/bin/env python3
+"""Collect real recent news + social-media reports about crimes against women in India,
+extract only the area/city, geocode, and write data/incidents.json + data/incidents.csv.
+
+Sources:
+  * Google News RSS search (English + Hindi queries)  -> archived raw in data/raw_news/YYYY-MM-DD/
+  * X (Twitter) public posts / X news stories, fetched through the X API tools (MCP) and saved
+    as raw JSON in data/raw_x/YYYY-MM-DD/*.txt by the caller; this script only ingests those files.
+APPEND-ONLY: existing data/incidents.json is loaded and never shrinks. New records are deduped by
+source URL, attached to an existing incident when the grouping rule matches, otherwise added as new
+incidents. Files are rewritten only when something new was added (a backup is kept in data/backups/).
+Exit status 0 always; prints "RESULT: CHANGED" or "RESULT: NOCHANGE".
+Privacy: no victim names, ages, photos or identifying details are stored. Post text from
+X is never shown; only a templated summary + link. Headlines are shown with ages removed.
+"""
+import json, os, re, sys, csv, time, glob, math, hashlib, html
+import urllib.request, urllib.parse
+import xml.etree.ElementTree as ET
+from email.utils import parsedate_to_datetime
+from datetime import datetime, timezone, timedelta
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA = os.path.join(ROOT, "data")
+sys.path.insert(0, os.path.join(ROOT, "scripts"))
+from gazetteer import Gazetteer
+
+UA = "WomenSafetyMap/0.1 (personal research prototype)"
+NOW = datetime.now(timezone.utc)
+IST = timezone(timedelta(hours=5, minutes=30))
+TODAY = NOW.astimezone(IST).strftime("%Y-%m-%d")
+MAX_AGE_DAYS = 45
+FETCH = "--no-fetch" not in sys.argv
+RESOLVE = "--no-resolve" not in sys.argv
+
+EN_Q = ["rape case arrested", "gangrape police", "molestation arrested", "eve-teasing arrested",
+        "woman stalking arrested", "chain snatching woman", "woman kidnapped police",
+        "acid attack woman", "dowry death", "sexual harassment FIR woman", "minor raped accused held"]
+HI_Q = ["दुष्कर्म आरोपी गिरफ्तार", "सामूहिक दुष्कर्म", "छेड़छाड़ आरोपी गिरफ्तार", "चेन स्नैचिंग",
+        "युवती अपहरण", "तेजाब हमला", "दहेज हत्या", "महिला से छेड़खानी", "नाबालिग से दुष्कर्म"]
+
+TYPES = [  # (id, label, regex) - priority order
+ ("rape", "Rape / sexual assault", r"\brap(e|ed|es|ing|ist)\b|gang-?rap|sexual(ly)? assault|बलात्कार|दुष्कर्म|रेप|गैंगरेप|गैंग रेप"),
+ ("acid", "Acid attack", r"acid attack|acid on|तेजाब|तेज़ाब|एसिड"),
+ ("dowry", "Dowry death / domestic violence", r"dowry|domestic violence|दहेज|घरेलू हिंसा"),
+ ("kidnap", "Kidnapping / abduction of woman", r"kidnap|abduct|अपहरण|अगवा"),
+ ("stalking", "Stalking", r"stalk|पीछा कर"),
+ ("harassment", "Molestation / sexual harassment / eve-teasing", r"molest|eve-?teas|sexual(ly)? harass|harass|grop|indecent|छेड़छाड़|छेड़खानी|छेडछाड|अश्लील हरकत|यौन उत्पीड़न|फब्तियां"),
+ ("snatching", "Chain / phone snatching", r"snatch|स्नैच|चेन लूट|झपट|छीन"),
+]
+TYPE_LABEL = {t[0]: t[1] for t in TYPES}
+# Must look like it is about a woman/girl for kidnap/snatching/stalking (those words are generic)
+WOMAN_RE = re.compile(r"\b(woman|women|girl|girls|minor|teen|wife|bride|student|lady|daughter)\b|महिला|युवती|किशोरी|नाबालिग|छात्रा|लड़की|बच्ची|पत्नी|विवाहिता|बहू", re.I)
+MINOR_RE = re.compile(r"\bminor\b|\bchild\b|\bteen|\bschoolgirl|\bgirl student|नाबालिग|किशोरी|बच्ची|छात्रा|POCSO|पॉक्सो", re.I)
+STATUS = [
+ ("Acquitted by court", r"acquit|बरी"),
+ ("Convicted / sentenced (court)", r"convicted|sentenced|life imprisonment|death sentence|सजा|उम्रकैद|दोषी|कैद"),
+ ("Accused shot/held after police encounter", r"encounter|मुठभेड़"),
+ ("Arrest reported", r"arrest|\bheld\b|\bnab|detained|in custody|गिरफ्तार|दबोच|हिरासत|धराए|धराया|पकड़ा|निरुद्ध"),
+ ("Accused absconding", r"abscond|absconding|on the run|फरार"),
+ ("FIR / case registered", r"\bFIR\b|case (registered|filed|lodged)|booked|मुकदमा दर्ज|मामला दर्ज|केस दर्ज|प्राथमिकी|एफआईआर"),
+ ("Complaint / allegation, police action not stated", r"alleg|complain|आरोप|शिकायत"),
+]
+DEBUNK_RE = re.compile(r"debunk|fake claim|false claim|rumou?r|अफवाह|फर्जी दावा", re.I)
+EXCLUDE_RE = re.compile(r"High Court|\bHC\b|Supreme Court|हाई कोर्ट|हाईकोर्ट|drop in|rise in|decline|NCRB|statistic|data shows|opinion|editorial|explained|top court says|accountability|how to |pakistan|bangladesh|nepal|sri lanka|\bUS\b|\bUK\b|canada|australia|cornell|sindh|kamloops|calgary|"
+                        r"\b(19[5-9]\d|200\d|201\d|202[0-4])\b", re.I)
+NEWS_DOMAINS = re.compile(r"timesofindia|indiatimes|hindustantimes|ndtv|thehindu|indianexpress|aajtak|amarujala|jagran|"
+                          r"bhaskar|livehindustan|abplive|news18|zeenews|indiatoday|tribuneindia|deccanherald|"
+                          r"patrika|navbharattimes|thequint|scroll|theprint|ptinews|aninews|ians|republicworld|"
+                          r"etvbharat|tv9|firstpost|newindianexpress|telegraphindia|bhaskarenglish|royalbulletin|youtu", re.I)
+POLICE_HANDLE = re.compile(r"pol(ice)?$|police|^sp_|^ssp|^dcp|^cp|^dgp|^adg|^ig|uppolice", re.I)
+
+HI_NUM = r"(?:\d{1,2}|एक|दो|तीन|चार|पांच|पाँच|छह|छः|सात|आठ|नौ|दस|ग्यारह|बारह|तेरह|चौदह|पंद्रह|सोलह|सत्रह)"
+AGE_PATTERNS = [
+ (re.compile(HI_NUM + r"(?:\s*(?:और|व|,)\s*" + HI_NUM + r")*\s*(साल|वर्ष|बरस)\s*(की|के|का)?\s*(?=(बच्ची|बच्चि|बच्चे|लड़की|लड़कि|किशोरी|मासूम|छात्रा|महिला|युवती|बालिका|नाबालिग))"), "[उम्र हटाई] "),
+ (re.compile(r"\d{1,2}\s*वर्षीय"), "[उम्र हटाई]"),
+ (re.compile(r",\s*\d{1,2}\s*,"), ","),
+ (re.compile(r"\b[\w-]+-(year|yr|month)s?-old\b", re.I), "[age removed]"),
+ (re.compile(r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)[\s-]+(year|month)s?[\s-]+old\b", re.I), "[age removed]"),
+ (re.compile(r"\b\d{1,2}\s*-?\s*(year|yr)s?\s*-?\s*old\b", re.I), "[age removed]"),
+ (re.compile(r"\baged\s+\d{1,2}\b", re.I), "[age removed]"),
+ (re.compile(r"\(\s*\d{1,2}\s*\)"), ""),
+ (re.compile(r"\d{1,2}\s*(साल|वर्ष|बरस)\s*(की|के|का)?\s*"), "[उम्र हटाई] "),
+ (re.compile(r"\d{1,2}\s*वर्षीय"), "[उम्र हटाई]"),
+ (re.compile(r"\b\d{1,2}\s*-?\s*(year|yr)s?\b", re.I), "[age removed]"),
+]
+# Names of victims that appeared in collected items and must never be displayed (manual review list).
+NAME_BLOCKLIST = [r"Sowjanya", r"Nimisha\s+Thakuria"]
+
+VICTIM_NOUN_HI = r"(नवविवाहिता|विवाहिता|विवाहित|युवती|छात्रा|किशोरी|पीड़िता|मृतका)"
+HI_NOT_NAME = set("से के की का को ने पर में और ही भी थी था है हुई हुआ गई गया अपहरण हत्या मौत शव दुष्कर्म छेड़छाड़ छेड़खानी रेप गैंगरेप सुसाइड आत्महत्या उत्पीड़न हमला मामले मामला केस परिजनों परिवार साथ पति प्रेमी लापता घर कॉलेज स्कूल दहेज सामूहिक तेजाब एसिड शिकायत".split())
+def redact_names(t):
+    def hi(m):
+        w = m.group(2)
+        return m.group(1) + " " + ("" if w in HI_NOT_NAME else "[नाम हटाया]") + ("" if w not in HI_NOT_NAME else w)
+    t = re.sub(VICTIM_NOUN_HI + r"\s+([\u0900-\u097F]{2,})(?=\s+(की|के|का|को|ने|पर|से)(\s|$))", hi, t)
+    t = re.sub(r"\b(victim|survivor|Justice for|woman|girl|student|wife|bride)\s+([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)(?=\W|$)",
+               lambda m: m.group(1) + " " + ("[name removed]" if m.group(2).split()[0] not in EN_OK else m.group(2)), t)
+    return t
+EN_OK = set("In From Of At On And Who Was Is Found Dies Died Allegedly Raped Gang Molested Harassed Kidnapped Abducted Attacked Assaulted Stalked Murdered Killed Held Arrested Case Engineer Doctor Nurse Student Teacher Biker Police Cops Delhi Mumbai".split())
+
+def redact(t):
+    t = html.unescape(t or "")
+    t = redact_names(t)
+    for rx, rep in AGE_PATTERNS: t = rx.sub(rep, t)
+    for n in NAME_BLOCKLIST: t = re.sub(n, "[name removed]", t, flags=re.I)
+    return re.sub(r"\s+", " ", t).strip()
+
+def classify(text):
+    for tid, _, rx in TYPES:
+        if re.search(rx, text, re.I):
+            if tid in ("kidnap", "stalking", "harassment", "acid") and not WOMAN_RE.search(text):
+                continue
+            return tid
+    return None
+
+def status_of(text):
+    for label, rx in STATUS:
+        if re.search(rx, text, re.I): return label
+    return "Not stated in source"
+
+# ---------------------------------------------------------------- fetch
+def http(url, headers=None):
+    req = urllib.request.Request(url, headers={"User-Agent": UA, **(headers or {})})
+    with urllib.request.urlopen(req, timeout=30) as r: return r.read()
+
+def fetch_rss():
+    day = os.path.join(DATA, "raw_news", TODAY); os.makedirs(day, exist_ok=True)
+    stamp = NOW.astimezone(IST).strftime("%H%M%S")
+    for lang, qs in (("en", EN_Q), ("hi", HI_Q)):
+        for q in qs:
+            fn = os.path.join(day, f"{lang}_{hashlib.md5(q.encode()).hexdigest()[:8]}_{stamp}.xml")
+            params = {"q": q + " when:30d", "hl": "en-IN" if lang == "en" else "hi", "gl": "IN",
+                      "ceid": "IN:en" if lang == "en" else "IN:hi"}
+            url = "https://news.google.com/rss/search?" + urllib.parse.urlencode(params)
+            try:
+                b = http(url); open(fn, "wb").write(b); print("rss", lang, q, len(b))
+            except Exception as e: print("rss fail", q, e)
+            time.sleep(1)
+
+def read_rss():
+    items = []
+    for fn in sorted(glob.glob(os.path.join(DATA, "raw_news", "**", "*.xml"), recursive=True)):
+        try: root = ET.parse(fn).getroot()
+        except Exception: continue
+        for it in root.iter("item"):
+            title = it.findtext("title") or ""; src = it.find("source")
+            srcname = src.text if src is not None else ""
+            if srcname and title.endswith(" - " + srcname): title = title[: -len(srcname) - 3]
+            try: dt = parsedate_to_datetime(it.findtext("pubDate"))
+            except Exception: continue
+            items.append({"kind": "news", "title": title.strip(), "link": it.findtext("link"),
+                          "source": srcname, "source_url": src.get("url") if src is not None else "",
+                          "date": dt.astimezone(timezone.utc), "text": title})
+    return items
+
+def read_x():
+    items = []
+    for fn in sorted(glob.glob(os.path.join(DATA, "raw_x", "**", "*.txt"), recursive=True) + glob.glob(os.path.join(DATA, "raw_x", "**", "*.json"), recursive=True)):
+        t = open(fn, encoding="utf-8").read()
+        try: d = json.loads(t[t.index("{"): t.rindex("}") + 1])
+        except Exception: continue
+        users = {u["id"]: u for u in d.get("includes", {}).get("users", [])}
+        for p in d.get("data", []):
+            if "name" in p and "summary" in p:  # X news story (aggregated from posts)
+                txt = p["name"] + ". " + p.get("summary", "")
+                items.append({"kind": "x_story", "title": p["name"], "link": p["url"], "source": "X News story (summary of posts)",
+                              "date": datetime.fromisoformat(p["updated_at"].replace("Z", "+00:00")), "text": txt,
+                              "head_text": p["name"]})
+                continue
+            txt = p.get("text", "")
+            if txt.startswith("RT @"): continue
+            u = users.get(p.get("author_id"), {})
+            handle = u.get("username", "")
+            links = [e.get("expanded_url", "") for e in (p.get("entities") or {}).get("urls", [])]
+            has_news_link = any(NEWS_DOMAINS.search(l or "") for l in links) or bool(re.search(r"https://t\.co/", txt)) and NEWS_DOMAINS.search(handle or "")
+            police = bool(POLICE_HANDLE.search(handle))
+            if not (links or "t.co/" in txt or police): continue  # prefer posts linking to news/police
+            items.append({"kind": "x_post", "title": None, "link": p["url"], "source": "@" + handle if handle else "X user",
+                          "handle": handle, "police": police, "has_link": bool(links or "t.co/" in txt),
+                          "news_link": has_news_link, "date": datetime.fromisoformat(p["created_at"].replace("Z", "+00:00")),
+                          "text": txt, "head_text": txt[:140]})
+    return items
+
+# ---------------------------------------------------------------- resolve Google News links to publisher article URLs
+RES_FN = os.path.join(DATA, "url_resolve_cache.json")
+rescache = json.load(open(RES_FN)) if os.path.exists(RES_FN) else {}
+BUA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"}
+RES_STATE = {"n": 0, "blocked": False}
+RES_MAX_PER_RUN = 120  # Google rate-limits (HTTP 429); unresolved links are retried on later runs
+def resolve_gnews(u):
+    """Return the publisher URL behind a news.google.com/rss/articles/... link (cached), or None."""
+    if "news.google.com" not in u: return u
+    if u in rescache: return rescache[u]
+    if RES_STATE["blocked"] or RES_STATE["n"] >= RES_MAX_PER_RUN: return None
+    RES_STATE["n"] += 1
+    out = None
+    try:
+        aid = u.split("/articles/")[1].split("?")[0]
+        h = urllib.request.urlopen(urllib.request.Request(f"https://news.google.com/articles/{aid}", headers=BUA), timeout=20).read().decode("utf-8", "ignore")
+        sg = re.search(r'data-n-a-sg="([^"]+)"', h); ts = re.search(r'data-n-a-ts="([^"]+)"', h)
+        if sg and ts:
+            req = ["Fbv4je", f'["garturlreq",[["X","X",["X","X"],null,null,1,1,"US:en",null,1,null,null,null,null,null,0,1],"X","X",1,[1,1,1],1,1,null,0,0,null,0],"{aid}",{ts.group(1)},"{sg.group(1)}"]']
+            body = "f.req=" + urllib.parse.quote(json.dumps([[req]]))
+            r = urllib.request.urlopen(urllib.request.Request("https://news.google.com/_/DotsSplashUi/data/batchexecute", data=body.encode(),
+                    headers={**BUA, "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"}), timeout=20).read().decode("utf-8", "ignore")
+            m = re.search(r'garturlres\\",\\"(https?://[^"\\]+)', r)
+            if m: out = m.group(1)
+    except Exception as ex:
+        print("resolve fail", ex)
+        if "429" in str(ex): RES_STATE["blocked"] = True; print("rate-limited by Google; remaining links resolved on a later run")
+        return None  # not cached: retry next run
+    rescache[u] = out; json.dump(rescache, open(RES_FN, "w"), indent=0)
+    time.sleep(1.5)
+    return out
+
+# ---------------------------------------------------------------- geocode
+CACHE_FN = os.path.join(DATA, "geocode_cache.json")
+cache = json.load(open(CACHE_FN)) if os.path.exists(CACHE_FN) else {}
+_last = [0.0]
+def nominatim(q):
+    if q in cache: return cache[q]
+    wait = 1.1 - (time.time() - _last[0])
+    if wait > 0: time.sleep(wait)
+    _last[0] = time.time()
+    url = "https://nominatim.openstreetmap.org/search?" + urllib.parse.urlencode({"q": q, "format": "jsonv2", "limit": 1, "countrycodes": "in"})
+    try: r = json.loads(http(url, {"Accept-Language": "en"}))
+    except Exception as e: print("geocode fail", q, e); return None
+    res = {"lat": float(r[0]["lat"]), "lon": float(r[0]["lon"]), "type": r[0].get("addresstype") or r[0].get("type"),
+           "display": r[0]["display_name"]} if r else None
+    cache[q] = res; json.dump(cache, open(CACHE_FN, "w"), ensure_ascii=False, indent=0)
+    return res
+
+def km(a, b):
+    R = 6371; p1, p2 = math.radians(a[0]), math.radians(b[0]); dl = math.radians(b[1] - a[1]); dp = p2 - p1
+    h = math.sin(dp/2)**2 + math.cos(p1)*math.cos(p2)*math.sin(dl/2)**2
+    return 2*R*math.asin(math.sqrt(h))
+
+HI_STOP = set("जिला जनपद नगर की के का ने से में यूपी पुलिस थाना थाने उत्तर प्रदेश स्थानीय राज्य अधीक्षक महिला क्षेत्र सदर कोतवाली मामले आरोपी युवती "
+              "नाबालिग त्वरित बड़ी कार्रवाई द्वारा टीम ग्रामीण देहात शहर जिले इस उस एक और भी को है था थी गांव कस्बा".split())
+EN_STOP = set("police station area district city village town the a an case accused woman girl minor man men".split())
+def area_candidates(text):
+    c = []
+    for m in re.finditer(r"(?:थाना|थाने)[_\s]+([\u0900-\u097F]{3,}(?:[_\s][\u0900-\u097F]{3,})?)", text): c.append(m.group(1).replace("_", " "))
+    for m in re.finditer(r"([\u0900-\u097F]{3,})\s+(?:थाना|थाने|पुलिस|कोतवाली)", text): c.append(m.group(1))
+    for m in re.finditer(r"#Ps([A-Z][a-z]+)", text): c.append(m.group(1))
+    for m in re.finditer(r"(?:'s|’s)\s+([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)", text): c.append(m.group(1))
+    for m in re.finditer(r"\bin\s+([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)\s*,\s*[A-Z]", text): c.append(m.group(1))
+    out = []
+    for x in c:
+        w = x.strip()
+        if not w or w in HI_STOP or w.lower() in EN_STOP or any(t in HI_STOP for t in w.split()): continue
+        if w not in out: out.append(w)
+    return out[:3]
+
+# ---------------------------------------------------------------- build
+def main():
+    if FETCH: fetch_rss()
+    gz = Gazetteer(os.path.join(DATA, "ncrb_raw.geojson"))
+    raw = read_rss() + read_x()
+    print("raw items", len(raw))
+    cut = NOW - timedelta(days=MAX_AGE_DAYS)
+    recs, skipped = [], {"old": 0, "type": 0, "place": 0, "excluded": 0, "geocode": 0}
+    seen_links = set()
+    for it in raw:
+        if it["link"] in seen_links: continue
+        seen_links.add(it["link"])
+        if it["date"] < cut: skipped["old"] += 1; continue
+        text = it["text"]
+        if EXCLUDE_RE.search(it.get("title") or text): skipped["excluded"] += 1; continue
+        t = classify(it["title"] if it["kind"] == "x_story" else text)
+        if not t: skipped["type"] += 1; continue
+        places = gz.find(text)
+        if not places: skipped["place"] += 1; continue
+        disp, state, matched, _ = places[0]
+        gq = f"{disp}, {state}, India"
+        city = nominatim(gq)
+        if not city: gq = f"{disp}, India"; city = nominatim(gq)
+        if not city: skipped["geocode"] += 1; continue
+        lat, lon, precision, place = city["lat"], city["lon"], "City/district level (approx., ±10–30 km)", f"{disp}, {state}"
+        reported = matched; geo = f"City/district name \u201c{matched}\u201d matched; geocoded with OpenStreetMap Nominatim query \u201c{gq}\u201d \u2192 {city['display'].split(',')[0]} ({city.get('type')}); pin approx \u00b110\u201330 km"
+        for a in area_candidates(text):
+            g = nominatim(f"{a}, {disp}, {state}, India")
+            if g and km((g["lat"], g["lon"]), (city["lat"], city["lon"])) < 40 and g["type"] not in ("state", "country", "state_district"):
+                eng = g["display"].split(",")[0]
+                if eng.lower() == disp.lower() or km((g["lat"], g["lon"]), (city["lat"], city["lon"])) < 1.5: continue
+                lat, lon, place = g["lat"], g["lon"], f"{eng}, {disp}, {state}"
+                precision = "Locality / police-station area (approx., ±2–5 km)"
+                reported = f"{a} \u2026 {matched}" if a != matched else a
+                geo = f"Locality/police-station name \u201c{a}\u201d with city \u201c{matched}\u201d; geocoded with OpenStreetMap Nominatim query \u201c{a}, {disp}, {state}, India\u201d \u2192 {eng} ({g.get('type')}), accepted because within 40 km of {disp}; pin approx \u00b12\u20135 km"
+                break
+        recs.append({**it, "type": t, "place": place, "city": disp, "state": state, "lat": round(lat, 4), "lon": round(lon, 4),
+                     "precision": precision, "status": status_of(text), "minor": bool(MINOR_RE.search(text)),
+                     "place_reported": reported, "geocode": geo,
+                     "reported_in": {"news": "headline", "x_post": "X post text", "x_story": "X news story title/summary"}[it["kind"]]})
+    print("kept", len(recs), "skipped", skipped)
+
+    METROS = {"Delhi","New Delhi","Mumbai","Bengaluru","Kolkata","Chennai","Hyderabad","Pune","Ahmedabad","Lucknow","Jaipur","Patna","Kanpur","Ghaziabad","Noida","Gurugram","Indore","Bhopal","Thane","Surat","Nagpur"}
+    def toks(s): return set(w for w in re.findall(r"\w+", (s or "").lower()) if len(w) > 3)
+    def same_group(g, r, tk):
+        sim = len(tk & g["_tok"]) / max(1, len(tk | g["_tok"]))
+        return g["type"] == r["type"] and g["city"] == r["city"] and abs((r["date"] - g["_last"]).total_seconds()) <= 2.5*86400 \
+            and g["_kind"] == ("news" if r["kind"] == "news" else "social") and sim >= 0.2  # wording must overlap (prevents merging different incidents in one city)
+    # 1) group this batch (all raw records) exactly like before
+    recs.sort(key=lambda r: (r["date"], r["link"]))
+    groups = []
+    for r in recs:
+        tk = toks(r.get("title") or r.get("head_text"))
+        for g in groups:
+            if same_group(g, r, tk): g["_recs"].append(r); g["_tok"] |= tk; g["_last"] = r["date"]; break
+        else:
+            groups.append({"type": r["type"], "city": r["city"], "_kind": "news" if r["kind"] == "news" else "social",
+                           "_tok": tk, "_last": r["date"], "_recs": [r]})
+
+    # 2) load existing (append-only base)
+    JF = os.path.join(DATA, "incidents.json")
+    old = json.load(open(JF)) if os.path.exists(JF) else {"incidents": []}
+    existing = old["incidents"]; before = len(existing)
+    for e in existing:  # migrate older records
+        e.setdefault("city", e["place"].split(", ")[-2] if e["place"].count(", ") >= 1 else e["place"])
+        e.setdefault("first_seen", (old.get("generated") or old.get("last_updated") or NOW.isoformat())[:10])
+        e.setdefault("last_updated", e["first_seen"])
+        e.setdefault("report_date", e["date"])
+        e.setdefault("minor", "involving a minor" in e["summary"])
+        e.setdefault("police_src", "official police account" in e["verification"])
+        e.setdefault("newslink_src", "links to / summarises" in e["verification"])
+        e.setdefault("all_urls", [x["url"] for x in e["sources"]])
+    url2inc = {}
+    for e in existing:
+        for u in e["all_urls"]: url2inc[u] = e
+    next_id = max([int(e["id"][3:]) for e in existing] + [0]) + 1
+    order = [st[0] for st in STATUS] + ["Not stated in source"]
+
+    def finalize(e):
+        social = e["channel"] == "social"
+        if social:
+            if e["police_src"]: ver = "Social media – posted by an official police account (not independently verified)"
+            elif e["newslink_src"]: ver = "Social media – unverified (post links to / summarises news reports)"
+            else: ver = "Social media – unverified"
+        else:
+            outlets = sorted(set(x["name"] for x in e["sources"]))
+            ver = f"News report – {len(outlets)} outlet{'s' if len(outlets) > 1 else ''}" + (" (multiple reports)" if len(outlets) > 1 else " (single source)")
+        n = len(e["all_urls"])
+        if n > 1: ver += f"; {n} reports from the same city/type within ~2 days were auto-grouped (likely the same incident)"
+        e["verification"] = ver
+        srcdesc = "News media" if not social else ("A police social-media account" if e["police_src"] else "Social-media posts")
+        who = "a minor" if e["minor"] else "a woman"
+        e["summary"] = f"{srcdesc} reported an alleged {TYPE_LABEL[e['type']].lower()} incident involving {who} in the {e['place']} area. Status in reports: {e['status']}."
+
+    KIND = {"news": "article", "x_post": "x_post", "x_story": "x_story"}
+    def src_of(x): return {"name": x["source"], "url": x["link"], "date": x["date"].astimezone(IST).strftime("%Y-%m-%d"),
+                           "kind": KIND[x["kind"]], "outlet_url": x.get("source_url") or ""}
+    def set_place_info(e, x):
+        e["place_reported"] = x["place_reported"]; e["place_reported_by"] = x["source"]
+        e["place_reported_in"] = x["reported_in"]; e["geocode"] = x["geocode"]
+    def add_recs(e, rs):
+        for x in rs:
+            if x["link"] in e["all_urls"]: continue
+            e["all_urls"].append(x["link"]); e["sources"].append(src_of(x)); url2inc[x["link"]] = e
+            e["status"] = min([e["status"], x["status"]], key=order.index)
+            e["minor"] = e["minor"] or x["minor"]
+            e["police_src"] = e["police_src"] or bool(x.get("police"))
+            e["newslink_src"] = e["newslink_src"] or bool(x.get("news_link") or x["kind"] == "x_story")
+            if "Locality" in x["precision"] and "Locality" not in e["precision"]:
+                e.update(place=x["place"], lat=x["lat"], lon=x["lon"], precision=x["precision"]); set_place_info(e, x)
+            if not e.get("place_reported"): set_place_info(e, x)
+            if not e.get("headline") and x["kind"] in ("news", "x_story"): e["headline"] = redact(x["title"])
+        e["last_updated"] = TODAY; finalize(e)
+
+    added_inc, added_src = 0, 0
+    cut = NOW - timedelta(days=MAX_AGE_DAYS)
+    for g in groups:
+        rs = g["_recs"]
+        new_rs = [x for x in rs if x["link"] not in url2inc]
+        if not new_rs: continue
+        hit = next((url2inc[x["link"]] for x in rs if x["link"] in url2inc), None)
+        if hit is None:  # attach to an existing incident by grouping rule
+            for e in existing:
+                if e["type"] != g["type"] or e["city"] != g["city"] or e["channel"] != g["_kind"]: continue
+                last = max(datetime.fromisoformat(s_["date"]).replace(tzinfo=IST) for s_ in e["sources"])
+                tk = toks(e.get("headline")) | g["_tok"] if g["_kind"] == "news" else set()
+                pseudo = {"type": e["type"], "city": e["city"], "_kind": e["channel"], "_tok": toks(e.get("headline")), "_last": last}
+                if same_group(pseudo, new_rs[0], g["_tok"]): hit = e; break
+        if hit is not None:
+            added_src += len(new_rs); add_recs(hit, new_rs); continue
+        if all(x["date"] < cut for x in new_rs): continue  # brand-new but stale
+        first = new_rs[0]
+        e = {"id": f"inc{next_id:04d}", "type": g["type"], "type_label": TYPE_LABEL[g["type"]], "channel": g["_kind"],
+             "date": first["date"].astimezone(IST).strftime("%Y-%m-%d"), "place": first["place"], "state": first["state"],
+             "city": first["city"], "lat": first["lat"], "lon": first["lon"], "precision": first["precision"],
+             "headline": redact(first["title"]) if first["kind"] in ("news", "x_story") else None, "summary": "",
+             "status": "Not stated in source", "verification": "", "sources": [], "all_urls": [],
+             "first_seen": TODAY, "minor": False, "police_src": False, "newslink_src": False}
+        e["report_date"] = e["date"]
+        next_id += 1; existing.append(e); added_inc += 1; added_src += len(new_rs); add_recs(e, new_rs)
+
+    # backfill credibility fields on older incidents from archived raw records (deterministic)
+    rec_by_url = {r["link"]: r for r in recs}
+    enriched = 0
+    for e in existing:
+        before_e = json.dumps(e, sort_keys=True, ensure_ascii=False)
+        for sx in e["sources"]:
+            r = rec_by_url.get(sx["url"])
+            if "kind" not in sx:
+                sx["kind"] = KIND[r["kind"]] if r else ("x_story" if "/i/trending/" in sx["url"] else "x_post" if "x.com/" in sx["url"] else "article")
+            if "outlet_url" not in sx: sx["outlet_url"] = (r.get("source_url") or "") if r else ""
+            if RESOLVE and "article_url" not in sx and sx["kind"] == "article":
+                au = resolve_gnews(sx["url"])
+                if au: sx["article_url"] = au
+        if not e.get("place_reported"):
+            rs = [rec_by_url[u] for u in e["all_urls"] if u in rec_by_url]
+            pick = next((r for r in rs if r["place"] == e["place"]), rs[0] if rs else None)
+            if pick: set_place_info(e, pick)
+            else: e.update(place_reported=e["place"], place_reported_by="(raw record unavailable)", place_reported_in="", geocode="Place from earlier build; raw record unavailable")
+        if e.get("headline"): e["headline"] = redact(e["headline"])  # re-apply latest redaction rules (idempotent)
+        ok = [sx for sx in e["sources"] if sx["url"].startswith("http") and sx["kind"] in ("article", "x_post")]
+        e["verifiable"] = bool(ok)
+        e["hidden_reason"] = None if ok else "No verifiable source link (only an aggregated X news-story summary)"
+        if e.get("headline") and DEBUNK_RE.search(e["headline"]):
+            e["verifiable"] = False; e["hidden_reason"] = "Report says the claim was debunked/false"
+        if json.dumps(e, sort_keys=True, ensure_ascii=False) != before_e: enriched += 1
+    print("enriched/updated metadata on", enriched, "incidents; not verifiable (hidden):", sum(not e["verifiable"] for e in existing))
+    changed = added_src > 0 or enriched > 0 or old.get("schema") != 4
+    print(f"before {before} incidents; added {added_inc} new incidents, {added_src} new source links; total {len(existing)}")
+    if not changed:
+        print("RESULT: NOCHANGE"); return
+    if os.path.exists(JF):
+        os.makedirs(os.path.join(DATA, "backups"), exist_ok=True)
+        import shutil; shutil.copy2(JF, os.path.join(DATA, "backups", f"incidents_{NOW.astimezone(IST).strftime('%Y%m%d_%H%M%S')}.json"))
+    dates = sorted(e["date"] for e in existing)
+    out = {"schema": 4, "last_updated": NOW.astimezone(IST).isoformat(timespec="seconds"),
+           "first_collected": old.get("first_collected") or (old.get("generated") or NOW.isoformat())[:10],
+           "date_span": [dates[0], dates[-1]] if dates else None, "count": len(existing),
+           "count_visible": sum(e["verifiable"] for e in existing), "incidents": existing}
+    out["generated"] = out["last_updated"]  # backward-compat
+    json.dump(out, open(JF, "w"), ensure_ascii=False, indent=1)
+    with open(os.path.join(DATA, "incidents.csv"), "w", newline="", encoding="utf-8-sig") as fh:
+        w = csv.writer(fh); w.writerow(["id", "report_date", "first_seen", "crime_type", "channel", "outlets", "article_urls", "publish_dates",
+                                        "place_as_reported", "place_reported_by", "geocoding_method", "map_place", "state", "lat", "lon", "precision",
+                                        "headline", "summary", "status", "verification"])
+        for o in existing:
+            if not o["verifiable"]: continue
+            ss = [x for x in o["sources"] if x["kind"] in ("article", "x_post")]
+            w.writerow([o["id"], o["date"], o["first_seen"], o["type_label"], o["channel"], " | ".join(x["name"] for x in ss), " | ".join(x.get("article_url") or x["url"] for x in ss),
+                        " | ".join(x["date"] for x in ss), o["place_reported"], f'{o["place_reported_by"]} ({o["place_reported_in"]})', o["geocode"],
+                        o["place"], o["state"], o["lat"], o["lon"], o["precision"], o["headline"] or "", o["summary"], o["status"], o["verification"]])
+    from collections import Counter
+    print("incidents", len(existing), Counter(o["channel"] for o in existing), Counter(o["type"] for o in existing))
+    print("RESULT: CHANGED")
+
+if __name__ == "__main__": main()

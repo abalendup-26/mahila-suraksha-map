@@ -1,0 +1,18 @@
+# never commit
+.env
+*.pem
+*.key
+.venv/
+venv/
+.pwvenv/
+__pycache__/
+*.pyc
+logs/
+# caches and large raw dumps stay local (see README)
+data/raw_news/
+data/raw_x/
+data/backups/
+data/geocode_cache.json
+data/url_resolve_cache.json
+data/incident_reports.html
+screenshots/
